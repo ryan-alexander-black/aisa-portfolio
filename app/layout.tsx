@@ -13,7 +13,17 @@ export const metadata: Metadata = {
     description:
       "Business-strong builder who architects whole systems — turning ideas into working AI software, end to end.",
     type: "website",
+    url: "https://www.ryanalexanderblack.com",
+    siteName: "Ryan Alexander Black",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ryan Alexander Black — AI Solutions Architect",
+    description:
+      "Business-strong builder who architects whole systems — turning ideas into working AI software, end to end.",
+  },
+  // og:image / twitter:image are generated automatically from
+  // app/opengraph-image.png and app/twitter-image.png (1200×630).
 };
 
 // Runs before paint so there's no flash of the wrong theme. Defaults to dark
