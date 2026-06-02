@@ -28,4 +28,9 @@
   .eyebrow {
     @apply font-mono text-xs uppercase tracking-[0.18em] text-accent;
   }
+  /* Theme-aware translucent header bg (alpha can't apply to var() tokens via
+     Tailwind, so do it here with color-mix — follows light/dark automatically). */
+  .bg-header {
+    background-color: color-mix(in srgb, var(--color-bg) 82%, transparent);
+  }
 }

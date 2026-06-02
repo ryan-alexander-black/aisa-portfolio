@@ -98,34 +98,72 @@ export default function NewsletterCaseStudy() {
         </div>
       </header>
 
-      {/* Rendered output */}
-      <figure className="mt-12 overflow-hidden rounded-lg border border-border bg-surface">
-        <Image
-          src="/projects/newsletter/preview.png"
-          alt="Signal over Noise — Issue 01, the real rendered output of the pipeline"
-          width={1200}
-          height={1600}
-          className="w-full"
-        />
-        <figcaption className="border-t border-border px-4 py-3 font-mono text-xs text-fg-muted">
-          Issue 01 — the real, unedited output of the pipeline.
-        </figcaption>
+      {/* Plain lead — the whole point of the automation, for a non-technical reader. */}
+      <p className="mt-8 text-lg leading-relaxed text-fg-muted">
+        A good newsletter is hours of work: researching the topic, writing it, building the charts,
+        laying it out as an email, and checking it before it goes. This takes a single topic and
+        does all of that automatically — researched from real sources, written in a set brand voice,
+        with accurate charts and a header image — then hands back a finished email, ready to send.
+        Here&apos;s a real one it produced:
+      </p>
+
+      {/* Rendered output — capped height with a fade; click through for the full issue. */}
+      <figure className="mt-6">
+        <a
+          href={EXAMPLE}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group block overflow-hidden rounded-lg border border-border bg-surface transition-colors hover:border-green-brand/50"
+        >
+          <div className="relative max-h-[420px] overflow-hidden">
+            <Image
+              src="/projects/newsletter/preview.png"
+              alt="Signal over Noise — Issue 01, a real rendered output of the pipeline"
+              width={1200}
+              height={1600}
+              className="w-full"
+            />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-surface to-transparent" />
+          </div>
+          <figcaption className="flex items-center justify-between gap-3 border-t border-border px-4 py-3 font-mono text-xs">
+            <span className="text-fg-muted">Issue 01 — a real, unedited output</span>
+            <span className="text-accent group-hover:underline">Open the full issue →</span>
+          </figcaption>
+        </a>
       </figure>
 
       {/* Problem */}
       <Section title="The problem">
         <p>
-          A good newsletter is several different jobs wearing one coat: current research with
-          sources, writing in a consistent voice, accurate data visuals, an email that actually
-          renders in every client, and a final read-through before it goes out. Done by hand it&apos;s
-          slow; handed entirely to an AI it&apos;s unreliable — models invent figures, garble chart
-          labels, and produce HTML that breaks in Outlook.
+          Automating this well is harder than it looks. Hand the whole job to an AI and it gets
+          unreliable — models invent figures, garble chart labels, and produce email layouts that
+          break in half the inboxes that open them. The interesting part isn&apos;t that AI writes the
+          words; it&apos;s building it so the result is genuinely accurate and ships every time.
         </p>
         <p>
           The goal: a pipeline that takes a single <em>topic</em> and returns a finished, on-brand,
           fact-checked issue — without the failure modes.
         </p>
       </Section>
+
+      {/* ── Under-the-hood divider: everything below is the technical detail ── */}
+      <div className="mt-16 rounded-lg border border-border bg-surface p-6">
+        <p className="eyebrow">Under the hood</p>
+        <p className="mt-2 text-sm text-fg-muted">
+          How it&apos;s actually built. The plain version is above — everything from here down is the
+          technical detail, for anyone who wants to see how the pieces fit.
+        </p>
+        <div className="mt-4 flex flex-wrap gap-1.5 border-t border-border pt-4">
+          {project.stack.concat(["Pillow", "Headless browser", "WAT framework"]).map((tech) => (
+            <span
+              key={tech}
+              className="rounded border border-border bg-bg px-2 py-0.5 font-mono text-[11px] text-fg-muted"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
 
       {/* How it works */}
       <Section title="How it works">
@@ -248,9 +286,17 @@ export default function NewsletterCaseStudy() {
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+  id,
+}: {
+  title: string;
+  children: React.ReactNode;
+  id?: string;
+}) {
   return (
-    <section className="mt-14">
+    <section id={id} className="mt-14">
       <h2 className="font-display text-2xl font-bold tracking-tight">{title}</h2>
       <div className="mt-4 space-y-4 leading-relaxed text-fg [&_p]:text-[15px]">{children}</div>
     </section>

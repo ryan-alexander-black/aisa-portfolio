@@ -7,7 +7,7 @@ export type ProjectStatus = "shipped" | "live" | "building" | "planned";
 export interface Project {
   slug: string;
   title: string;
-  tagline: string; // one line: what it is / what it does
+  tagline: string; // one line: what it is / what it does (plain English)
   status: ProjectStatus;
   featured?: boolean; // surfaced at the top of the grid
   caseStudy?: boolean; // has a /projects/<slug> page
@@ -15,8 +15,11 @@ export interface Project {
   liveUrl?: string; // deployed / live link
   exampleUrl?: string; // a real output to view (e.g. the rendered newsletter)
   repoUrl?: string;
-  // The "what it does" pitch shown on the card.
+  // The plain-English "what it does" lead — readable by anyone, no jargon.
   summary: string;
+  // The technical layer, quarantined behind an "Under the hood" label so
+  // non-technical readers can skip it. Points keep the real terms but gloss them.
+  underHood?: string[];
 }
 
 export const STATUS_LABEL: Record<ProjectStatus, string> = {
@@ -30,34 +33,49 @@ export const projects: Project[] = [
   {
     slug: "ocla",
     title: "OCLA",
-    tagline: "A full SaaS that takes a fitness coach from zero to launched business.",
+    tagline: "A complete app that takes a fitness coach from zero to a launched business.",
     status: "live",
     featured: true,
-    stack: ["Next.js 16", "TypeScript", "Supabase", "Claude (Anthropic SDK)", "Vercel", "Zapier"],
+    stack: ["Next.js", "Supabase", "Claude API", "Vercel"],
     summary:
-      "End-to-end applied-AI SaaS: 4 guided modules plus tools (content & ad planners, AI DM assistant, CRM, website generator, helper chat). A trial→paid lifecycle state machine, webhook + cron orchestration, and AI patterns hardened for production (RLS, rate limiting, idempotent webhooks). ~300 hours, built solo in Claude Code.",
+      "Software that takes a fitness coach from zero to a launched, running business — four guided modules plus the tools to operate it: content and ad planners, an AI assistant that drafts replies to clients, a simple client tracker (CRM), and a website builder. Built solo over ~300 hours.",
+    underHood: [
+      "Automated trial-to-paid flow — sign-ups and billing handled with no manual steps",
+      "AI hardened to stay accurate in production (it won't drift or invent its own data)",
+      "Row-level security — every user only ever sees their own data",
+    ],
   },
   {
     slug: "newsletter",
     title: "Newsletter Automation",
-    tagline: '"Signal over Noise" — a topic in, a finished on-brand newsletter out.',
+    tagline: '"Signal over Noise" — give it a topic, get a finished newsletter.',
     status: "shipped",
     featured: true,
     caseStudy: true,
-    stack: ["Python", "Perplexity Sonar", "Pillow", "Headless Chrome", "WAT"],
+    stack: ["Python", "Perplexity", "Claude"],
     exampleUrl: "/projects/newsletter/example/signal-over-noise-01.html",
     summary:
-      "Give it a topic; it researches with citations, writes in a defined brand voice, renders accurate data charts in code, generates an editorial hero image, assembles email-safe HTML, verifies by rendering, and sends. Probabilistic where it should be, deterministic where it must be.",
+      "Give it a topic and it produces a finished newsletter — researched with real sources, written in a set brand voice, with accurate charts and a header image, then checked and sent. The card below links to a real issue it produced.",
+    underHood: [
+      "Charts are drawn in code, not AI-generated — so the numbers are always exact",
+      "Every issue is checked by rendering it to an image before it sends",
+      "Each part (research, images, sending) is swappable without rebuilding the rest",
+    ],
   },
   {
     slug: "tfs-creative-suite",
     title: "TFS Creative Suite",
-    tagline: "A custom MCP server turning KIE.ai's models into a cloud creative suite.",
+    tagline: "One place to generate images, video, voice and music — saved to the cloud.",
     status: "live",
     featured: true,
-    stack: ["MCP", "KIE.ai", "Image / Video / Voice / Music", "Cloud storage"],
+    stack: ["MCP", "KIE.ai", "Remotion"],
     summary:
-      "A Model Context Protocol server that pulls KIE.ai's image, video, voice and music models into one toolset, saving generated assets to the cloud. Plus Remotion for automated Reel editing that fed live ads. Evidence of integration and tool-building, not just consuming an API.",
+      "A single toolset for generating images, video, voice and music from top AI models, with every result saved to the cloud automatically. I built the connector that wires those models into the tools I use day to day — plus an automated video editor that turned clips into finished Reels for live ad campaigns.",
+    underHood: [
+      "A custom connector (MCP server) links multiple AI media models into one toolset",
+      "Generated assets save to permanent cloud storage automatically",
+      "An automated editor (Remotion) assembled clips into finished, ad-ready Reels",
+    ],
   },
   {
     slug: "challenge-day-2",

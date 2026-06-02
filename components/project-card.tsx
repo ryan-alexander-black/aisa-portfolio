@@ -3,7 +3,8 @@ import type { Project } from "@/lib/projects";
 import { StatusBadge } from "@/components/status-badge";
 
 export function ProjectCard({ project }: { project: Project }) {
-  const { slug, title, tagline, summary, stack, status, caseStudy, liveUrl, exampleUrl } = project;
+  const { slug, title, tagline, summary, stack, status, caseStudy, liveUrl, exampleUrl, underHood } =
+    project;
   const href = caseStudy ? `/projects/${slug}` : liveUrl ?? exampleUrl;
   const isInternal = Boolean(caseStudy);
   const interactive = Boolean(href);
@@ -27,16 +28,34 @@ export function ProjectCard({ project }: { project: Project }) {
       <p className="mt-1 text-sm text-accent">{tagline}</p>
       <p className="mt-3 flex-1 text-sm leading-relaxed text-fg-muted">{summary}</p>
 
-      <ul className="mt-5 flex flex-wrap gap-1.5">
-        {stack.map((tech) => (
-          <li
-            key={tech}
-            className="rounded border border-border bg-bg px-2 py-0.5 font-mono text-[11px] text-fg-muted"
-          >
-            {tech}
-          </li>
-        ))}
-      </ul>
+      {/* Technical layer — labelled so non-technical readers know they can skip it. */}
+      <div className="mt-5 border-t border-border pt-4">
+        {underHood && (
+          <>
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-muted">
+              Under the hood
+            </p>
+            <ul className="mt-2 space-y-1.5">
+              {underHood.map((point) => (
+                <li key={point} className="flex gap-2 text-[13px] leading-snug text-fg-muted">
+                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        <ul className={`flex flex-wrap gap-1.5 ${underHood ? "mt-3" : ""}`}>
+          {stack.map((tech) => (
+            <li
+              key={tech}
+              className="rounded border border-border bg-bg px-2 py-0.5 font-mono text-[11px] text-fg-muted"
+            >
+              {tech}
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <div className="mt-5 font-mono text-xs">
         {caseStudy ? (

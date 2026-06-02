@@ -16,12 +16,18 @@ export const metadata: Metadata = {
   },
 };
 
+// Runs before paint so there's no flash of the wrong theme. Defaults to dark
+// (the brand's signature look) on first visit; remembers the user's choice after.
+const themeScript = `(function(){try{var t=localStorage.getItem('theme')||'dark';var c=document.documentElement.classList;if(t==='light'){c.add('light');c.remove('dark');}else{c.add('dark');c.remove('light');}}catch(e){document.documentElement.classList.add('dark');}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // Dark by default — the brand's signature look (dark surface, one green moment).
   return (
-    <html lang="en" className="dark">
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-screen flex flex-col">
         <SiteHeader />
         <main className="flex-1">{children}</main>
