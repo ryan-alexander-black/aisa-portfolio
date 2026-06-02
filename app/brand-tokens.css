@@ -1,0 +1,127 @@
+/* ====================================================================
+   AISA Brand Tokens — Ryan Alexander Black
+   Palette: "Signal Green"  ·  v1.0.0
+   --------------------------------------------------------------------
+   Drop this file into any project and import it once (global CSS).
+   Light theme is the default. Dark theme activates via either:
+     • <html class="dark">            (manual / class-based toggle)
+     • @media (prefers-color-scheme: dark)  (auto — included below)
+   Source of truth: brand.json
+   ==================================================================== */
+
+:root {
+  /* — Raw palette — */
+  --green-brand:    #11D38B;
+  --green-bright:   #2EE6A6;
+  --green-deep:     #047857;
+  --green-electric: #00E58F; /* alternate — not active */
+
+  --ink-50:  #F5F8F6;
+  --ink-100: #E6EBE8;
+  --ink-200: #CDD6D1;
+  --ink-300: #9FB0A8;
+  --ink-400: #5C6B64;
+  --ink-500: #3A4742;
+  --ink-600: #2A3530;
+  --ink-700: #1E2723;
+  --ink-800: #121917;
+  --ink-900: #0A0F0D;
+  --white:   #FFFFFF;
+
+  /* — Semantic theme tokens (LIGHT defaults) — */
+  --color-bg:              #FFFFFF;
+  --color-surface:         #F5F8F6;
+  --color-elevated:        #FFFFFF;
+  --color-border:          #E6EBE8;
+  --color-text:            #0A0F0D;
+  --color-text-muted:      #5C6B64;
+  --color-accent:          #047857; /* AA text/links on light */
+  --color-accent-solid:    #11D38B; /* fills / buttons */
+  --color-accent-contrast: #0A0F0D; /* text ON a green fill */
+  --color-focus:           #11D38B;
+
+  --color-success: #11D38B;
+  --color-warning: #B45309;
+  --color-error:   #DC2626;
+  --color-info:    #0F766E;
+
+  /* — Typography — */
+  --font-display: 'Sora', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-body:    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, 'Cascadia Code', Menlo, monospace;
+
+  --text-xs:   0.75rem;   --lh-xs:   1rem;
+  --text-sm:   0.875rem;  --lh-sm:   1.25rem;
+  --text-base: 1rem;      --lh-base: 1.5rem;
+  --text-lg:   1.125rem;  --lh-lg:   1.75rem;
+  --text-xl:   1.5rem;    --lh-xl:   2rem;
+  --text-2xl:  2rem;      --lh-2xl:  2.375rem;
+  --text-3xl:  3rem;      --lh-3xl:  3.25rem;
+  --text-4xl:  4rem;      --lh-4xl:  4.25rem;
+
+  --tracking-tight: -0.02em;
+  --tracking-wide:  0.04em;
+
+  /* — Radius / spacing / shadow — */
+  --radius-sm: 6px;  --radius-md: 10px; --radius-lg: 16px; --radius-xl: 24px; --radius-full: 9999px;
+
+  --shadow-sm:   0 1px 2px 0 rgba(10,15,13,0.06);
+  --shadow-md:   0 4px 16px -2px rgba(10,15,13,0.10);
+  --shadow-lg:   0 12px 32px -8px rgba(10,15,13,0.18);
+  --shadow-glow: 0 0 0 1px rgba(17,211,139,0.30), 0 8px 32px -6px rgba(17,211,139,0.35);
+}
+
+/* — DARK theme — class-based (manual toggle) — */
+:root.dark,
+.dark {
+  --color-bg:              #0A0F0D;
+  --color-surface:         #121917;
+  --color-elevated:        #1E2723;
+  --color-border:          #1E2723;
+  --color-text:            #E8F0EC;
+  --color-text-muted:      #9FB0A8;
+  --color-accent:          #2EE6A6;
+  --color-accent-solid:    #11D38B;
+  --color-accent-contrast: #0A0F0D;
+  --color-focus:           #2EE6A6;
+
+  --color-success: #2EE6A6;
+  --color-warning: #FBBF24;
+  --color-error:   #F87171;
+  --color-info:    #2DD4BF;
+
+  --shadow-sm:   0 1px 2px 0 rgba(0,0,0,0.40);
+  --shadow-md:   0 4px 16px -2px rgba(0,0,0,0.50);
+  --shadow-lg:   0 12px 32px -8px rgba(0,0,0,0.60);
+  --shadow-glow: 0 0 0 1px rgba(46,230,166,0.35), 0 8px 36px -6px rgba(46,230,166,0.40);
+}
+
+/* — DARK theme — automatic (system preference), only when not manually set to light — */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --color-bg:              #0A0F0D;
+    --color-surface:         #121917;
+    --color-elevated:        #1E2723;
+    --color-border:          #1E2723;
+    --color-text:            #E8F0EC;
+    --color-text-muted:      #9FB0A8;
+    --color-accent:          #2EE6A6;
+    --color-accent-solid:    #11D38B;
+    --color-accent-contrast: #0A0F0D;
+    --color-focus:           #2EE6A6;
+    --color-success: #2EE6A6;
+    --color-warning: #FBBF24;
+    --color-error:   #F87171;
+    --color-info:    #2DD4BF;
+  }
+}
+
+/* — Optional base helpers (use or ignore) — */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+h1, h2, h3, h4, .font-display { font-family: var(--font-display); letter-spacing: var(--tracking-tight); }
+code, pre, .font-mono { font-family: var(--font-mono); }
+:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }

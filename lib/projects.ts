@@ -1,0 +1,126 @@
+// The portfolio's source of truth. Each entry renders a card on the home grid;
+// entries with `caseStudy: true` also get a /projects/<slug> page.
+// Keep copy plain and outcome-led (brand voice: no hype, lead with what it does).
+
+export type ProjectStatus = "shipped" | "live" | "building" | "planned";
+
+export interface Project {
+  slug: string;
+  title: string;
+  tagline: string; // one line: what it is / what it does
+  status: ProjectStatus;
+  featured?: boolean; // surfaced at the top of the grid
+  caseStudy?: boolean; // has a /projects/<slug> page
+  stack: string[]; // short tech chips
+  liveUrl?: string; // deployed / live link
+  exampleUrl?: string; // a real output to view (e.g. the rendered newsletter)
+  repoUrl?: string;
+  // The "what it does" pitch shown on the card.
+  summary: string;
+}
+
+export const STATUS_LABEL: Record<ProjectStatus, string> = {
+  shipped: "Shipped",
+  live: "Live",
+  building: "In progress",
+  planned: "Planned",
+};
+
+export const projects: Project[] = [
+  {
+    slug: "ocla",
+    title: "OCLA",
+    tagline: "A full SaaS that takes a fitness coach from zero to launched business.",
+    status: "live",
+    featured: true,
+    stack: ["Next.js 16", "TypeScript", "Supabase", "Claude (Anthropic SDK)", "Vercel", "Zapier"],
+    summary:
+      "End-to-end applied-AI SaaS: 4 guided modules plus tools (content & ad planners, AI DM assistant, CRM, website generator, helper chat). A trial→paid lifecycle state machine, webhook + cron orchestration, and AI patterns hardened for production (RLS, rate limiting, idempotent webhooks). ~300 hours, built solo in Claude Code.",
+  },
+  {
+    slug: "newsletter",
+    title: "Newsletter Automation",
+    tagline: '"Signal over Noise" — a topic in, a finished on-brand newsletter out.',
+    status: "shipped",
+    featured: true,
+    caseStudy: true,
+    stack: ["Python", "Perplexity Sonar", "Pillow", "Headless Chrome", "WAT"],
+    exampleUrl: "/projects/newsletter/example/signal-over-noise-01.html",
+    summary:
+      "Give it a topic; it researches with citations, writes in a defined brand voice, renders accurate data charts in code, generates an editorial hero image, assembles email-safe HTML, verifies by rendering, and sends. Probabilistic where it should be, deterministic where it must be.",
+  },
+  {
+    slug: "tfs-creative-suite",
+    title: "TFS Creative Suite",
+    tagline: "A custom MCP server turning KIE.ai's models into a cloud creative suite.",
+    status: "live",
+    featured: true,
+    stack: ["MCP", "KIE.ai", "Image / Video / Voice / Music", "Cloud storage"],
+    summary:
+      "A Model Context Protocol server that pulls KIE.ai's image, video, voice and music models into one toolset, saving generated assets to the cloud. Plus Remotion for automated Reel editing that fed live ads. Evidence of integration and tool-building, not just consuming an API.",
+  },
+  {
+    slug: "challenge-day-2",
+    title: "Challenge — Day 2",
+    tagline: "Day 2 of the 7-day AI build challenge.",
+    status: "planned",
+    stack: ["TBD"],
+    summary: "One build a day, shipped publicly. Coming as the challenge runs.",
+  },
+  {
+    slug: "challenge-day-3",
+    title: "Challenge — Day 3",
+    tagline: "Day 3 of the 7-day AI build challenge.",
+    status: "planned",
+    stack: ["TBD"],
+    summary: "One build a day, shipped publicly. Coming as the challenge runs.",
+  },
+  {
+    slug: "challenge-day-4",
+    title: "Challenge — Day 4",
+    tagline: "Day 4 of the 7-day AI build challenge.",
+    status: "planned",
+    stack: ["TBD"],
+    summary: "One build a day, shipped publicly. Coming as the challenge runs.",
+  },
+  {
+    slug: "challenge-day-5",
+    title: "Challenge — Day 5",
+    tagline: "Day 5 of the 7-day AI build challenge.",
+    status: "planned",
+    stack: ["TBD"],
+    summary: "One build a day, shipped publicly. Coming as the challenge runs.",
+  },
+  {
+    slug: "challenge-day-6",
+    title: "Challenge — Day 6",
+    tagline: "Day 6 of the 7-day AI build challenge.",
+    status: "planned",
+    stack: ["TBD"],
+    summary: "One build a day, shipped publicly. Coming as the challenge runs.",
+  },
+  {
+    slug: "challenge-day-7",
+    title: "Challenge — Day 7",
+    tagline: "Day 7 of the 7-day AI build challenge.",
+    status: "planned",
+    stack: ["TBD"],
+    summary: "One build a day, shipped publicly. Coming as the challenge runs.",
+  },
+  {
+    slug: "marathon-plan",
+    title: "Marathon Training Plan",
+    tagline: "An adaptive training-plan builder (scope TBC).",
+    status: "planned",
+    stack: ["TBD"],
+    summary: "A personal build in the running domain — concept and scope being defined.",
+  },
+];
+
+export function getProject(slug: string): Project | undefined {
+  return projects.find((p) => p.slug === slug);
+}
+
+export function caseStudySlugs(): string[] {
+  return projects.filter((p) => p.caseStudy).map((p) => p.slug);
+}

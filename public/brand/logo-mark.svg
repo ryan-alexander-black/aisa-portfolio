@@ -1,0 +1,19 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="AISA mark">
+  <defs>
+    <linearGradient id="aisaGreen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2EE6A6"/>
+      <stop offset="1" stop-color="#11D38B"/>
+    </linearGradient>
+  </defs>
+  <!-- Three connected nodes = a system; the upward triangle reads as 'A' (Architect). -->
+  <g fill="none" stroke="url(#aisaGreen)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 84 L50 16"/>
+    <path d="M82 84 L50 16"/>
+    <path d="M30.2 58 L69.8 58"/>
+  </g>
+  <g fill="url(#aisaGreen)">
+    <circle cx="50" cy="16" r="9"/>
+    <circle cx="18" cy="84" r="9"/>
+    <circle cx="82" cy="84" r="9"/>
+  </g>
+</svg>

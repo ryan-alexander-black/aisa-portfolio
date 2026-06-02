@@ -1,0 +1,31 @@
+/* AISA brand fonts (Sora · Inter · JetBrains Mono) — real family names so the
+   Tailwind preset's font-display / font-sans / font-mono resolve correctly. */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Brand tokens (CSS variables for the semantic colour system, light + dark). */
+@import './brand-tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+  /* Make in-page anchor jumps clear the sticky header. */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+}
+
+@layer components {
+  /* One reusable mono "eyebrow" label — the architect/technical signal. */
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.18em] text-accent;
+  }
+}
