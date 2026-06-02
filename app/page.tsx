@@ -3,7 +3,8 @@ import { projects } from "@/lib/projects";
 import { ProjectCard } from "@/components/project-card";
 
 export default function Home() {
-  const featured = projects.filter((p) => p.featured);
+  const spotlight = projects.find((p) => p.featuredLarge);
+  const featured = projects.filter((p) => p.featured && !p.featuredLarge);
   const rest = projects.filter((p) => !p.featured);
 
   return (
@@ -59,6 +60,13 @@ export default function Home() {
             Builds &amp; case studies
           </h2>
         </div>
+
+        {/* Spotlight — the centrepiece, full width above the grid */}
+        {spotlight && (
+          <div className="mb-5">
+            <ProjectCard project={spotlight} large />
+          </div>
+        )}
 
         {/* Featured */}
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

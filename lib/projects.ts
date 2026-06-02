@@ -10,11 +10,16 @@ export interface Project {
   tagline: string; // one line: what it is / what it does (plain English)
   status: ProjectStatus;
   featured?: boolean; // surfaced at the top of the grid
+  featuredLarge?: boolean; // the centrepiece — renders as a 2-col spotlight card
   caseStudy?: boolean; // has a /projects/<slug> page
   stack: string[]; // short tech chips
   liveUrl?: string; // deployed / live link
   exampleUrl?: string; // a real output to view (e.g. the rendered newsletter)
   repoUrl?: string;
+  // A few hard numbers for the spotlight card / case-study header.
+  metrics?: { label: string; value: string }[];
+  // Optional cover image for the large spotlight card (falls back to a branded panel).
+  cover?: string;
   // The plain-English "what it does" lead — readable by anyone, no jargon.
   summary: string;
   // The technical layer, quarantined behind an "Under the hood" label so
@@ -36,12 +41,21 @@ export const projects: Project[] = [
     tagline: "A complete app that takes a fitness coach from zero to a launched business.",
     status: "live",
     featured: true,
+    featuredLarge: true,
+    caseStudy: true,
     stack: ["Next.js", "Supabase", "Claude API", "Vercel"],
+    metrics: [
+      { label: "Built solo", value: "~100 hrs" },
+      { label: "Modules", value: "4" },
+      { label: "Operating tools", value: "6" },
+      { label: "AI endpoints", value: "12" },
+    ],
+    cover: "/projects/ocla/kpi-tracker.jpg",
     summary:
-      "Software that takes a fitness coach from zero to a launched, running business — four guided modules plus the tools to operate it: content and ad planners, an AI assistant that drafts replies to clients, a simple client tracker (CRM), and a website builder. Built solo over ~300 hours.",
+      "Online Coach Launch Academy — software that takes a fitness coach from zero to a launched, running business. A four-module guided curriculum, then the tools to operate the business: content and ad planners, an AI assistant for live client DMs, a daily-metrics tracker, a simple client tracker (CRM), and a website-copy builder — with an AI helper on every page. Built solo, live with paying users.",
     underHood: [
-      "Automated trial-to-paid flow — sign-ups and billing handled with no manual steps",
-      "AI hardened to stay accurate in production (it won't drift or invent its own data)",
+      "AI on every feature (Claude), hardened to stay accurate in production — it won't drift or anchor to a user's old answers when it regenerates",
+      "Designed around a third-party's limits — a trial→paid lifecycle built on the handful of events the community platform actually exposes",
       "Row-level security — every user only ever sees their own data",
     ],
   },

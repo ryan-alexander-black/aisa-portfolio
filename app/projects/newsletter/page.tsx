@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getProject } from "@/lib/projects";
 import { StatusBadge } from "@/components/status-badge";
+import { Section } from "@/components/section";
 
 const project = getProject("newsletter")!;
 const EXAMPLE = "/projects/newsletter/example/signal-over-noise-01.html";
@@ -283,22 +284,5 @@ export default function NewsletterCaseStudy() {
         </div>
       </div>
     </article>
-  );
-}
-
-function Section({
-  title,
-  children,
-  id,
-}: {
-  title: string;
-  children: React.ReactNode;
-  id?: string;
-}) {
-  return (
-    <section id={id} className="mt-14">
-      <h2 className="font-display text-2xl font-bold tracking-tight">{title}</h2>
-      <div className="mt-4 space-y-4 leading-relaxed text-fg [&_p]:text-[15px]">{children}</div>
-    </section>
   );
 }
