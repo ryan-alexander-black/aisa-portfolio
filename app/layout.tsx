@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Ryan Alexander Black — AI Solutions Architect",
   description:
     "Business-strong builder who architects whole systems — turning ideas into working AI software, end to end. Selected builds and case studies.",
-  metadataBase: new URL("https://ryanalexanderblack.com"),
+  metadataBase: new URL("https://www.ryanalexanderblack.com"),
   openGraph: {
     title: "Ryan Alexander Black — AI Solutions Architect",
     description:

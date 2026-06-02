@@ -275,7 +275,7 @@ export default function NewsletterCaseStudy() {
             Open the live example
           </a>
           <a
-            href="mailto:alexanderthegreatcoaching@gmail.com"
+            href="mailto:ryanalexanderblack@gmail.com"
             className="rounded-md border border-border px-5 py-2.5 font-medium text-fg transition-colors hover:border-green-brand/50"
           >
             Get in touch

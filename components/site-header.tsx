@@ -24,7 +24,7 @@ export function SiteHeader() {
             Work
           </Link>
           <a
-            href="mailto:alexanderthegreatcoaching@gmail.com"
+            href="mailto:ryanalexanderblack@gmail.com"
             className="hidden rounded-md bg-accent-solid px-3.5 py-1.5 font-medium text-accent-contrast transition-opacity hover:opacity-90 sm:inline-block"
           >
             Get in touch
