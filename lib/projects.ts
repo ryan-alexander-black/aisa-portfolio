@@ -77,6 +77,29 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "super-tracker",
+    title: "Investment Strategy Engine",
+    tagline:
+      "A rules-based engine that scores the market daily and tells me when my strategy says move.",
+    status: "shipped",
+    featured: true,
+    caseStudy: true,
+    stack: ["Python", "SQLite", "FastAPI", "Next.js", "Claude API"],
+    metrics: [
+      { label: "Golden tests", value: "22" },
+      { label: "Report cadences", value: "3" },
+      { label: "History migrated", value: "6 tabs" },
+      { label: "Math by LLM", value: "0%" },
+    ],
+    summary:
+      "A personal decision-support system for a disciplined, rules-based investment (superannuation) strategy. It pulls live market and macro data, scores conditions against a fixed debt-cycle rulebook, tracks allocation gates and triggers, and surfaces it all on a dashboard with daily, weekly and monthly reports — replacing a manual ChatGPT-and-Excel routine. It recommends; the human decides — it never auto-trades.",
+    underHood: [
+      "Every number the decision depends on is computed in plain Python, never by an AI — the old LLM workflow made ~6 moving-average errors in a single month",
+      "The rulebook lives as versioned config (data, not code), so every strategy change is auditable",
+      "AI is used only for the genuinely linguistic parts — news sentiment, report narrative, and a chat that explains your own data",
+    ],
+  },
+  {
     slug: "tfs-creative-suite",
     title: "TFS Creative Suite",
     tagline: "One place to generate images, video, voice and music — saved to the cloud.",
