@@ -42,9 +42,11 @@ export function MarkEyebrow({
 export function NodeLabel({ index, children }: { index: string; children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="font-mono text-xs text-accent">{index}</span>
-      <Peak className="h-2.5 w-3.5 text-accent" />
-      <span className="font-mono text-xs uppercase tracking-[0.18em] text-fg-muted">{children}</span>
+      <span className="text-plate inline-flex items-center gap-3">
+        <span className="font-mono text-xs text-accent">{index}</span>
+        <Peak className="h-2.5 w-3.5 text-accent" />
+        <span className="font-mono text-xs uppercase tracking-[0.18em] text-fg-muted">{children}</span>
+      </span>
       <span className="h-px flex-1 bg-border" aria-hidden />
     </div>
   );

@@ -52,16 +52,18 @@ export default function Home() {
           {/* Statement + face */}
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_17rem] lg:gap-16">
             <div>
-              <MarkEyebrow>AI Solutions Architect</MarkEyebrow>
-              <h1 className="mt-4 font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
-                I architect whole systems —{" "}
-                <span className="text-accent">and build them, end to end.</span>
-              </h1>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-fg-muted">
-                I&apos;m Ryan. I take AI products from idea to live — designing how every piece fits
-                together, then building it. After ~6–7 years running my own businesses, I understand
-                the whole system, not just the code — the join most builders miss.
-              </p>
+              <div className="text-plate">
+                <MarkEyebrow>AI Solutions Architect</MarkEyebrow>
+                <h1 className="mt-4 font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
+                  I architect whole systems —{" "}
+                  <span className="text-accent">and build them, end to end.</span>
+                </h1>
+                <p className="mt-6 max-w-xl text-lg leading-relaxed text-fg-muted">
+                  I&apos;m Ryan. I take AI products from idea to live — designing how every piece fits
+                  together, then building it. After ~6–7 years running my own businesses, I understand
+                  the whole system, not just the code — the join most builders miss.
+                </p>
+              </div>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
                   href="#work"
@@ -110,26 +112,28 @@ export default function Home() {
             ))}
           </div>
 
-          <dl className="mt-8 grid gap-4 border-t border-border pt-6">
-            {experience.map((e) => (
-              <div key={e.role} className="grid gap-1 sm:grid-cols-[12rem_1fr] sm:gap-4">
-                <dt className="font-display text-sm font-semibold tracking-tight text-fg">
-                  {e.role}
-                </dt>
-                <dd className="text-sm leading-relaxed text-fg-muted">{e.detail}</dd>
-              </div>
-            ))}
-          </dl>
+          <div className="mt-8 text-plate">
+            <dl className="grid gap-4 border-t border-border pt-6">
+              {experience.map((e) => (
+                <div key={e.role} className="grid gap-1 sm:grid-cols-[12rem_1fr] sm:gap-4">
+                  <dt className="font-display text-sm font-semibold tracking-tight text-fg">
+                    {e.role}
+                  </dt>
+                  <dd className="text-sm leading-relaxed text-fg-muted">{e.detail}</dd>
+                </div>
+              ))}
+            </dl>
 
-          <p className="mt-8 text-sm text-fg-muted">
-            A fuller story — and a downloadable CV — lands here soon.
-          </p>
+            <p className="mt-8 text-sm text-fg-muted">
+              A fuller story — and a downloadable CV — lands here soon.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Work */}
       <section id="work" className="mx-auto max-w-5xl px-6 py-20">
-        <div className="mb-10">
+        <div className="mb-10 text-plate inline-block">
           <MarkEyebrow>Selected work</MarkEyebrow>
           <h2 className="mt-2 font-display text-2xl font-bold tracking-tight">
             Builds &amp; case studies

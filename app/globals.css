@@ -17,31 +17,6 @@
   /* The node backdrop is the dense, glowing constellation mesh rendered in
      <Constellation /> (components/constellation.tsx), fixed behind content. */
 
-  /* ── Frosted reading band — keeps the central content column legible over
-     the grid. The grid stays crisp in the page margins; behind the content
-     it's veiled and softly blurred so text never fights the lines. Edges
-     feather into the gutters (no hard seam). Light theme needs a stronger
-     veil than dark, which already reads fine. ── */
-  body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(100%, 72rem);
-    z-index: -1;
-    pointer-events: none;
-    background-color: color-mix(in srgb, var(--color-bg) 80%, transparent);
-    -webkit-backdrop-filter: blur(3px);
-    backdrop-filter: blur(3px);
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
-  }
-  /* Dark already reads fine — a lighter veil keeps more of the blueprint. */
-  .dark body::after {
-    background-color: color-mix(in srgb, var(--color-bg) 50%, transparent);
-  }
   h1, h2, h3, h4 {
     @apply font-display tracking-tight;
   }
@@ -61,5 +36,48 @@
      Tailwind, so do it here with color-mix — follows light/dark automatically). */
   .bg-header {
     background-color: color-mix(in srgb, var(--color-bg) 82%, transparent);
+  }
+
+  /* ── Text plate — a soft frosted backdrop that sits *just behind text*, so
+     the constellation shows everywhere except directly under the words (not
+     whole sections). Feathered edges (radial mask) keep it from reading as a
+     hard card. Light theme needs a stronger veil; dark reads fine lighter. ── */
+  .text-plate {
+    position: relative;
+    isolation: isolate;
+  }
+  .text-plate::before {
+    content: "";
+    position: absolute;
+    inset: -0.5rem -1.1rem;
+    z-index: -1;
+    border-radius: 1.25rem;
+    background-color: color-mix(in srgb, var(--color-bg) 86%, transparent);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    -webkit-mask-image: radial-gradient(115% 130% at 50% 50%, #000 50%, transparent 100%);
+    mask-image: radial-gradient(115% 130% at 50% 50%, #000 50%, transparent 100%);
+  }
+  .dark .text-plate::before {
+    background-color: color-mix(in srgb, var(--color-bg) 64%, transparent);
+  }
+}
+
+/* Subtle life — nodes gently twinkle (staggered per node via inline timing).
+   Opacity-only, so it stays cheap; disabled for reduced-motion users. */
+@keyframes nodeTwinkle {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+.cnode {
+  animation-name: nodeTwinkle;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  will-change: opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cnode {
+    animation: none;
+    opacity: 0.85;
   }
 }
