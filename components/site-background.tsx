@@ -25,6 +25,15 @@ export function SiteBackground() {
         <source src="/bg-network.mp4" type="video/mp4" />
       </video>
 
+      {/* Dark theme, reduced-motion: the still instead of the video loop */}
+      <Image
+        src="/bg-network.png"
+        alt=""
+        fill
+        sizes="100vw"
+        className="site-bg-dark-still object-cover object-center"
+      />
+
       {/* Light theme: the light render (still) */}
       <Image
         src="/bg-network-light.png"

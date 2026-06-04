@@ -72,6 +72,12 @@
 :root.dark .site-bg-dark { display: block; }
 .site-bg-light { display: none; }
 :root:not(.dark) .site-bg-light { display: block; }
+/* Reduced-motion users: swap the dark video loop for the matching still. */
+.site-bg-dark-still { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  :root.dark .site-bg-dark { display: none; }
+  :root.dark .site-bg-dark-still { display: block; }
+}
 
 /* Subtle life — nodes gently twinkle (staggered per node via inline timing).
    Opacity-only, so it stays cheap; disabled for reduced-motion users. */
