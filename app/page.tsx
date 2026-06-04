@@ -43,11 +43,6 @@ export default function Home() {
     <>
       {/* Hero — the statement, the face, and what I bring, as one flow */}
       <section id="about" className="relative overflow-hidden border-b border-border">
-        {/* one confident green moment */}
-        <div
-          className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[42rem] -translate-x-1/2 rounded-full bg-green-brand/15 blur-[120px]"
-          aria-hidden
-        />
         <div className="mx-auto max-w-5xl px-6 py-20 sm:py-28">
           {/* Statement + face */}
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_17rem] lg:gap-16">

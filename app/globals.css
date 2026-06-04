@@ -49,18 +49,26 @@
   .text-plate::before {
     content: "";
     position: absolute;
-    inset: -0.5rem -1.1rem;
+    inset: -0.9rem -1.6rem;
     z-index: -1;
-    border-radius: 1.25rem;
-    background-color: color-mix(in srgb, var(--color-bg) 86%, transparent);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    -webkit-mask-image: radial-gradient(115% 130% at 50% 50%, #000 50%, transparent 100%);
-    mask-image: radial-gradient(115% 130% at 50% 50%, #000 50%, transparent 100%);
+    border-radius: 2rem;
+    background-color: color-mix(in srgb, var(--color-bg) 62%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    /* Feather hard from the centre out, so it dissolves into a soft blur with
+       no visible panel edge. */
+    -webkit-mask-image: radial-gradient(125% 150% at 50% 50%, #000 22%, transparent 92%);
+    mask-image: radial-gradient(125% 150% at 50% 50%, #000 22%, transparent 92%);
   }
   .dark .text-plate::before {
-    background-color: color-mix(in srgb, var(--color-bg) 64%, transparent);
+    background-color: color-mix(in srgb, var(--color-bg) 46%, transparent);
   }
+}
+
+/* The background image is a dark composition; in light theme fade it right
+   back so the page stays clean and bright. */
+html:not(.dark) .site-bg {
+  opacity: 0.12;
 }
 
 /* Subtle life — nodes gently twinkle (staggered per node via inline timing).
