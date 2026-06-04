@@ -14,27 +14,8 @@
     @apply bg-bg text-fg font-sans antialiased;
   }
 
-  /* ── Node-field backdrop — the work is plotted on a field of nodes, echoing
-     the mark (three connected nodes = a system). A modern dotted "tech" field
-     rather than graph-paper lines. Fixed behind all content, painted above the
-     body's solid bg but below it (negative z-index), so opaque cards sit on top
-     like components on a plan. Adaptive node colour (from the text token) keeps
-     contrast in both themes; brighter green "hub" nodes every 5th point add
-     depth, like the hubs of a network. ── */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -3;
-    pointer-events: none;
-    --node: color-mix(in srgb, var(--color-text-muted) 20%, transparent);
-    background-image: radial-gradient(circle, var(--node) 1.3px, transparent 1.8px);
-    background-size: 30px 30px;
-    /* Stays present down the whole page (it's fixed to the viewport); a gentle
-       top-bias keeps the hero strongest without ever fully disappearing. */
-    -webkit-mask-image: linear-gradient(to bottom, #000, color-mix(in srgb, #000 55%, transparent));
-    mask-image: linear-gradient(to bottom, #000, color-mix(in srgb, #000 55%, transparent));
-  }
+  /* The node backdrop is the dense, glowing constellation mesh rendered in
+     <Constellation /> (components/constellation.tsx), fixed behind content. */
 
   /* ── Frosted reading band — keeps the central content column legible over
      the grid. The grid stays crisp in the page margins; behind the content
