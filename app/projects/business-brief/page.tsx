@@ -53,7 +53,7 @@ const TOOLS: { name: string; does: string }[] = [
 
 export default function BusinessBriefCaseStudy() {
   return (
-    <article className="mx-auto max-w-3xl px-6 py-16">
+    <article className="mx-auto my-10 max-w-3xl rounded-2xl border border-border glass-card px-6 py-10 sm:px-10 sm:py-12">
       <Link href="/#work" className="font-mono text-xs text-fg-muted hover:text-accent">
         ← All work
       </Link>

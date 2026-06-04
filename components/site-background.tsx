@@ -22,7 +22,8 @@ export function SiteBackground() {
         playsInline
         poster="/bg-network.png"
       >
-        <source src="/bg-network.mp4" type="video/mp4" />
+        {/* ?v= busts the browser cache for the updated clip (valid on plain video) */}
+        <source src="/bg-network.mp4?v=3" type="video/mp4" />
       </video>
 
       {/* Dark theme, reduced-motion: the still instead of the video loop */}
@@ -34,9 +35,10 @@ export function SiteBackground() {
         className="site-bg-dark-still object-cover object-center"
       />
 
-      {/* Light theme: the light render (still) */}
+      {/* Light theme: the light render (still). Versioned filename busts cache
+          (next/image rejects query strings, so we rename instead). */}
       <Image
-        src="/bg-network-light.png"
+        src="/bg-network-light-v2.png"
         alt=""
         fill
         sizes="100vw"
