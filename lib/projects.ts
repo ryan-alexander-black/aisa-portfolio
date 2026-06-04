@@ -92,7 +92,7 @@ export const projects: Project[] = [
       { label: "Math by LLM", value: "0%" },
     ],
     summary:
-      "A personal decision-support system for a disciplined, rules-based investment (superannuation) strategy. It pulls live market and macro data, scores conditions against a fixed debt-cycle rulebook, tracks allocation gates and triggers, and surfaces it all on a dashboard with daily, weekly and monthly reports — replacing a manual ChatGPT-and-Excel routine. It recommends; the human decides — it never auto-trades.",
+      "A personal decision-support system for a disciplined, rules-based investment (superannuation) strategy. It pulls live market and macro data, scores conditions against a fixed debt-cycle rulebook, tracks allocation gates and triggers, and tracks whether the strategy is working (balance and returns over time) — all on a dashboard with daily, weekly and monthly reports, replacing a manual ChatGPT-and-Excel routine. It recommends; the human decides — it never auto-trades.",
     underHood: [
       "Every number the decision depends on is computed in plain Python, never by an AI — the old LLM workflow made ~6 moving-average errors in a single month",
       "The rulebook lives as versioned config (data, not code), so every strategy change is auditable",
@@ -115,12 +115,20 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "challenge-day-2",
-    title: "Challenge — Day 2",
-    tagline: "Day 2 of the 7-day AI build challenge.",
-    status: "planned",
-    stack: ["TBD"],
-    summary: "One build a day, shipped publicly. Coming as the challenge runs.",
+    slug: "business-brief",
+    title: "Business Brief Generator",
+    tagline: "Point it at a company's website → a branded, ready-to-read business brief.",
+    status: "shipped",
+    featured: true,
+    caseStudy: true,
+    stack: ["Firecrawl MCP", "Python", "Claude"],
+    summary:
+      "Give it a company's web address and it produces a complete brief on that business — what they do, how they're positioned, who they serve, their team, and their full visual identity (colours, fonts, logo) — then renders it as a clean, branded PDF. Built from public pages only, in about an hour. The preview is a real, anonymised run.",
+    underHood: [
+      "Reads the site with the Firecrawl MCP server — maps the pages, pulls the content, and auto-extracts the brand (colours, fonts, logo)",
+      "Two outputs from one research pass — a candid internal recon brief, or a warm client-facing version in your own brand",
+      "Renders to a styled PDF in code (headless browser), so the output is consistent every time",
+    ],
   },
   {
     slug: "challenge-day-3",
