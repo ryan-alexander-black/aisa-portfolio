@@ -38,7 +38,7 @@ export function SiteBackground() {
       {/* Light theme: the light render (still). Versioned filename busts cache
           (next/image rejects query strings, so we rename instead). */}
       <Image
-        src="/bg-network-light-v2.png"
+        src="/bg-network-light-v3.jpg"
         alt=""
         fill
         sizes="100vw"
