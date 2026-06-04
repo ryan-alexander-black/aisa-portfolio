@@ -61,7 +61,26 @@
     mask-image: radial-gradient(125% 150% at 50% 50%, #000 22%, transparent 92%);
   }
   .dark .text-plate::before {
-    background-color: color-mix(in srgb, var(--color-bg) 46%, transparent);
+    background-color: color-mix(in srgb, var(--color-bg) 60%, transparent);
+  }
+
+  /* Unified frosted "glass" box — every card/box shares this blur backdrop for
+     consistency, a touch darker so the video's bright signal line can't wash
+     out the contents. Replaces opaque bg-surface on cards. */
+  .glass-card {
+    background-color: color-mix(in srgb, var(--color-surface) 80%, transparent);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+  .dark .glass-card {
+    background-color: color-mix(in srgb, var(--color-bg) 68%, transparent);
+  }
+
+  /* Over the dark frosted boxes/plates, lift muted text toward white for
+     legibility (scoped via the inherited token, so light theme is untouched). */
+  .dark .glass-card,
+  .dark .text-plate {
+    --color-text-muted: #C8D5CE;
   }
 }
 
@@ -72,6 +91,9 @@
 :root.dark .site-bg-dark { display: block; }
 .site-bg-light { display: none; }
 :root:not(.dark) .site-bg-light { display: block; }
+/* Dark-theme veil that gently softens the video's bright signal line. */
+.site-scrim-dark { display: none; }
+:root.dark .site-scrim-dark { display: block; }
 /* Reduced-motion users: swap the dark video loop for the matching still. */
 .site-bg-dark-still { display: none; }
 @media (prefers-reduced-motion: reduce) {

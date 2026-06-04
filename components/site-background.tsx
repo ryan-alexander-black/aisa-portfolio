@@ -15,7 +15,7 @@ export function SiteBackground() {
     <div aria-hidden className="pointer-events-none fixed inset-0 z-[-2] overflow-hidden">
       {/* Dark theme: animated network (poster = the matching still) */}
       <video
-        className="site-bg-dark absolute inset-0 h-full w-full object-cover object-center"
+        className="site-bg-dark absolute inset-0 h-full w-full scale-105 object-cover object-center blur-[2px]"
         autoPlay
         loop
         muted
@@ -41,6 +41,12 @@ export function SiteBackground() {
         fill
         sizes="100vw"
         className="site-bg-light object-cover object-center"
+      />
+
+      {/* Dark theme: a gentle uniform veil to calm the video's bright signal line. */}
+      <div
+        className="site-scrim-dark absolute inset-0"
+        style={{ background: "color-mix(in srgb, var(--color-bg) 22%, transparent)" }}
       />
 
       {/* Feather the top and bottom into the solid bg (theme-aware). */}

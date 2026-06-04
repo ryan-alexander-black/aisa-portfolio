@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { projects, workGroups, getProject } from "@/lib/projects";
 import { ProjectCard } from "@/components/project-card";
-import { MarkEyebrow, NodeLabel, CornerTicks } from "@/components/blueprint";
+import { MarkEyebrow, NodeLabel } from "@/components/blueprint";
 
 const strengths = [
   {
@@ -68,7 +68,7 @@ export default function Home() {
                 </a>
                 <a
                   href="mailto:ryanalexanderblack@gmail.com"
-                  className="rounded-md border border-border px-5 py-2.5 font-medium text-fg transition-colors hover:border-green-brand/50"
+                  className="glass-card rounded-md border border-border px-5 py-2.5 font-medium text-fg transition-colors hover:border-green-brand/50"
                 >
                   Get in touch
                 </a>
@@ -78,10 +78,10 @@ export default function Home() {
             {/* The face */}
             <div className="relative order-first mx-auto w-44 sm:w-52 lg:order-none lg:mx-0 lg:w-full">
               <div
-                className="pointer-events-none absolute -inset-4 -z-10 rounded-2xl bg-green-brand/15 blur-[60px]"
+                className="pointer-events-none absolute -inset-4 -z-10 rounded-2xl bg-green-brand/25 blur-[60px]"
                 aria-hidden
               />
-              <div className="relative aspect-square overflow-hidden rounded-xl border border-border bg-surface">
+              <div className="relative aspect-square overflow-hidden rounded-xl border-2 border-green-brand/80 shadow-glow">
                 <Image
                   src="/ryan.jpg"
                   alt="Ryan Black"
@@ -91,14 +91,13 @@ export default function Home() {
                   priority
                 />
               </div>
-              <CornerTicks />
             </div>
           </div>
 
           {/* Flows straight into what that means in practice — no second "About" heading */}
           <div className="mt-16 grid gap-4 sm:mt-20 sm:grid-cols-3">
             {strengths.map((s) => (
-              <div key={s.label} className="rounded-lg border border-border bg-surface p-5">
+              <div key={s.label} className="glass-card rounded-lg border border-border p-5">
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">
                   {s.label}
                 </p>

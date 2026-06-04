@@ -34,7 +34,7 @@ export function ProjectCard({ project, large }: { project: Project; large?: bool
   if (large) {
     const inner = (
       <div
-        className={`group grid h-full gap-6 rounded-lg border border-border bg-surface p-6 transition-all sm:p-8 lg:grid-cols-2 lg:items-center ${
+        className={`group grid h-full gap-6 rounded-lg border border-border glass-card p-6 transition-all sm:p-8 lg:grid-cols-2 lg:items-center ${
           interactive ? "hover:border-green-brand/50 hover:shadow-glow" : "opacity-80"
         }`}
       >
@@ -111,7 +111,7 @@ export function ProjectCard({ project, large }: { project: Project; large?: bool
   //    case-study page it links to. ──
   const inner = (
     <div
-      className={`group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-surface transition-all ${
+      className={`group flex h-full flex-col overflow-hidden rounded-lg border border-border glass-card transition-all ${
         interactive ? "hover:border-green-brand/50 hover:shadow-glow" : "opacity-80"
       }`}
     >
