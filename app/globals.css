@@ -25,14 +25,11 @@
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: -3;
     pointer-events: none;
-    --node: color-mix(in srgb, var(--color-text-muted) 24%, transparent);
-    --node-hub: color-mix(in srgb, var(--color-accent) 42%, transparent);
-    background-image:
-      radial-gradient(circle, var(--node-hub) 1.7px, transparent 2.2px),
-      radial-gradient(circle, var(--node) 1.4px, transparent 1.9px);
-    background-size: 150px 150px, 30px 30px;
+    --node: color-mix(in srgb, var(--color-text-muted) 20%, transparent);
+    background-image: radial-gradient(circle, var(--node) 1.3px, transparent 1.8px);
+    background-size: 30px 30px;
     /* Stays present down the whole page (it's fixed to the viewport); a gentle
        top-bias keeps the hero strongest without ever fully disappearing. */
     -webkit-mask-image: linear-gradient(to bottom, #000, color-mix(in srgb, #000 55%, transparent));

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { Constellation } from "@/components/constellation";
 
 export const metadata: Metadata = {
   title: "Ryan Alexander Black — AI Solutions Architect",
@@ -39,6 +40,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-screen flex flex-col">
+        <Constellation />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />
