@@ -112,7 +112,7 @@ function Edge({
 export function SuperTrackerArchitecture() {
   return (
     <svg
-      viewBox="0 0 900 600"
+      viewBox="0 0 900 615"
       className="w-full"
       role="img"
       aria-label="Investment Strategy Engine system architecture diagram"
@@ -145,7 +145,7 @@ export function SuperTrackerArchitecture() {
 
       {/* ── The split: deterministic engine vs narrow LLM layer ── */}
       {/* Left — deterministic (solid green: the reliability guarantee) */}
-      <rect x={40} y={232} width={470} height={186} rx={14} fill={SURFACE} stroke={G} strokeWidth={1.5} />
+      <rect x={40} y={232} width={470} height={206} rx={14} fill={SURFACE} stroke={G} strokeWidth={1.5} />
       <text x={60} y={260} style={{ font: `700 14px ${DISPLAY}` }} fill={T}>
         Deterministic Python — the maths, exact
       </text>
@@ -158,6 +158,7 @@ export function SuperTrackerArchitecture() {
       <Chip x={285} y={326} w={205} label="vetoes · bubble / debt-cycle" />
       <Chip x={60} y={362} w={210} label="triggers · HY-spread / 50dMA" />
       <Chip x={285} y={362} w={205} label="cadence · daily/weekly/monthly" />
+      <Chip x={60} y={398} w={430} label="performance · balance & returns (never fabricated)" />
 
       {/* Right — narrow LLM (dashed muted: linguistic, never the numbers) */}
       <rect
@@ -186,27 +187,27 @@ export function SuperTrackerArchitecture() {
       {/* ── Persistence ── */}
       <Node
         x={250}
-        y={452}
+        y={462}
         w={400}
         h={52}
         title="SQLite — data/super.db"
-        sub="reports · gates · allocations · decisions · alerts"
+        sub="reports · gates · allocations · history · decisions"
       />
-      <Edge d="M275,418 L420,450" />
-      <Edge d="M715,418 L590,450" />
+      <Edge d="M275,438 L420,460" />
+      <Edge d="M715,418 L590,460" />
 
       {/* ── Serving ── */}
-      <Node x={150} y={530} w={250} h={50} title="FastAPI — api/" />
+      <Node x={150} y={540} w={250} h={50} title="FastAPI — api/" />
       <Node
         x={470}
-        y={530}
+        y={540}
         w={360}
         h={50}
         title="Next.js dashboard"
-        sub="position · gates · score history · chat"
+        sub="growth · position · gates · scores · chat"
       />
-      <Edge d="M400,504 L300,528" />
-      <Edge d="M400,555 L468,555" />
+      <Edge d="M400,514 L300,538" />
+      <Edge d="M400,565 L468,565" />
     </svg>
   );
 }

@@ -16,6 +16,7 @@ const STACK = [
   "FastAPI",
   "Next.js / TypeScript",
   "Anthropic Claude",
+  "react-markdown",
   "FRED + keyless EOD prices",
   "GitHub Actions cron",
   "Windows Task Scheduler",
@@ -27,6 +28,7 @@ const ENGINE: { name: string; does: string }[] = [
   { name: "Scoring", does: "daily (tiers 3/2/1) and weekly (4/2/1) scores with exact grade bands, straight from the rulebook" },
   { name: "Gates", does: "move-eligibility gates that can only change with cited evidence — no silent drift" },
   { name: "Triggers & vetoes", does: "auto-defensive triggers (HY-spread, 50dMA, VIX) and slow vetoes (RSI, StochRSI, bubble score, debt-cycle phase)" },
+  { name: "Growth & performance", does: "balance over time, since-launch and trailing returns, per-sleeve — and periods read “building…” until real history backs them, never a fabricated number" },
 ];
 
 // The LLM layer — narrow, linguistic, never producing a number.
@@ -103,7 +105,8 @@ export default function SuperTrackerCaseStudy() {
         to track it. It was slow, easy to get wrong, and impossible to audit. This replaced that
         with one system: it pulls live market and macro data, scores conditions against a fixed
         debt-cycle rulebook, tracks where my allocation can and can&apos;t move, and writes me a
-        daily, weekly and monthly report — all on a live dashboard.{" "}
+        daily, weekly and monthly report — all on a live dashboard. It also tracks whether the
+        strategy is actually working: balance over time, returns, and where each sleeve sits.{" "}
         <strong className="text-fg">It recommends; I decide.</strong> It never moves money on its own.
       </p>
 
@@ -194,10 +197,10 @@ export default function SuperTrackerCaseStudy() {
       </Section>
 
       {/* Engineering stories */}
-      <Section title="The four decisions worth talking about">
+      <Section title="The five decisions worth talking about">
         <p>
           The interesting work wasn&apos;t the dashboard — it was deciding what code owns versus what
-          the model owns, and making the whole thing reproducible. Four decisions carried most of the
+          the model owns, and making the whole thing reproducible. Five decisions carried most of the
           weight.
         </p>
       </Section>
@@ -267,6 +270,25 @@ export default function SuperTrackerCaseStudy() {
         </p>
       </Story>
 
+      <Story
+        n="05"
+        title="Closing the loop — and refusing to fabricate a number"
+        plain="Signals are only half of it; the real question is whether the strategy is working. So it now tracks the money — but only ever shows a figure it can actually back with data."
+      >
+        <p>
+          A new <strong className="text-fg">growth &amp; performance</strong> layer tracks balance
+          over time, since-launch and trailing returns, and each sleeve&apos;s return — computed from
+          logged snapshots, anchored to the latest snapshot rather than the wall clock so the numbers
+          stay consistent with the data. The detail that matters: a 3/6/12-month delta resolves to the
+          nearest snapshot <em>at or before</em> the cutoff, and if the logged history doesn&apos;t
+          reach back that far yet, the period returns <code className="font-mono text-[13px] text-accent">null</code>{" "}
+          and the dashboard reads <strong className="text-fg">&ldquo;building…&rdquo;</strong> — never a
+          guessed or interpolated figure. The same reliability boundary as the rest of the engine,
+          applied to performance: show the real number or show nothing. (Reports also moved to proper
+          markdown rendering, so the daily/weekly/monthly write-ups are readable, with a full scorecard.)
+        </p>
+      </Story>
+
       {/* Why this way */}
       <Section title="Why it's built this way">
         <p>
@@ -319,14 +341,16 @@ export default function SuperTrackerCaseStudy() {
   );
 }
 
-// One captioned screenshot per dashboard surface, rendered full-width at its
-// natural aspect so every label and number stays legible (the strips are wide).
-// The position dollar value in `dashboard.jpg` is masked — the app runs on real
-// financial data, so screenshots are redacted before they go on the public site.
-const SURFACES: { key: string; w: number; h: number; label: string }[] = [
-  { key: "dashboard", w: 1148, h: 311, label: "Dashboard — position, allocation & structural state" },
-  { key: "gates-scores", w: 1148, h: 375, label: "Move gates & recent daily / weekly scores" },
-  { key: "decisions-reports", w: 1105, h: 868, label: "Decisions log, parked items, reports & AI chat" },
+// One captioned screenshot per dashboard surface, rendered at its natural aspect
+// so every label and number stays legible. Wide strips go full-width; the portrait
+// report is capped so it stays crisp (never upscaled). Every real dollar figure —
+// the position value and the whole growth panel's balances — is masked before these
+// go public; the app runs on real financial data.
+const SURFACES: { key: string; w: number; h: number; label: string; narrow?: boolean }[] = [
+  { key: "dashboard", w: 1029, h: 544, label: "Dashboard — grades, position, structural state, gates & recent scores" },
+  { key: "growth", w: 1030, h: 322, label: "Growth & performance — balance, returns & per-sleeve (dollar figures masked)" },
+  { key: "decisions", w: 1029, h: 577, label: "Decisions log, parked items & AI insight chat" },
+  { key: "report", w: 685, h: 1080, label: "Daily report — markdown-rendered, with the full scorecard", narrow: true },
 ];
 
 function SurfaceGallery() {
@@ -344,8 +368,8 @@ function SurfaceGallery() {
               alt={s.label}
               width={s.w}
               height={s.h}
-              sizes="(min-width: 768px) 768px, 100vw"
-              className="h-auto w-full"
+              sizes={s.narrow ? "452px" : "(min-width: 768px) 768px, 100vw"}
+              className={s.narrow ? "mx-auto h-auto w-full max-w-[452px]" : "h-auto w-full"}
             />
             <figcaption className="border-t border-border px-3 py-2 font-mono text-[11px] text-fg-muted">
               {s.label}
