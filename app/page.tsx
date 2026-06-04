@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <>
       {/* Hero — the statement, the face, and what I bring, as one flow */}
-      <section id="about" className="relative overflow-hidden border-b border-border">
+      <section id="about" className="relative overflow-hidden">
         <div className="mx-auto max-w-5xl px-6 py-20 sm:py-28">
           {/* Statement + face */}
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_17rem] lg:gap-16">
@@ -107,7 +107,7 @@ export default function Home() {
           </div>
 
           <div className="mt-8 text-plate">
-            <dl className="grid gap-4 border-t border-border pt-6">
+            <dl className="grid gap-4 pt-6">
               {experience.map((e) => (
                 <div key={e.role} className="grid gap-1 sm:grid-cols-[12rem_1fr] sm:gap-4">
                   <dt className="font-display text-sm font-semibold tracking-tight text-fg">
