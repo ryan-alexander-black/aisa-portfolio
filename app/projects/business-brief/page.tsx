@@ -147,8 +147,8 @@ export default function BusinessBriefCaseStudy() {
           Six stages, each owned by whichever layer is right for the job — the read engine pulls the
           facts and the brand, the model does the synthesis, and code renders the document.
         </p>
-        <div className="mt-6 overflow-hidden rounded-lg border border-border">
-          <table className="w-full border-collapse text-left text-sm">
+        <div className="mt-6 overflow-x-auto rounded-lg border border-border">
+          <table className="w-full min-w-[34rem] border-collapse text-left text-sm">
             <thead>
               <tr className="bg-surface font-mono text-xs uppercase tracking-wider text-fg-muted">
                 <th className="px-4 py-3 font-medium">Stage</th>

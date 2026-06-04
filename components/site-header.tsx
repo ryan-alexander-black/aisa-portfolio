@@ -15,7 +15,7 @@ export function SiteHeader() {
             className="h-7 w-7"
             priority
           />
-          <span className="font-display text-base font-bold tracking-tight">
+          <span className="font-display text-sm font-bold tracking-tight sm:text-base">
             Ryan Alexander Black
           </span>
         </Link>

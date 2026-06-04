@@ -113,7 +113,7 @@ export function SuperTrackerArchitecture() {
   return (
     <svg
       viewBox="0 0 900 615"
-      className="w-full"
+      className="w-full min-w-[42rem] sm:min-w-0"
       role="img"
       aria-label="Investment Strategy Engine system architecture diagram"
     >

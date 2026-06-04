@@ -93,7 +93,7 @@ function Edge({
 
 export function OclaArchitecture() {
   return (
-    <svg viewBox="0 0 880 470" className="w-full" role="img" aria-label="OCLA system architecture diagram">
+    <svg viewBox="0 0 880 470" className="w-full min-w-[42rem] sm:min-w-0" role="img" aria-label="OCLA system architecture diagram">
       <defs>
         <marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
           <path d="M0,0 L8,3.5 L0,7 Z" fill={M} />

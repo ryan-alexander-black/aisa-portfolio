@@ -172,8 +172,8 @@ export default function NewsletterCaseStudy() {
           Seven stages, each owned by whichever layer is right for the job — reasoning where
           judgment matters, deterministic code where exactness matters.
         </p>
-        <div className="mt-6 overflow-hidden rounded-lg border border-border">
-          <table className="w-full border-collapse text-left text-sm">
+        <div className="mt-6 overflow-x-auto rounded-lg border border-border">
+          <table className="w-full min-w-[34rem] border-collapse text-left text-sm">
             <thead>
               <tr className="bg-surface font-mono text-xs uppercase tracking-wider text-fg-muted">
                 <th className="px-4 py-3 font-medium">Stage</th>

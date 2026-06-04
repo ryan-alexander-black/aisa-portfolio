@@ -113,7 +113,7 @@ export default function OclaCaseStudy() {
 
       {/* The proof — system map first (it's a private app), then the surfaces a coach uses. */}
       <figure className="mt-8">
-        <div className="overflow-hidden rounded-lg border border-border bg-surface p-4 sm:p-6">
+        <div className="overflow-x-auto rounded-lg border border-border bg-surface p-4 sm:p-6">
           <OclaArchitecture />
         </div>
         <figcaption className="mt-2 font-mono text-xs text-fg-muted">

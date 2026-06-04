@@ -49,7 +49,7 @@ export default function Home() {
             <div>
               <div className="text-plate">
                 <MarkEyebrow>AI Solutions Architect</MarkEyebrow>
-                <h1 className="mt-4 font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
+                <h1 className="mt-4 font-display text-[1.7rem] font-extrabold leading-[1.12] tracking-tight sm:text-5xl sm:leading-[1.05]">
                   I architect whole systems —{" "}
                   <span className="text-accent">and build them, end to end.</span>
                 </h1>
