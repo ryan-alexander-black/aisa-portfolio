@@ -65,11 +65,13 @@
   }
 }
 
-/* The background image is a dark composition; in light theme fade it right
-   back so the page stays clean and bright. */
-html:not(.dark) .site-bg {
-  opacity: 0.12;
-}
+/* Swap the background render by theme — dark network for dark, light network
+   for light (the dark image is invisible on a light page). The theme class is
+   always set on <html> before paint, so there's no flash. */
+.site-bg-dark { display: none; }
+:root.dark .site-bg-dark { display: block; }
+.site-bg-light { display: none; }
+:root:not(.dark) .site-bg-light { display: block; }
 
 /* Subtle life — nodes gently twinkle (staggered per node via inline timing).
    Opacity-only, so it stays cheap; disabled for reduced-motion users. */
