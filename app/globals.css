@@ -39,6 +39,32 @@
     -webkit-mask-image: linear-gradient(to bottom, #000, color-mix(in srgb, #000 55%, transparent));
     mask-image: linear-gradient(to bottom, #000, color-mix(in srgb, #000 55%, transparent));
   }
+
+  /* ── Frosted reading band — keeps the central content column legible over
+     the grid. The grid stays crisp in the page margins; behind the content
+     it's veiled and softly blurred so text never fights the lines. Edges
+     feather into the gutters (no hard seam). Light theme needs a stronger
+     veil than dark, which already reads fine. ── */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100%, 72rem);
+    z-index: -1;
+    pointer-events: none;
+    background-color: color-mix(in srgb, var(--color-bg) 80%, transparent);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+  }
+  /* Dark already reads fine — a lighter veil keeps more of the blueprint. */
+  .dark body::after {
+    background-color: color-mix(in srgb, var(--color-bg) 50%, transparent);
+  }
   h1, h2, h3, h4 {
     @apply font-display tracking-tight;
   }
