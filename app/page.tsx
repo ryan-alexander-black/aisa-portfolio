@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { projects, workGroups, getProject } from "@/lib/projects";
 import { ProjectCard } from "@/components/project-card";
+import { MarkEyebrow, NodeLabel, CornerTicks } from "@/components/blueprint";
 
 const strengths = [
   {
@@ -51,7 +52,7 @@ export default function Home() {
           {/* Statement + face */}
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_17rem] lg:gap-16">
             <div>
-              <p className="eyebrow">AI Solutions Architect</p>
+              <MarkEyebrow>AI Solutions Architect</MarkEyebrow>
               <h1 className="mt-4 font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
                 I architect whole systems —{" "}
                 <span className="text-accent">and build them, end to end.</span>
@@ -93,6 +94,7 @@ export default function Home() {
                   priority
                 />
               </div>
+              <CornerTicks />
             </div>
           </div>
 
@@ -128,7 +130,7 @@ export default function Home() {
       {/* Work */}
       <section id="work" className="mx-auto max-w-5xl px-6 py-20">
         <div className="mb-10">
-          <p className="eyebrow">Selected work</p>
+          <MarkEyebrow>Selected work</MarkEyebrow>
           <h2 className="mt-2 font-display text-2xl font-bold tracking-tight">
             Builds &amp; case studies
           </h2>
@@ -143,13 +145,13 @@ export default function Home() {
 
         {/* Everything else — grouped, in layers of two */}
         <div className="space-y-12">
-          {workGroups.map((group) => {
+          {workGroups.map((group, i) => {
             const items = group.slugs.map(getProject).filter(Boolean);
             if (items.length === 0) return null;
             return (
               <div key={group.label}>
-                <p className="eyebrow mb-4">{group.label}</p>
-                <div className="grid gap-5 sm:grid-cols-2">
+                <NodeLabel index={String(i + 1).padStart(2, "0")}>{group.label}</NodeLabel>
+                <div className="mt-4 grid gap-5 sm:grid-cols-2">
                   {items.map((p) => (
                     <ProjectCard key={p!.slug} project={p!} />
                   ))}

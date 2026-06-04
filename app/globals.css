@@ -13,6 +13,32 @@
   body {
     @apply bg-bg text-fg font-sans antialiased;
   }
+
+  /* ── "Blueprint" backdrop — a faint schematic grid the work is plotted on.
+     Fixed behind all content, painted above the body's solid bg but below it
+     (negative z-index), so opaque cards sit on top like components on a plan.
+     Built from the border token, so it follows the light/dark toggle. A fine
+     34px grid + a stronger major line every 5 cells, masked so it reads as an
+     intentional backdrop rather than flat tiling. ── */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    --grid-line: color-mix(in srgb, var(--color-border) 50%, transparent);
+    --grid-major: color-mix(in srgb, var(--color-accent) 22%, transparent);
+    background-image:
+      linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 170px 170px, 170px 170px, 34px 34px, 34px 34px;
+    /* Stays present down the whole page (it's fixed to the viewport); a gentle
+       top-bias keeps the hero strongest without ever fully disappearing. */
+    -webkit-mask-image: linear-gradient(to bottom, #000, color-mix(in srgb, #000 55%, transparent));
+    mask-image: linear-gradient(to bottom, #000, color-mix(in srgb, #000 55%, transparent));
+  }
   h1, h2, h3, h4 {
     @apply font-display tracking-tight;
   }
