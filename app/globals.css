@@ -94,11 +94,14 @@
 /* Dark-theme veil that gently softens the video's bright signal line. */
 .site-scrim-dark { display: none; }
 :root.dark .site-scrim-dark { display: block; }
-/* Reduced-motion users: swap the dark video loop for the matching still. */
+/* Reduced-motion users: swap each video loop for its matching still. */
 .site-bg-dark-still { display: none; }
+.site-bg-light-still { display: none; }
 @media (prefers-reduced-motion: reduce) {
   :root.dark .site-bg-dark { display: none; }
   :root.dark .site-bg-dark-still { display: block; }
+  :root:not(.dark) .site-bg-light { display: none; }
+  :root:not(.dark) .site-bg-light-still { display: block; }
 }
 
 /* Subtle life — nodes gently twinkle (staggered per node via inline timing).

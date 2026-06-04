@@ -35,14 +35,25 @@ export function SiteBackground() {
         className="site-bg-dark-still object-cover object-center"
       />
 
-      {/* Light theme: the light render (still). Versioned filename busts cache
-          (next/image rejects query strings, so we rename instead). */}
+      {/* Light theme: animated 3D glass network (poster = the matching still) */}
+      <video
+        className="site-bg-light absolute inset-0 h-full w-full scale-105 object-cover object-center blur-[2px]"
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster="/bg-network-light-v3.jpg"
+      >
+        <source src="/bg-network-light.mp4?v=1" type="video/mp4" />
+      </video>
+
+      {/* Light theme, reduced-motion: the still instead of the video loop */}
       <Image
         src="/bg-network-light-v3.jpg"
         alt=""
         fill
         sizes="100vw"
-        className="site-bg-light object-cover object-center"
+        className="site-bg-light-still object-cover object-center"
       />
 
       {/* Dark theme: a gentle uniform veil to calm the video's bright signal line. */}
