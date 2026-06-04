@@ -14,7 +14,6 @@ export function ProjectCard({ project, large }: { project: Project; large?: bool
     caseStudy,
     liveUrl,
     exampleUrl,
-    underHood,
     metrics,
     cover,
   } = project;
@@ -107,44 +106,48 @@ export function ProjectCard({ project, large }: { project: Project; large?: bool
     );
   }
 
-  // ── Standard card ──
+  // ── Standard card — image-led, light on text. The card sells the click;
+  //    the full story (summary, the under-the-hood detail) lives on the
+  //    case-study page it links to. ──
   const inner = (
     <div
-      className={`group flex h-full flex-col rounded-lg border border-border bg-surface p-6 transition-all ${
+      className={`group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-surface transition-all ${
         interactive ? "hover:border-green-brand/50 hover:shadow-glow" : "opacity-80"
       }`}
     >
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <StatusBadge status={status} />
-        {interactive && (
-          <span className="text-fg-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent">
-            →
-          </span>
+      {/* Cover */}
+      <div className="relative aspect-[16/10] overflow-hidden border-b border-border bg-bg">
+        {cover ? (
+          <Image
+            src={cover}
+            alt={`${title} — preview`}
+            fill
+            sizes="(min-width: 640px) 50vw, 100vw"
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center bg-gradient-to-br from-green-brand/15 to-transparent">
+            <Image src="/brand/logo-mark.svg" alt="" width={48} height={48} className="opacity-70" />
+          </div>
         )}
+        <div className="absolute left-3 top-3 rounded-md bg-bg/70 px-0.5 backdrop-blur-sm">
+          <StatusBadge status={status} />
+        </div>
       </div>
 
-      <h3 className="font-display text-lg font-bold tracking-tight">{title}</h3>
-      <p className="mt-1 text-sm text-accent">{tagline}</p>
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-fg-muted">{summary}</p>
+      {/* Copy — kept deliberately short */}
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="font-display text-lg font-bold tracking-tight">{title}</h3>
+          {interactive && (
+            <span className="mt-1 shrink-0 text-fg-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent">
+              →
+            </span>
+          )}
+        </div>
+        <p className="mt-1.5 flex-1 text-sm leading-snug text-accent">{tagline}</p>
 
-      {/* Technical layer — labelled so non-technical readers know they can skip it. */}
-      <div className="mt-5 border-t border-border pt-4">
-        {underHood && (
-          <>
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-muted">
-              Under the hood
-            </p>
-            <ul className="mt-2 space-y-1.5">
-              {underHood.map((point) => (
-                <li key={point} className="flex gap-2 text-[13px] leading-snug text-fg-muted">
-                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-        <ul className={`flex flex-wrap gap-1.5 ${underHood ? "mt-3" : ""}`}>
+        <ul className="mt-4 flex flex-wrap gap-1.5">
           {stack.map((tech) => (
             <li
               key={tech}
@@ -154,9 +157,9 @@ export function ProjectCard({ project, large }: { project: Project; large?: bool
             </li>
           ))}
         </ul>
-      </div>
 
-      <div className="mt-5 font-mono text-xs">{cta}</div>
+        <div className="mt-4 font-mono text-xs">{cta}</div>
+      </div>
     </div>
   );
 

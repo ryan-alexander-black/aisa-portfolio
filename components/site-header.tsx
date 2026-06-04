@@ -20,6 +20,9 @@ export function SiteHeader() {
           </span>
         </Link>
         <nav className="flex items-center gap-3 text-sm sm:gap-6">
+          <Link href="/#about" className="text-fg-muted transition-colors hover:text-fg">
+            About
+          </Link>
           <Link href="/#work" className="text-fg-muted transition-colors hover:text-fg">
             Work
           </Link>

@@ -67,6 +67,7 @@ export const projects: Project[] = [
     featured: true,
     caseStudy: true,
     stack: ["Python", "Perplexity", "Claude"],
+    cover: "/projects/newsletter/preview.png",
     exampleUrl: "/projects/newsletter/example/signal-over-noise-01.html",
     summary:
       "Give it a topic and it produces a finished newsletter — researched with real sources, written in a set brand voice, with accurate charts and a header image, then checked and sent. The card below links to a real issue it produced.",
@@ -85,6 +86,7 @@ export const projects: Project[] = [
     featured: true,
     caseStudy: true,
     stack: ["Python", "SQLite", "FastAPI", "Next.js", "Claude API"],
+    cover: "/projects/super-tracker/dashboard.jpg",
     metrics: [
       { label: "Golden tests", value: "22" },
       { label: "Report cadences", value: "3" },
@@ -122,6 +124,7 @@ export const projects: Project[] = [
     featured: true,
     caseStudy: true,
     stack: ["Firecrawl MCP", "Python", "Claude"],
+    cover: "/projects/business-brief/preview.png",
     summary:
       "Give it a company's web address and it produces a complete brief on that business — what they do, how they're positioned, who they serve, their team, and their full visual identity (colours, fonts, logo) — then renders it as a clean, branded PDF. Built from public pages only, in about an hour. The preview is a real, anonymised run.",
     underHood: [
@@ -177,6 +180,36 @@ export const projects: Project[] = [
     status: "planned",
     stack: ["TBD"],
     summary: "A personal build in the running domain — concept and scope being defined.",
+  },
+];
+
+// How the non-flagship builds are grouped on the home page — rendered as
+// "layers of 2" beneath the OCLA spotlight. Edit the slug lists (or add a
+// group) to re-arrange as more case studies land; the page reads this order.
+export interface WorkGroup {
+  label: string; // small eyebrow above the pair
+  slugs: string[]; // projects in this group, in display order
+}
+
+export const workGroups: WorkGroup[] = [
+  {
+    label: "Systems & engines",
+    slugs: ["super-tracker", "tfs-creative-suite"],
+  },
+  {
+    label: "Automation pipelines",
+    slugs: ["newsletter", "business-brief"],
+  },
+  {
+    label: "Coming soon",
+    slugs: [
+      "challenge-day-3",
+      "challenge-day-4",
+      "challenge-day-5",
+      "challenge-day-6",
+      "challenge-day-7",
+      "marathon-plan",
+    ],
   },
 ];
 

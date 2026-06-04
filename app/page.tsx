@@ -1,54 +1,127 @@
 import Image from "next/image";
-import { projects } from "@/lib/projects";
+import { projects, workGroups, getProject } from "@/lib/projects";
 import { ProjectCard } from "@/components/project-card";
+
+const strengths = [
+  {
+    label: "Whole-system thinking",
+    body: "I see how every piece of a business fits — and design how the parts flow together, not just one screen.",
+  },
+  {
+    label: "Business-strong builder",
+    body: "Years of running the operation give me the context most builders lack: I build for the outcome, not the demo.",
+  },
+  {
+    label: "AI-native & fast",
+    body: "I take products idea → live with AI-assisted tools, learning whatever the build needs as I go.",
+  },
+];
+
+const experience = [
+  {
+    role: "Operations & delivery",
+    detail:
+      "Ran production and installation for a signage company — ~$250k/month, 30+ concurrent projects, a team of 5–6.",
+  },
+  {
+    role: "Founder & builder",
+    detail:
+      "~6–7 years running my own businesses; now building AI software full-time. Flagship is the OCLA web app — built solo, live with paying users.",
+  },
+  {
+    role: "Consultative sales",
+    detail:
+      "Closed $3–5k offers as a consultative seller — the stakeholder and communication edge that client-facing architecture work runs on.",
+  },
+];
 
 export default function Home() {
   const spotlight = projects.find((p) => p.featuredLarge);
-  const featured = projects.filter((p) => p.featured && !p.featuredLarge);
-  const rest = projects.filter((p) => !p.featured);
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border">
+      {/* Hero — the statement, the face, and what I bring, as one flow */}
+      <section id="about" className="relative overflow-hidden border-b border-border">
         {/* one confident green moment */}
         <div
           className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[42rem] -translate-x-1/2 rounded-full bg-green-brand/15 blur-[120px]"
           aria-hidden
         />
-        <div className="mx-auto max-w-5xl px-6 py-24 sm:py-32">
-          <Image
-            src="/brand/logo-mark.svg"
-            alt=""
-            width={48}
-            height={48}
-            className="mb-8 h-12 w-12"
-            priority
-          />
-          <p className="eyebrow">AI Solutions Architect — in the making</p>
-          <h1 className="mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
-            I architect whole systems —{" "}
-            <span className="text-accent">and build them, end to end.</span>
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-fg-muted">
-            Business-strong builder turning ideas into working AI software. I take products
-            from idea to live — designing how every piece flows together, then shipping it.
-            Below are selected builds, each with the problem it solved and the stack behind it.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <a
-              href="#work"
-              className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90"
-            >
-              See the work
-            </a>
-            <a
-              href="mailto:ryanalexanderblack@gmail.com"
-              className="rounded-md border border-border px-5 py-2.5 font-medium text-fg transition-colors hover:border-green-brand/50"
-            >
-              Get in touch
-            </a>
+        <div className="mx-auto max-w-5xl px-6 py-20 sm:py-28">
+          {/* Statement + face */}
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_17rem] lg:gap-16">
+            <div>
+              <p className="eyebrow">AI Solutions Architect</p>
+              <h1 className="mt-4 font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
+                I architect whole systems —{" "}
+                <span className="text-accent">and build them, end to end.</span>
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-fg-muted">
+                I&apos;m Ryan. I take AI products from idea to live — designing how every piece fits
+                together, then building it. After ~6–7 years running my own businesses, I understand
+                the whole system, not just the code — the join most builders miss.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <a
+                  href="#work"
+                  className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90"
+                >
+                  See the work
+                </a>
+                <a
+                  href="mailto:ryanalexanderblack@gmail.com"
+                  className="rounded-md border border-border px-5 py-2.5 font-medium text-fg transition-colors hover:border-green-brand/50"
+                >
+                  Get in touch
+                </a>
+              </div>
+            </div>
+
+            {/* The face */}
+            <div className="relative order-first mx-auto w-44 sm:w-52 lg:order-none lg:mx-0 lg:w-full">
+              <div
+                className="pointer-events-none absolute -inset-4 -z-10 rounded-2xl bg-green-brand/15 blur-[60px]"
+                aria-hidden
+              />
+              <div className="relative aspect-square overflow-hidden rounded-xl border border-border bg-surface">
+                <Image
+                  src="/ryan.jpg"
+                  alt="Ryan Black"
+                  fill
+                  sizes="(min-width: 1024px) 17rem, (min-width: 640px) 13rem, 11rem"
+                  className="object-cover object-top"
+                  priority
+                />
+              </div>
+            </div>
           </div>
+
+          {/* Flows straight into what that means in practice — no second "About" heading */}
+          <div className="mt-16 grid gap-4 sm:mt-20 sm:grid-cols-3">
+            {strengths.map((s) => (
+              <div key={s.label} className="rounded-lg border border-border bg-surface p-5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">
+                  {s.label}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-fg-muted">{s.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <dl className="mt-8 grid gap-4 border-t border-border pt-6">
+            {experience.map((e) => (
+              <div key={e.role} className="grid gap-1 sm:grid-cols-[12rem_1fr] sm:gap-4">
+                <dt className="font-display text-sm font-semibold tracking-tight text-fg">
+                  {e.role}
+                </dt>
+                <dd className="text-sm leading-relaxed text-fg-muted">{e.detail}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <p className="mt-8 text-sm text-fg-muted">
+            A fuller story — and a downloadable CV — lands here soon.
+          </p>
         </div>
       </section>
 
@@ -61,25 +134,29 @@ export default function Home() {
           </h2>
         </div>
 
-        {/* Spotlight — the centrepiece, full width above the grid */}
+        {/* Spotlight — the centrepiece, full width above the pairs */}
         {spotlight && (
-          <div className="mb-5">
+          <div className="mb-12">
             <ProjectCard project={spotlight} large />
           </div>
         )}
 
-        {/* Featured */}
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
-          ))}
-        </div>
-
-        {/* Everything else */}
-        <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {rest.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
-          ))}
+        {/* Everything else — grouped, in layers of two */}
+        <div className="space-y-12">
+          {workGroups.map((group) => {
+            const items = group.slugs.map(getProject).filter(Boolean);
+            if (items.length === 0) return null;
+            return (
+              <div key={group.label}>
+                <p className="eyebrow mb-4">{group.label}</p>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {items.map((p) => (
+                    <ProjectCard key={p!.slug} project={p!} />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
     </>
