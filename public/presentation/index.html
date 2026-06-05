@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/presentation/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Let AI Do the Boring Bits — Ryan Alexander Black</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF; --surface:#F5F8F6; --elevated:#FFFFFF;
+    --text:#0A0F0D; --ink600:#2A3530; --muted:#5C6B64; --faint:#9FB0A8;
+    --green:#11D38B; --deep:#047857; --bright:#2EE6A6;
+    --border:#E6EBE8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow:hidden}
+  body{position:fixed;inset:0}
+
+  .slide{position:absolute;inset:0;display:none;opacity:0;transition:opacity .35s ease}
+  .slide.active{display:flex;opacity:1}
+
+  /* ---------- shared text atoms ---------- */
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:clamp(11px,1.05vw,14px);
+    letter-spacing:.18em;text-transform:uppercase;color:var(--deep);margin-bottom:clamp(14px,2.4vh,26px)}
+  h1{font-family:'Sora',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.03;
+     font-size:clamp(40px,7vw,100px)}
+  h2{font-family:'Sora',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.06;
+     font-size:clamp(28px,4.4vw,60px)}
+  .sub{font-size:clamp(16px,2vw,28px);color:var(--muted);margin-top:clamp(12px,2.2vh,26px);
+       font-weight:400;line-height:1.35;max-width:26ch}
+  .accent{color:var(--deep)} .green{color:var(--green)}
+  em{font-style:italic}
+
+  /* detailed speaker-prompt list */
+  .cues{margin-top:clamp(14px,2.2vh,26px);display:flex;flex-direction:column;gap:clamp(8px,1.2vh,14px);max-width:66ch}
+  .cues li{list-style:none;font-size:clamp(15px,1.5vw,21px);color:var(--ink600);
+           position:relative;padding-left:22px;line-height:1.4}
+  .cues li::before{content:"";position:absolute;left:0;top:.52em;width:7px;height:7px;border-radius:2px;background:var(--green)}
+  .cues b{color:var(--text);font-weight:600}
+
+  .oneliner{margin-top:clamp(14px,2.2vh,24px);padding-left:18px;border-left:3px solid var(--green);
+    font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(16px,1.7vw,23px);color:var(--text);
+    line-height:1.28;max-width:48ch}
+
+  /* ---------- layouts ---------- */
+  .pad{padding:7.5vh 8vw}
+  .center{flex-direction:column;justify-content:center}
+  .cols{display:grid;grid-template-columns:1fr auto;gap:clamp(30px,4vw,60px);align-items:stretch}
+  .cols>*{min-width:0;min-height:0}
+  .cols .txt{display:flex;flex-direction:column;justify-content:center}
+  .cols h2{font-size:clamp(27px,3.4vw,46px)}
+  .imgpanel{height:100%;width:auto;min-width:0;min-height:0;align-self:stretch;object-fit:cover;border-radius:18px;
+    border:1px solid var(--border);box-shadow:0 18px 50px -24px rgba(10,15,13,.35)}
+
+  /* faint node-mark watermark (light) */
+  .wm::after{content:"";position:absolute;top:5.5vh;right:6.5vw;width:46px;height:46px;opacity:.95;
+    background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='none' stroke='%2311D38B' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'><path d='M18 84 L50 16'/><path d='M82 84 L50 16'/></g><g fill='%2311D38B'><circle cx='50' cy='16' r='9'/><circle cx='18' cy='84' r='9'/><circle cx='82' cy='84' r='9'/></g></svg>") no-repeat center/contain;pointer-events:none}
+
+  /* full-bleed image slides */
+  .bleed{align-items:center}
+  .bleed .bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+  .bleed .scrim{position:absolute;inset:0;z-index:1;
+    background:linear-gradient(100deg, #fff 30%, rgba(255,255,255,.82) 46%, rgba(255,255,255,0) 70%)}
+  .bleed .panel{position:relative;z-index:2;padding:7vh 8vw;max-width:62%}
+
+  /* mark */
+  .mark{width:clamp(50px,6.5vw,80px);height:auto;margin-bottom:clamp(20px,3.4vh,40px)}
+  .byline{margin-top:clamp(24px,4.4vh,48px);font-family:'JetBrains Mono',monospace;
+          font-size:clamp(11px,1.1vw,15px);letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+  .byline b{color:var(--text);font-weight:500}
+
+  /* question slides */
+  .q-note{margin-top:clamp(16px,2.6vh,30px);font-family:'JetBrains Mono',monospace;
+    font-size:clamp(12px,1.25vw,17px);color:var(--faint);line-height:1.4;max-width:40ch}
+  .q-tag{font-family:'JetBrains Mono',monospace;color:var(--deep);font-size:clamp(11px,1.1vw,15px);
+    letter-spacing:.18em;text-transform:uppercase;margin-bottom:clamp(18px,3vh,34px)}
+
+  .rung-no{font-family:'JetBrains Mono',monospace;color:var(--muted);
+           font-size:clamp(12px,1.2vw,17px);letter-spacing:.08em;margin-bottom:12px}
+  .rung-no b{color:var(--deep);font-weight:500}
+
+  .quote{font-family:'Sora',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.12;
+         font-size:clamp(28px,4.6vw,64px);max-width:17ch}
+
+  /* CTA */
+  .cta-row{display:flex;align-items:center;gap:clamp(26px,4vw,60px);margin-top:clamp(20px,3.2vh,40px);flex-wrap:wrap}
+  .qr{flex:none;width:clamp(140px,15vw,200px);aspect-ratio:1;border:2px dashed var(--faint);
+      border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;
+      font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--faint);padding:16px;background:var(--surface)}
+
+  /* chrome */
+  .chrome{position:fixed;left:0;right:0;bottom:0;height:4px;background:var(--border);z-index:30}
+  .bar{height:100%;background:linear-gradient(90deg,var(--green),var(--deep));width:0;transition:width .35s ease}
+  .counter{position:fixed;bottom:14px;right:18px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--faint);z-index:30;letter-spacing:.1em}
+  .hint{position:fixed;bottom:14px;left:18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);z-index:30;letter-spacing:.06em;opacity:.7}
+</style>
+</head>
+<body>
+
+<!-- 1 · TITLE (bleed) -->
+<section class="slide bleed active">
+  <div class="bg" style="background-image:url('assets/chain-c.png')"></div>
+  <div class="scrim"></div>
+  <div class="panel">
+    <svg class="mark" viewBox="0 0 100 100" aria-label="AISA mark">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2EE6A6"/><stop offset="1" stop-color="#11D38B"/></linearGradient></defs>
+      <g fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 84 L50 16"/><path d="M82 84 L50 16"/><path d="M30.2 58 L69.8 58"/></g>
+      <g fill="url(#g)"><circle cx="50" cy="16" r="9"/><circle cx="18" cy="84" r="9"/><circle cx="82" cy="84" r="9"/></g>
+    </svg>
+    <h1>Let AI do the<br><span class="accent">boring bits.</span></h1>
+    <p class="sub" style="max-width:32ch">…so you've got time for the rest.</p>
+    <p class="byline"><b>Ryan Alexander Black</b> &nbsp;·&nbsp; AI Solutions Architect</p>
+  </div>
+</section>
+
+<!-- 2 · Q1 -->
+<section class="slide pad center wm">
+  <div class="q-tag">Quick show of hands</div>
+  <h2>Put your hand up if you<br>know <span class="accent">what AI is.</span></h2>
+</section>
+
+<!-- 3 · Q2 -->
+<section class="slide pad center wm">
+  <div class="q-tag">Quick show of hands</div>
+  <h2>Put your hand up if you<br><span class="accent">use it</span> every day.</h2>
+</section>
+
+<!-- 4 · Q3 -->
+<section class="slide pad center wm">
+  <div class="q-tag">Quick show of hands</div>
+  <h2>Put your hand up if you know you <span class="accent">should</span>…<br>but don't really know where to start, or how to use it for your business.</h2>
+</section>
+
+<!-- 5 · REFRAME (cols) -->
+<section class="slide pad cols">
+  <div class="txt">
+    <div class="kicker">01 · The big idea</div>
+    <h2>This isn't about<br>doing <span class="accent">more.</span></h2>
+    <ul class="cues">
+      <li>Yes, AI can help you do <b>more</b> — but for most of us, the best place to start is doing <b>less</b>.</li>
+      <li>It quietly takes the dull, repetitive, time-sucking work off your plate.</li>
+      <li>The admin, the typing, the chasing — it hands that <b>time back to you</b>.</li>
+      <li>And that time goes to what matters: your customers, growing the business, happier staff, and your life outside work.</li>
+    </ul>
+    <p class="oneliner">Less of the boring stuff means more time for the rest of your life.</p>
+  </div>
+  <img class="imgpanel" src="assets/s5-time.png" alt="">
+</section>
+
+<!-- 6 · WHAT AI IS (cols) -->
+<section class="slide pad cols">
+  <div class="txt">
+    <div class="kicker">02 · What it actually is</div>
+    <h2>A tireless<br><span class="accent">assistant.</span></h2>
+    <ul class="cues">
+      <li>Think of it as an assistant that's read more than anyone alive, never gets tired, and <b>works for a few dollars a week</b>.</li>
+      <li>It can't run your business and it has no real judgement — but it's <b>brilliant at the boring 80%</b>.</li>
+      <li>It's the thing that drafts the email, turns a voice memo into a quote, or answers the same question at 11pm.</li>
+      <li>And if you're not a computer person, <b>that's exactly who it's for</b> — you just talk to it in plain English, like sending a text.</li>
+    </ul>
+  </div>
+  <img class="imgpanel" src="assets/s6-assistant.png" alt="">
+</section>
+
+<!-- 7 · JOBS Q (center) -->
+<section class="slide pad center wm">
+  <div class="kicker">03 · The honest bit</div>
+  <h2>Is it coming<br>for <span class="accent">jobs?</span></h2>
+  <ul class="cues">
+    <li>The honest answer is <b>yes — some</b>.</li>
+    <li>The roles most exposed are the ones that are <b>mostly repetitive screen-work</b> — admin, data entry, basic processing.</li>
+    <li>But that's only half the story…</li>
+  </ul>
+</section>
+
+<!-- 8 · REINS (cols) -->
+<section class="slide pad cols">
+  <div class="txt">
+    <div class="kicker">03 · …but here's what matters</div>
+    <h2>It can't run<br><span class="accent">without you.</span></h2>
+    <ul class="cues">
+      <li>It has no judgement, no accountability, and it doesn't really understand your business.</li>
+      <li>It's an <b>assistant and a partner</b> — it always needs a human holding the reins.</li>
+      <li>So the lesson isn't to be afraid; it's to <b>be the one holding the reins</b>.</li>
+      <li>If your role has a lot of repetitive work, become the person who uses AI brilliantly — that makes you <b>more valuable, not less</b>.</li>
+    </ul>
+    <p class="oneliner">AI won't replace you — but a person using it might replace someone who won't. So be the one who uses it.</p>
+  </div>
+  <img class="imgpanel" src="assets/s8-partner.png" alt="">
+</section>
+
+<!-- 9 · LADDER INTRO (center) -->
+<section class="slide pad center wm">
+  <div class="kicker">04 · What can it actually do?</div>
+  <h2>Let's climb<br>a <span class="accent">ladder.</span></h2>
+  <ul class="cues">
+    <li>It runs from "<b>anyone could do this tonight</b>" all the way up to "<b>wait, it can do <em>that?</em></b>".</li>
+    <li>You don't need the top rung — but it's worth seeing how far it goes.</li>
+  </ul>
+</section>
+
+<!-- 10 · RUNG 1 (cols) -->
+<section class="slide pad cols">
+  <div class="txt">
+    <div class="rung-no"><b>RUNG 1</b> — anyone, today</div>
+    <h2>Write <span class="accent">anything.</span></h2>
+    <ul class="cues">
+      <li>You <b>never have to start from a blank page</b> again.</li>
+      <li>The quote follow-up, the "closed Monday" notice, the reply you've been dreading — all drafted in about five seconds.</li>
+      <li>Then you just <b>edit the draft</b>, which is far faster than starting cold, and it still sounds like you.</li>
+      <li>It's free to try — ChatGPT, Claude or Gemini; just pick one.</li>
+    </ul>
+  </div>
+  <img class="imgpanel" src="assets/s10-write.png" alt="">
+</section>
+
+<!-- 11 · RUNG 2 (cols) -->
+<section class="slide pad cols">
+  <div class="txt">
+    <div class="rung-no"><b>RUNG 2</b> — a step up</div>
+    <h2>Tidy <span class="accent">anything.</span></h2>
+    <ul class="cues">
+      <li>It doesn't just write — it takes a <b>mess</b> and hands you back something <b>clean</b>.</li>
+      <li>Ramble a <b>voice memo</b> while you're driving and it becomes a tidy, professional message.</li>
+      <li>Snap a photo of your <b>scribbled job notes</b> and it becomes a typed checklist for the team.</li>
+      <li>Drop in a long, painful <b>email thread</b> and it comes back as a three-line summary.</li>
+    </ul>
+  </div>
+  <img class="imgpanel" src="assets/s11-tidy.png" alt="">
+</section>
+
+<!-- 12 · RUNG 3 — showcase (cols) -->
+<section class="slide pad cols">
+  <div class="txt">
+    <div class="rung-no"><b>RUNG 3</b> — "oh, it can do <em>that?</em>"</div>
+    <h2>Find out <span class="accent">anything.</span></h2>
+    <ul class="cues">
+      <li>It can go and <b>do real research and real work</b> for you.</li>
+      <li>In my own work, I point it at a website and <b>know a business back to front in about ten minutes</b> — that used to take hours.</li>
+      <li>For you, that's sizing up a competitor, researching a supplier, or prepping for a big meeting.</li>
+      <li>Or an assistant that answers your customers' questions <b>24/7</b>, while the important ones still reach you.</li>
+    </ul>
+  </div>
+  <img class="imgpanel" src="assets/s12-research.png" alt="">
+</section>
+
+<!-- 13 · BUSINESS BRAIN (cols) -->
+<section class="slide pad cols">
+  <div class="txt">
+    <div class="rung-no"><b>THE WOW</b> — where it can go</div>
+    <h2>A brain for<br>your <span class="accent">whole business.</span></h2>
+    <ul class="cues">
+      <li>One assistant connected to <b>every part of your business</b> — sales, customers, numbers, suppliers, processes.</li>
+      <li>You ask it anything — "<em>which customers haven't ordered in 90 days?</em>" — and get an answer in seconds.</li>
+      <li>A <b>brain for your whole business</b> — but it still can't <em>run</em> it. It's your partner, and you're in charge.</li>
+    </ul>
+  </div>
+  <img class="imgpanel" src="assets/s12-network.png" alt="">
+</section>
+
+<!-- 14 · SERVE (bleed divider) -->
+<section class="slide bleed">
+  <div class="bg" style="background-image:url('assets/chain-c.png')"></div>
+  <div class="scrim"></div>
+  <div class="panel">
+    <div class="kicker">05 · The whole point</div>
+    <p class="quote">Let the machine do the busywork — so you're free to <span class="accent">serve</span> the people in front of you.</p>
+    <ul class="cues" style="margin-top:clamp(20px,3vh,34px)">
+      <li>Every hour it hands back is an hour you're not buried in admin at 9pm.</li>
+      <li>It's an hour for the customer, for your team, for the people it's all really for.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 16 · CLOSE + CTA (cols-ish) -->
+<section class="slide pad center wm">
+  <div class="kicker">Start with one</div>
+  <h2>Kill <span class="accent">one</span> blank page this week.</h2>
+  <ul class="cues">
+    <li>You're already ahead of most just by being in this room</li>
+    <li>You don't have to do all of it — just don't ignore it</li>
+  </ul>
+  <div class="cta-row">
+    <div class="qr">QR CODE<br>(drop in once the<br>landing page is live)</div>
+    <div>
+      <p class="sub" style="margin-top:0;max-width:34ch"><b style="color:var(--text)">Come say hi afterwards</b> — I just like this stuff.</p>
+      <p class="sub" style="max-width:36ch">…or scan for a <span class="green">free report</span> on where AI could save <em>your</em> business time. Drop your website and I'll send it back.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 17 · THANKS (bleed) -->
+<section class="slide bleed">
+  <div class="bg" style="background-image:url('assets/chain-c.png')"></div>
+  <div class="scrim"></div>
+  <div class="panel">
+    <svg class="mark" viewBox="0 0 100 100" aria-label="AISA mark">
+      <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2EE6A6"/><stop offset="1" stop-color="#11D38B"/></linearGradient></defs>
+      <g fill="none" stroke="url(#g2)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 84 L50 16"/><path d="M82 84 L50 16"/><path d="M30.2 58 L69.8 58"/></g>
+      <g fill="url(#g2)"><circle cx="50" cy="16" r="9"/><circle cx="18" cy="84" r="9"/><circle cx="82" cy="84" r="9"/></g>
+    </svg>
+    <h1>Thanks.</h1>
+    <p class="byline"><b>Ryan Alexander Black</b> &nbsp;·&nbsp; ryanalexanderblack@gmail.com<br><span style="color:var(--deep)">www.ryanalexanderblack.com</span></p>
+  </div>
+</section>
+
+<!-- chrome -->
+<div class="chrome"><div class="bar" id="bar"></div></div>
+<div class="counter" id="counter">01 / 17</div>
+<div class="hint">← → or space · F = fullscreen</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const bar=document.getElementById('bar'), counter=document.getElementById('counter');
+  let i=0; const pad=n=>String(n).padStart(2,'0');
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    bar.style.width=(i/(slides.length-1)*100)+'%';
+    counter.textContent=pad(i+1)+' / '+pad(slides.length);
+  }
+  function next(){show(i+1)} function prev(){show(i-1)}
+  function fromHash(){const n=parseInt((location.hash||'').replace('#',''),10);if(!isNaN(n))show(n-1)}
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();next()}
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();prev()}
+    else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(slides.length-1)}
+    else if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();}
+  });
+  document.addEventListener('click',e=>{ if(e.clientX < window.innerWidth*0.22) prev(); else next(); });
+  window.addEventListener('hashchange',fromHash);
+  show(0); fromHash();
+</script>
+</body>
+</html>
