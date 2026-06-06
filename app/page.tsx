@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { projects, workGroups, getProject } from "@/lib/projects";
+import { projects, workGroups, getProject, isPublished } from "@/lib/projects";
 import { ProjectCard } from "@/components/project-card";
 import { MarkEyebrow, NodeLabel } from "@/components/blueprint";
 
@@ -37,7 +37,7 @@ const experience = [
 ];
 
 export default function Home() {
-  const spotlight = projects.find((p) => p.featuredLarge);
+  const spotlight = projects.find((p) => p.featuredLarge && isPublished(p));
 
   return (
     <>
@@ -144,7 +144,7 @@ export default function Home() {
         {/* Everything else — grouped, in layers of two */}
         <div className="space-y-12">
           {workGroups.map((group, i) => {
-            const items = group.slugs.map(getProject).filter(Boolean);
+            const items = group.slugs.map(getProject).filter((p) => p && isPublished(p));
             if (items.length === 0) return null;
             return (
               <div key={group.label}>

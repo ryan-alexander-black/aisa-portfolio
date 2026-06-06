@@ -213,6 +213,16 @@ export const workGroups: WorkGroup[] = [
   },
 ];
 
+// A build only shows on the site once it's done — "shipped" or "live".
+// In-progress ("building") and "planned" work stays hidden until its status
+// flips, at which point it surfaces automatically. That status change IS the
+// visual "unlock": finished work appears; unfinished work is invisible.
+// To unlock a build: flip its status here (and move its slug out of the
+// "Coming soon" group into a real one so it lands under the right label).
+export function isPublished(p: Project): boolean {
+  return p.status === "shipped" || p.status === "live";
+}
+
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }

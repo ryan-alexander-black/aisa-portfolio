@@ -10,6 +10,11 @@
    ==================================================================== */
 
 :root {
+  /* Match the browser's native canvas, scrollbars and form controls to the
+     theme. Without this the dark default flashes a light canvas on first paint
+     (the flicker) before the body background lands. Overridden per-theme below. */
+  color-scheme: light;
+
   /* — Raw palette — */
   --green-brand:    #11D38B;
   --green-bright:   #2EE6A6;
@@ -74,6 +79,7 @@
 /* — DARK theme — class-based (manual toggle) — */
 :root.dark,
 .dark {
+  color-scheme: dark;
   --color-bg:              #0A0F0D;
   --color-surface:         #121917;
   --color-elevated:        #1E2723;
@@ -99,6 +105,7 @@
 /* — DARK theme — automatic (system preference), only when not manually set to light — */
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
+    color-scheme: dark;
     --color-bg:              #0A0F0D;
     --color-surface:         #121917;
     --color-elevated:        #1E2723;
@@ -117,6 +124,10 @@
 }
 
 /* — Optional base helpers (use or ignore) — */
+/* NB: do NOT set a background on <html>. Leaving it transparent lets the body
+   background propagate to the root canvas, which is what keeps the fixed
+   z-[-2] background layer (SiteBackground videos) visible behind content. The
+   `color-scheme` tokens above already prevent the first-paint flash. */
 body {
   background: var(--color-bg);
   color: var(--color-text);
