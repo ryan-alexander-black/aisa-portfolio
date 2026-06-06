@@ -38,7 +38,7 @@ export const projects: Project[] = [
   {
     slug: "ocla",
     title: "OCLA",
-    tagline: "A complete app that takes a fitness coach from zero to a launched business.",
+    tagline: "A complete app that unifies a whole online coaching business — zero to launched.",
     status: "live",
     featured: true,
     featuredLarge: true,
@@ -52,7 +52,7 @@ export const projects: Project[] = [
     ],
     cover: "/projects/ocla/kpi-tracker.jpg",
     summary:
-      "Online Coach Launch Academy — software that takes a fitness coach from zero to a launched, running business. A four-module guided curriculum, then the tools to operate the business: content and ad planners, an AI assistant for live client DMs, a daily-metrics tracker, a simple client tracker (CRM), and a website-copy builder — with an AI helper on every page. Built solo, live with paying users.",
+      "Online Coach Launch Academy — the system that unifies an entire coaching business into one place. A four-module guided curriculum, then the tools to operate the business: content and ad planners, an AI assistant for live client DMs, a daily-metrics tracker, a simple client tracker (CRM), and a website-copy builder — with an AI helper on every page. Built solo, live with paying users.",
     underHood: [
       "AI on every feature (Claude), hardened to stay accurate in production — it won't drift or anchor to a user's old answers when it regenerates",
       "Designed around a third-party's limits — a trial→paid lifecycle built on the handful of events the community platform actually exposes",
