@@ -107,7 +107,8 @@ export const projects: Project[] = [
     tagline: "One place to generate images, video, voice and music — saved to the cloud.",
     status: "live",
     featured: true,
-    stack: ["MCP", "KIE.ai", "Remotion"],
+    caseStudy: true,
+    stack: ["Custom MCP server", "KIE.ai", "ElevenLabs", "Remotion"],
     cover: "/projects/tfs-creative-suite/cover.jpg",
     summary:
       "A single toolset for generating images, video, voice and music from top AI models, with every result saved to the cloud automatically. I built the connector that wires those models into the tools I use day to day — plus an automated video editor that turned clips into finished Reels for live ad campaigns.",

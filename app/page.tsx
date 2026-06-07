@@ -94,11 +94,11 @@ export default function Home() {
               />
               <div className="relative aspect-square overflow-hidden rounded-xl border-2 border-green-brand/80 shadow-glow">
                 <Image
-                  src="/ryan.jpg"
+                  src="/ryan-headshot.png"
                   alt="Ryan Black"
                   fill
                   sizes="(min-width: 1024px) 17rem, (min-width: 640px) 13rem, 11rem"
-                  className="object-cover object-top"
+                  className="object-cover object-center"
                   priority
                 />
               </div>
