@@ -5,34 +5,34 @@ import { MarkEyebrow, NodeLabel } from "@/components/blueprint";
 
 const strengths = [
   {
-    label: "Business-minded builder",
-    body: "~7 years running my own businesses — I read a whole operation fast and build from a holistic perspective, not narrow focused outcomes. The context most AI builders lack.",
+    label: "Range, end to end",
+    body: "Full-stack apps, automation pipelines, AI integrations, custom tooling — I build whatever the job needs and take it from idea to live, not just the fun bits in the middle.",
   },
   {
-    label: "Real systems, not just what looks good",
-    body: "I set up the operating system a business runs on, then automate the repetitive work — designed end to end, not just nice looking features.",
+    label: "Business-minded builder",
+    body: "~7 years running my own businesses — I read a whole operation fast and build for outcomes, not just features that look good in a demo. The context most builders lack.",
   },
   {
     label: "AI-native & fast",
-    body: "I take ideas → live with AI-assisted tools, adapting to whatever the build needs as I go.",
+    body: "I take ideas → live with AI-assisted tooling, with the production guardrails (validation, code-not-LLM for anything numeric, tests) that keep AI reliable once real people use it.",
   },
 ];
 
 const experience = [
   {
+    role: "Builder & founder",
+    detail:
+      "~7 years running my own businesses; now building AI software full-time. Flagship is OCLA — a SaaS that unifies a whole coaching business into one system, built solo, live with paying users.",
+  },
+  {
     role: "Operations & delivery",
     detail:
-      "Ran production and installation for a signage company — ~$250k/month, 30+ concurrent projects, a team of 5–6.",
+      "Ran production and installation for a signage company — ~$250k/month, 30+ concurrent projects, a team of 5–6. I understand real-world constraints.",
   },
   {
-    role: "Founder & builder",
+    role: "Full range of builds",
     detail:
-      "~7 years running my own businesses; now building AI systems full-time. Flagship is OCLA — a SaaS that unifies a whole coaching business into one system, built solo, live with paying users.",
-  },
-  {
-    role: "Built my own AIOS",
-    detail:
-      "I run my own operation on a custom AI operating system I built (Nexus) — the same AI business hub & automations I set up inside a business.",
+      "Full-stack SaaS, a rules-based data/decision engine, a custom AI media toolset (MCP server + automated video editor), and research/reporting automation pipelines.",
   },
 ];
 
@@ -48,17 +48,18 @@ export default function Home() {
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_17rem] lg:gap-16">
             <div>
               <div className="text-plate">
-                <MarkEyebrow>AI Solutions Architect &amp; Builder</MarkEyebrow>
+                <MarkEyebrow>AI Software &amp; Automation Builder</MarkEyebrow>
                 <h1 className="mt-4 font-display text-[1.7rem] font-extrabold leading-[1.12] tracking-tight sm:text-5xl sm:leading-[1.05]">
-                  I install the AI operating system a business runs on —{" "}
-                  <span className="text-accent">and automate the boring work.</span>
+                  I build AI software, automations and tools —{" "}
+                  <span className="text-accent">end to end.</span>
                 </h1>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-fg-muted">
-                  I&apos;m Ryan. After ~7 years running my own businesses, I build the AI systems that
-                  make them run. I go into a business, set up its AI operating system, and layer in the
-                  automations that kill the repetitive work — the whole-operation judgement most AI
-                  builders lack. I proved it on my own business first: OCLA (a live SaaS) and Nexus (my own
-                  AIOS).
+                  I&apos;m Ryan. I take ideas and turn them into working AI products — full-stack apps,
+                  automation pipelines, and custom model integrations — with the production guardrails that
+                  keep AI reliable. After ~7 years running my own businesses, I build for real outcomes, not
+                  just features: I understand the whole operation a tool has to fit into, the context most
+                  builders lack. Proven across a live SaaS, a decision-support engine, a custom AI media
+                  toolset, and research/reporting automations — all built solo.
                 </p>
               </div>
               <div className="mt-8 flex flex-wrap items-center gap-4">

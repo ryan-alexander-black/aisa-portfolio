@@ -1,11 +1,19 @@
 # Portfolio — Ryan Alexander Black
 
-The portfolio site for Ryan Alexander Black, AI Solutions Architect. A hub of
-selected builds, each with its own case study (the problem, how it's built, why,
+The portfolio site for Ryan Alexander Black, AI Software & Automation Builder. A hub
+of selected builds, each with its own case study (the problem, how it's built, why,
 the stack, and a live example).
 
 > **Lane 2** standalone project (own git repo, deployed). Gitignored by the AISA
 > hub. Carries its own copy of the AISA brand kit so it's self-contained for deploy.
+
+## Two-track positioning (2026-06-07)
+The live site runs the **generalist (Track A)** framing — *"I build AI software,
+automations and tools"* — the income-now front door (AI jobs, eval platforms, Upwork).
+The words live in [`content-v2-generalist.md`](content-v2-generalist.md). The earlier
+**North-Star (Track B / AIOS Architect)** copy is archived in
+[`content-northstar.md`](content-northstar.md) for rebuild/swap-back when Ryan is doing
+AIOS-install outreach. Builds/case studies are shared; only the positioning differs.
 
 ## Stack
 - **Next.js 16** (App Router) + **TypeScript** + **React 19**

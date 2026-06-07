@@ -5,23 +5,23 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteBackground } from "@/components/site-background";
 
 export const metadata: Metadata = {
-  title: "Ryan Alexander Black — AI Solutions Architect",
+  title: "Ryan Alexander Black — AI Software & Automation Builder",
   description:
-    "Business-strong builder who architects whole systems — turning ideas into working AI software, end to end. Selected builds and case studies.",
+    "I build AI software, automations and tools — end to end. Full-stack apps, automation pipelines and custom model integrations, backed by ~7 years running my own businesses. Selected builds and case studies.",
   metadataBase: new URL("https://www.ryanalexanderblack.com"),
   openGraph: {
-    title: "Ryan Alexander Black — AI Solutions Architect",
+    title: "Ryan Alexander Black — AI Software & Automation Builder",
     description:
-      "Business-strong builder who architects whole systems — turning ideas into working AI software, end to end.",
+      "I build AI software, automations and tools — end to end. Full-stack apps, automation pipelines and custom model integrations.",
     type: "website",
     url: "https://www.ryanalexanderblack.com",
     siteName: "Ryan Alexander Black",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ryan Alexander Black — AI Solutions Architect",
+    title: "Ryan Alexander Black — AI Software & Automation Builder",
     description:
-      "Business-strong builder who architects whole systems — turning ideas into working AI software, end to end.",
+      "I build AI software, automations and tools — end to end. Full-stack apps, automation pipelines and custom model integrations.",
   },
   // og:image / twitter:image are generated automatically from
   // app/opengraph-image.png and app/twitter-image.png (1200×630).

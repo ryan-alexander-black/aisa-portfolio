@@ -81,7 +81,7 @@ export const projects: Project[] = [
     slug: "super-tracker",
     title: "Investment Strategy Engine",
     tagline:
-      "A rules-based engine that scores the market daily and tells me when my strategy says move.",
+      "A rules-based engine that scores the market daily and flags when the strategy says move.",
     status: "shipped",
     featured: true,
     caseStudy: true,
@@ -94,7 +94,7 @@ export const projects: Project[] = [
       { label: "Math by LLM", value: "0%" },
     ],
     summary:
-      "A personal decision-support system for a disciplined, rules-based investment (superannuation) strategy. It pulls live market and macro data, scores conditions against a fixed debt-cycle rulebook, tracks allocation gates and triggers, and tracks whether the strategy is working (balance and returns over time) — all on a dashboard with daily, weekly and monthly reports, replacing a manual ChatGPT-and-Excel routine. It recommends; the human decides — it never auto-trades.",
+      "A personal decision-support system for a disciplined, rules-based investment strategy. It pulls live market and macro data, scores conditions against a fixed rulebook, tracks allocation gates and triggers, and shows whether the strategy is working over time — on a dashboard with daily, weekly and monthly reports, replacing a manual ChatGPT-and-Excel routine. It recommends; the human decides — it never auto-trades.",
     underHood: [
       "Every number the decision depends on is computed in plain Python, never by an AI — the old LLM workflow made ~6 moving-average errors in a single month",
       "The rulebook lives as versioned config (data, not code), so every strategy change is auditable",
@@ -194,32 +194,25 @@ export interface WorkGroup {
 
 export const workGroups: WorkGroup[] = [
   {
-    label: "Systems & engines",
+    label: "Data, engines & tooling",
     slugs: ["super-tracker", "tfs-creative-suite"],
   },
   {
     label: "Automation pipelines",
     slugs: ["newsletter", "business-brief"],
   },
-  {
-    label: "Coming soon",
-    slugs: [
-      "challenge-day-3",
-      "challenge-day-4",
-      "challenge-day-5",
-      "challenge-day-6",
-      "challenge-day-7",
-      "marathon-plan",
-    ],
-  },
+  // Planned builds (7-day challenge days 3–7, marathon-plan) stay defined in
+  // `projects` above but are intentionally NOT in any group — they're hidden
+  // until done. To reveal one: flip its status to shipped/live and add its
+  // slug to a group below.
 ];
 
 // A build only shows on the site once it's done — "shipped" or "live".
 // In-progress ("building") and "planned" work stays hidden until its status
 // flips, at which point it surfaces automatically. That status change IS the
 // visual "unlock": finished work appears; unfinished work is invisible.
-// To unlock a build: flip its status here (and move its slug out of the
-// "Coming soon" group into a real one so it lands under the right label).
+// To unlock a build: flip its status here AND add its slug to a workGroup
+// above so it lands under the right label.
 export function isPublished(p: Project): boolean {
   return p.status === "shipped" || p.status === "live";
 }

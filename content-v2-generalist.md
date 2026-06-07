@@ -18,8 +18,7 @@
 
 ## ⚠️ Decisions to confirm before we build (read first)
 
-1. **Title / eyebrow.** Defaulted to **"AI Engineer & Builder"** to match the generalist CV. Keep it
-   consistent with whatever you pick on the CV (decision #1 there).
+1. ~~**Title / eyebrow.**~~ ✅ **LOCKED — "AI Software & Automation Builder"** (matches the approved v2 CV).
 2. **Subdomain + split.** Plan is `build.` (generalist) vs main (North-Star), same builds, different
    hero/positioning. Confirm the subdomain name. (Open question parked in `BACKLOG.md` → "Two front doors".)
 3. **How much diverges.** Default: only the **hero, strength cards, and the work group labels** change.
@@ -30,17 +29,17 @@
 
 ## Hero
 
-**Eyebrow:** AI Engineer & Builder
+**Eyebrow:** AI Software & Automation Builder
 
 **Headline:** I build AI software, automations and tools — **end to end.**
 *(accent on "end to end")*
 
 **Subhead:**
 I'm Ryan. I take ideas and turn them into working AI products — full-stack apps, automation pipelines,
-and custom model integrations — and I ship fast. After ~7 years running my own businesses, I build for
-real outcomes, not just features: I understand the whole operation a tool has to fit into. Proven across
-a live SaaS, a decision-support engine, a custom AI media toolset, and research/reporting automations —
-all built solo.
+and custom model integrations — with the production guardrails that keep AI reliable. After ~7 years
+running my own businesses, I build for real outcomes, not just features: I understand the whole operation
+a tool has to fit into, the context most builders lack. Proven across a live SaaS, a decision-support
+engine, a custom AI media toolset, and research/reporting automations — all built solo.
 
 **Buttons:** `See the work` · `Get in touch` (mailto) · `Download CV`
 
@@ -68,7 +67,7 @@ for anything numeric, tests) that keep AI reliable once real people use it.
 is OCLA — a SaaS that unifies a whole coaching business into one system, built solo, live with paying users.
 
 **Operations & delivery** — Ran production and installation for a signage company — ~$250k/month, 30+
-concurrent projects, a team of 5–6. I've shipped under real-world constraints, not just side projects.
+concurrent projects, a team of 5–6. I understand real-world constraints.
 
 **Full range of builds** — Full-stack SaaS, a rules-based data/decision engine, a custom AI media toolset
 (MCP server + automated video editor), and research/reporting automation pipelines. (See the work below.)
@@ -95,7 +94,7 @@ I build whatever the job needs.
 *(Mostly carries over from the live site — it's already plain and outcome-led. Only taglines tweaked to
 lead with the build type / range. Edit freely.)*
 
-### OCLA — Full-stack SaaS
+### OCLA — Full-stack SaaS product
 **Tagline:** A complete app that unifies a whole online coaching business — zero to launched.
 **Summary:** Online Coach Launch Academy — the system that unifies an entire coaching business into one
 place. A four-module guided curriculum, then the tools to operate the business: content and ad planners,

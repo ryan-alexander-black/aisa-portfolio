@@ -315,8 +315,8 @@ export default function OclaCaseStudy() {
           constraint</strong> rather than an ideal one: Skool exposes two events, so the app infers
           the rest; Vercel caps execution at 60 seconds, so generation is split and parallelised;
           billing state isn&apos;t readable, so a state machine plus manual overrides covers the gap.
-          That&apos;s the work of an architect — making the pieces flow together given what the real
-          systems will and won&apos;t do.
+          That&apos;s the real work of building software — making the pieces flow together given what the
+          real systems will and won&apos;t do.
         </p>
       </Section>
 
@@ -324,10 +324,10 @@ export default function OclaCaseStudy() {
       <Section title="Where it is now">
         <p>
           OCLA is <strong className="text-fg">live in production with paying users.</strong> Since
-          pivoting toward an AI-architecture career I&apos;ve moved it to maintenance-only — kept
+          moving into building AI software full-time I&apos;ve moved it to maintenance-only — kept
           running for its users, infrastructure trimmed to lower-cost tiers, fully backed up — and it
           now serves as the centrepiece of this portfolio. It&apos;s the most complete answer I have to
-          &ldquo;can you architect and ship a real, AI-native system end to end?&rdquo; — so it&apos;s the
+          &ldquo;can you build and ship a real, AI-native system end to end?&rdquo; — so it&apos;s the
           one I point to first.
         </p>
       </Section>
