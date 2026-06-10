@@ -59,6 +59,8 @@ the `var()`-based semantic tokens (`accent`, `bg`) — use hex tokens for tints.
 
 The site sends transactional email via **[Resend](https://resend.com)**. Set up 2026-06-10 for the
 operator intake form; the sending domain is reusable for any future email feature.
+**Status: ✅ verified working (2026-06-10)** — test submission landed in the target inbox, formatted
+correctly, sent from `hello@ryanalexanderblack.com`.
 
 ### What's live
 - **Route:** `/operator-form` — the branded "AI Time-Back Audit" intake form (operator-role version;
