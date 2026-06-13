@@ -64,7 +64,7 @@ correctly, sent from `hello@ryanalexanderblack.com`.
 
 ### What's live
 - **Route:** `/operator-form` — the branded "AI Time-Back Audit" intake form (operator-role version;
-  the question copy is owned by the AISA hub at `projects/money-engine/05-intake-form.md`).
+  the question copy is owned by the AISA hub at `money-engine/05-intake-form.md`).
 - **Handler:** `app/api/operator-form/route.ts` (POST) — emails each submission via Resend, then returns
   JSON. Honeypot field (`company_website`) silently drops bots. All form fields are required client-side.
 - **Who gets emailed:** **only Ryan** (the `OPERATOR_FORM_TO` inbox). The submitter receives **nothing**;
