@@ -48,7 +48,7 @@ export default function Home() {
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_17rem] lg:gap-16">
             <div>
               <div className="text-plate">
-                <MarkEyebrow>AI Software &amp; Automation Builder</MarkEyebrow>
+                <MarkEyebrow>AI Solutions Consultant &amp; Builder</MarkEyebrow>
                 <h1 className="mt-4 font-display text-[1.7rem] font-extrabold leading-[1.12] tracking-tight sm:text-5xl sm:leading-[1.05]">
                   I build AI software, automations and tools —{" "}
                   <span className="text-accent">end to end.</span>
