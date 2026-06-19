@@ -2,6 +2,7 @@ import Image from "next/image";
 import { projects, workGroups, getProject, isPublished } from "@/lib/projects";
 import { ProjectCard } from "@/components/project-card";
 import { MarkEyebrow, NodeLabel } from "@/components/blueprint";
+import { HeroActions } from "@/components/hero-actions";
 
 const strengths = [
   {
@@ -62,28 +63,7 @@ export default function Home() {
                   toolset, and research/reporting automations — all built solo.
                 </p>
               </div>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <a
-                  href="#work"
-                  className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90"
-                >
-                  See the work
-                </a>
-                <a
-                  href="mailto:ryanalexanderblack@gmail.com"
-                  className="glass-card rounded-md border border-border px-5 py-2.5 font-medium text-fg transition-colors hover:border-green-brand/50"
-                >
-                  Get in touch
-                </a>
-                <a
-                  href="/Ryan-Alexander-Black-CV.pdf"
-                  target="_blank"
-                  rel="noopener"
-                  className="glass-card rounded-md border border-border px-5 py-2.5 font-medium text-fg transition-colors hover:border-green-brand/50"
-                >
-                  Download CV
-                </a>
-              </div>
+              <HeroActions />
             </div>
 
             {/* The face */}

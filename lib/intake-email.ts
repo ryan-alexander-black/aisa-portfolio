@@ -12,7 +12,7 @@ const TO = process.env.OPERATOR_FORM_TO || "ryanalexanderblack@gmail.com";
 // Generic send-from identity on the verified domain. Any local-part on a verified
 // domain works without separate verification, so `hello@` is reusable across forms.
 // (This is a sending identity, not a mailbox; replies go to the submitter below.)
-const FROM = process.env.MAIL_FROM || "Ryan Alexander Black — Audit Intake <hello@ryanalexanderblack.com>";
+const FROM = process.env.MAIL_FROM || "Ryan Alexander Black <hello@ryanalexanderblack.com>";
 
 export async function handleIntake(
   request: NextRequest,
