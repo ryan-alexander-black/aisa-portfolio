@@ -12,14 +12,16 @@ const CONTACT = "mailto:ryanalexanderblack@gmail.com?subject=Investment%20Strate
 // The full stack, surfaced inside the "Under the hood" zone.
 const STACK = [
   "Python 3.11 (stdlib-only engine)",
-  "SQLite",
   "FastAPI",
   "Next.js / TypeScript",
+  "Vercel (web + API)",
+  "Supabase Postgres",
+  "SQLite (local dev)",
   "Anthropic Claude",
   "react-markdown",
   "FRED + keyless EOD prices",
   "GitHub Actions cron",
-  "Windows Task Scheduler",
+  "Windows Task Scheduler (local)",
 ];
 
 // The deterministic engine — the maths that's never left to a model.
@@ -241,18 +243,24 @@ export default function SuperTrackerCaseStudy() {
 
       <Story
         n="03"
-        title="Local-first, but cloud-deployable unchanged"
-        plain="It runs on my machine off a local database, but the exact same engine runs in the cloud on a schedule — so reports still arrive when my PC is off."
+        title="One engine, two homes — live in the cloud, identical code on my machine"
+        plain="It's deployed and always-on: the dashboard and reports run in the cloud on a schedule, so they arrive even when my PC is off. The exact same code runs locally on my own machine for development — nothing forks."
       >
         <p>
-          Locally it&apos;s <strong className="text-fg">SQLite plus scheduled CLI runs</strong>{" "}
-          (Windows Task Scheduler: weekday dailies, a Monday weekly, a monthly on the 2nd, all on
-          AWST). The same code is <strong className="text-fg">cloud-deployable unchanged</strong> —
-          Postgres plus a{" "}
+          It runs live on <strong className="text-fg">Vercel</strong> — the Next.js dashboard and a
+          FastAPI backend as two projects, against{" "}
+          <strong className="text-fg">Supabase Postgres</strong> (Sydney), with a{" "}
           <code className="font-mono text-[13px] text-accent">.github/workflows/report.yml</code> cron
-          that runs the identical reports on GitHub&apos;s schedule. Price data is keyless and FRED is
-          free, so the only secrets are two API keys held as repo secrets. The engine doesn&apos;t know
-          or care which environment it&apos;s in.
+          generating the daily/weekly/monthly reports straight into the cloud database. Locally it&apos;s
+          the identical engine on <strong className="text-fg">SQLite plus scheduled CLI runs</strong>{" "}
+          (Windows Task Scheduler: weekday dailies, a Monday weekly, a monthly on the 2nd, all AWST).
+          The trick is one line:{" "}
+          <code className="font-mono text-[13px] text-accent">tools/db.py</code> picks the backend on
+          the presence of a <code className="font-mono text-[13px] text-accent">DATABASE_URL</code> —
+          Postgres in production, SQLite in dev — and the same SQL runs against both. Price data is
+          keyless and FRED is free, so the only secrets are the API keys held as repo/Vercel secrets,
+          and a push to <code className="font-mono text-[13px] text-accent">main</code> auto-deploys
+          both projects. The engine doesn&apos;t know or care which environment it&apos;s in.
         </p>
       </Story>
 
@@ -307,11 +315,14 @@ export default function SuperTrackerCaseStudy() {
       {/* Where it is now */}
       <Section title="Where it is now">
         <p>
-          It runs for me on schedule — generating the daily, weekly and monthly reports and keeping
-          the dashboard current. It&apos;s a{" "}
-          <strong className="text-fg">personal project operating on real financial data</strong>, so
-          it stays private. It is <em>not</em> financial advice — it&apos;s a systematic
-          decision-support tool that operates a predefined rulebook and hands the call back to a human.
+          It&apos;s <strong className="text-fg">deployed and live</strong> — running always-on in the
+          cloud (Vercel for the dashboard and API, Supabase Postgres for state), with a GitHub Actions
+          cron generating the daily, weekly and monthly reports on schedule and keeping the dashboard
+          current whether my machine is on or not. Because it&apos;s a{" "}
+          <strong className="text-fg">personal project operating on real financial data</strong>, the
+          dashboard sits behind a password and stays private. It is <em>not</em> financial advice —
+          it&apos;s a systematic decision-support tool that operates a predefined rulebook and hands the
+          call back to a human.
         </p>
       </Section>
 

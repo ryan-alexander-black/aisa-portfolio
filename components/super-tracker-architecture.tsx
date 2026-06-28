@@ -190,14 +190,14 @@ export function SuperTrackerArchitecture() {
         y={462}
         w={400}
         h={52}
-        title="SQLite — data/super.db"
+        title="Postgres (cloud) / SQLite (local)"
         sub="reports · gates · allocations · history · decisions"
       />
       <Edge d="M275,438 L420,460" />
       <Edge d="M715,418 L590,460" />
 
       {/* ── Serving ── */}
-      <Node x={150} y={540} w={250} h={50} title="FastAPI — api/" />
+      <Node x={150} y={540} w={250} h={50} title="FastAPI — api/" sub="live on Vercel" />
       <Node
         x={470}
         y={540}

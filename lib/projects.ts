@@ -82,10 +82,10 @@ export const projects: Project[] = [
     title: "Investment Strategy Engine",
     tagline:
       "A rules-based engine that scores the market daily and flags when the strategy says move.",
-    status: "shipped",
+    status: "live",
     featured: true,
     caseStudy: true,
-    stack: ["Python", "SQLite", "FastAPI", "Next.js", "Claude API"],
+    stack: ["Next.js", "FastAPI", "Python", "Vercel", "Supabase Postgres", "Claude API"],
     cover: "/projects/super-tracker/dashboard.jpg",
     metrics: [
       { label: "Golden tests", value: "22" },
@@ -99,6 +99,7 @@ export const projects: Project[] = [
       "Every number the decision depends on is computed in plain Python, never by an AI — the old LLM workflow made ~6 moving-average errors in a single month",
       "The rulebook lives as versioned config (data, not code), so every strategy change is auditable",
       "AI is used only for the genuinely linguistic parts — news sentiment, report narrative, and a chat that explains your own data",
+      "Deployed live on Vercel (dashboard + API) against Supabase Postgres, with a GitHub Actions cron generating the scheduled reports — the same engine runs locally on SQLite, unchanged",
     ],
   },
   {
