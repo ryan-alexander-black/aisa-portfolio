@@ -7,9 +7,9 @@ import { getProject } from "@/lib/projects";
 import { StatusBadge } from "@/components/status-badge";
 import { Section } from "@/components/section";
 import { OclaArchitecture } from "@/components/ocla-architecture";
+import { ContactButton } from "@/components/contact-button";
 
 const project = getProject("ocla")!;
-const CONTACT = "mailto:ryanalexanderblack@gmail.com?subject=OCLA%20walkthrough";
 
 export const metadata: Metadata = {
   title: `${project.title} — Case study | Ryan Alexander Black`,
@@ -90,12 +90,9 @@ export default function OclaCaseStudy() {
         )}
 
         <div className="mt-6 flex flex-wrap items-center gap-4">
-          <a
-            href={CONTACT}
-            className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90"
-          >
+          <ContactButton className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90">
             Request a walkthrough →
-          </a>
+          </ContactButton>
           <span className="font-mono text-xs text-fg-muted">
             Live at ocla.thefitnessstall.com · login-gated (private)
           </span>
@@ -340,12 +337,9 @@ export default function OclaCaseStudy() {
           through any part of the architecture.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-4">
-          <a
-            href={CONTACT}
-            className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90"
-          >
+          <ContactButton className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90">
             Request a walkthrough
-          </a>
+          </ContactButton>
           <Link
             href="/#work"
             className="rounded-md border border-border px-5 py-2.5 font-medium text-fg transition-colors hover:border-green-brand/50"

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { ContactButton } from "@/components/contact-button";
 
 export function SiteHeader() {
   return (
@@ -26,12 +27,9 @@ export function SiteHeader() {
           <Link href="/#work" className="text-fg-muted transition-colors hover:text-fg">
             Work
           </Link>
-          <a
-            href="mailto:ryanalexanderblack@gmail.com"
-            className="hidden rounded-md bg-accent-solid px-3.5 py-1.5 font-medium text-accent-contrast transition-opacity hover:opacity-90 sm:inline-block"
-          >
+          <ContactButton className="hidden rounded-md bg-accent-solid px-3.5 py-1.5 font-medium text-accent-contrast transition-opacity hover:opacity-90 sm:inline-block">
             Get in touch
-          </a>
+          </ContactButton>
           <ThemeToggle />
         </nav>
       </div>

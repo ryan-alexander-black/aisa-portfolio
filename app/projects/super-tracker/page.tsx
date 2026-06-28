@@ -5,9 +5,9 @@ import { getProject } from "@/lib/projects";
 import { StatusBadge } from "@/components/status-badge";
 import { Section } from "@/components/section";
 import { SuperTrackerArchitecture } from "@/components/super-tracker-architecture";
+import { ContactButton } from "@/components/contact-button";
 
 const project = getProject("super-tracker")!;
-const CONTACT = "mailto:ryanalexanderblack@gmail.com?subject=Investment%20Strategy%20Engine%20walkthrough";
 
 // The full stack, surfaced inside the "Under the hood" zone.
 const STACK = [
@@ -88,12 +88,9 @@ export default function SuperTrackerCaseStudy() {
         )}
 
         <div className="mt-6 flex flex-wrap items-center gap-4">
-          <a
-            href={CONTACT}
-            className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90"
-          >
+          <ContactButton className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90">
             Request a walkthrough →
-          </a>
+          </ContactButton>
           <span className="font-mono text-xs text-fg-muted">
             Personal project · private (operates on real financial data)
           </span>
@@ -334,12 +331,9 @@ export default function SuperTrackerCaseStudy() {
           architecture and the deterministic/AI boundary live.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-4">
-          <a
-            href={CONTACT}
-            className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90"
-          >
+          <ContactButton className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90">
             Request a walkthrough
-          </a>
+          </ContactButton>
           <Link
             href="/#work"
             className="rounded-md border border-border px-5 py-2.5 font-medium text-fg transition-colors hover:border-green-brand/50"

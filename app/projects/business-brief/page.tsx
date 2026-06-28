@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getProject } from "@/lib/projects";
 import { StatusBadge } from "@/components/status-badge";
 import { Section } from "@/components/section";
+import { ContactButton } from "@/components/contact-button";
 
 const project = getProject("business-brief")!;
 
@@ -238,12 +239,9 @@ export default function BusinessBriefCaseStudy() {
           together.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-4">
-          <a
-            href="mailto:ryanalexanderblack@gmail.com"
-            className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90"
-          >
+          <ContactButton className="rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90">
             Get in touch
-          </a>
+          </ContactButton>
         </div>
       </div>
     </article>
