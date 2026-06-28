@@ -3,7 +3,15 @@ import Link from "next/link";
 import type { Project } from "@/lib/projects";
 import { StatusBadge } from "@/components/status-badge";
 
-export function ProjectCard({ project, large }: { project: Project; large?: boolean }) {
+export function ProjectCard({
+  project,
+  large,
+  eyebrow = "Flagship build",
+}: {
+  project: Project;
+  large?: boolean;
+  eyebrow?: string;
+}) {
   const {
     slug,
     title,
@@ -58,7 +66,7 @@ export function ProjectCard({ project, large }: { project: Project; large?: bool
         {/* Copy */}
         <div className="flex flex-col">
           <div className="mb-3 flex items-center gap-3">
-            <p className="eyebrow">Flagship build</p>
+            <p className="eyebrow">{eyebrow}</p>
             <StatusBadge status={status} />
           </div>
           <h3 className="font-display text-2xl font-extrabold tracking-tight sm:text-3xl">{title}</h3>

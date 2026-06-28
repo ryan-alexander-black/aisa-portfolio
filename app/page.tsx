@@ -39,6 +39,8 @@ const experience = [
 
 export default function Home() {
   const spotlight = projects.find((p) => p.featuredLarge && isPublished(p));
+  const funnel = getProject("ocla-funnel");
+  const funnelShown = funnel && isPublished(funnel);
 
   return (
     <>
@@ -157,6 +159,18 @@ export default function Home() {
             );
           })}
         </div>
+
+        {/* Design & go-to-market — a full-width banner under the grouped pairs */}
+        {funnelShown && (
+          <div className="mt-12">
+            <NodeLabel index={String(workGroups.length + 1).padStart(2, "0")}>
+              Design &amp; go-to-market
+            </NodeLabel>
+            <div className="mt-4">
+              <ProjectCard project={funnel} large eyebrow="Design & funnel build" />
+            </div>
+          </div>
+        )}
       </section>
     </>
   );

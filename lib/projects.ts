@@ -60,6 +60,29 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "ocla-funnel",
+    title: "OCLA Sales Funnel",
+    tagline: "A hand-built sales page and the automated opt-in funnel behind it — designed end to end.",
+    status: "live",
+    caseStudy: true,
+    stack: ["HTML/CSS/JS", "Klaviyo", "Meta Pixel", "Skool", "Vercel"],
+    liveUrl: "https://onlinecoachlaunchacademy.com/",
+    cover: "/projects/ocla-funnel/sales-page.jpg",
+    metrics: [
+      { label: "Pages, hand-built", value: "2" },
+      { label: "Frameworks", value: "0" },
+      { label: "Nurture emails", value: "7" },
+      { label: "Funnel tools", value: "3" },
+    ],
+    summary:
+      "The public face of OCLA — the long-form sales page that sells the program and the automated funnel that turns a visitor into a free-trial member. Designed and built by hand: a video-led sales page with a clear narrative and a five-part breakdown of the program, a separate lead-magnet opt-in page, and the email sequence that follows up automatically after opt-in. The counterpart to the OCLA app case study — this is the design and the go-to-market funnel that live in front of the software.",
+    underHood: [
+      "Hand-built static pages (HTML/CSS/JS, no framework) on Vercel — an on-brand visual system with custom illustrations, founder photography and a VSL, not a page-builder template",
+      "The opt-in posts straight to the Klaviyo API and fires a Meta Pixel Subscribe event — no third-party form widget",
+      "Opt-in triggers a live 7-email Klaviyo nurture flow across the 7-day trial window; every CTA hands off to the Skool community where trial-to-paid lives",
+    ],
+  },
+  {
     slug: "newsletter",
     title: "Newsletter Automation",
     tagline: '"Signal over Noise" — give it a topic, get a finished newsletter.',
