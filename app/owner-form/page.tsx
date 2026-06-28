@@ -15,12 +15,14 @@ export default function OwnerFormPage() {
       <header>
         <p className="eyebrow">AI Opportunity Audit</p>
         <h1 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
-          Pre-call intake
+          Pre-audit questionnaire
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-fg-muted">
-          Thanks for doing this! It just helps me prep so our call goes straight to the useful stuff —
-          about 5 minutes, short answers are perfect. The more honest the better; we&apos;ll get into the
-          detail when we chat.
+          Completing this short questionnaire before our audit ensures we make the most of our time
+          together. Your answers let me come prepared, ask the right questions, and focus the
+          conversation on identifying the highest-value AI and automation opportunities for your
+          business. It takes around five minutes — concise answers are perfectly fine, and the more
+          candid you are, the more useful the audit will be.
         </p>
       </header>
 

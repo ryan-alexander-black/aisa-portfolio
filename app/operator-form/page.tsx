@@ -15,12 +15,13 @@ export default function OperatorFormPage() {
       <header>
         <p className="eyebrow">AI Time-Back Audit</p>
         <h1 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
-          Quick intake
+          Pre-audit questionnaire
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-fg-muted">
-          Thanks for doing this! It&apos;s just a quick orientation so our call goes straight to the
-          useful stuff — takes 2–3 minutes, short answers are perfect. We&apos;ll get into the detail
-          when we chat.
+          Completing this short questionnaire before our audit ensures we make the most of our time
+          together. Your answers let me come prepared, ask the right questions, and focus the
+          conversation on identifying where AI and automation can give you back the most time in your
+          role. It takes two to three minutes — concise answers are perfectly fine.
         </p>
       </header>
 
