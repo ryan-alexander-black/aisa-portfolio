@@ -21,11 +21,11 @@ export function SiteHeader() {
           </span>
         </Link>
         <nav className="flex items-center gap-3 text-sm sm:gap-6">
-          <Link href="/#about" className="text-fg-muted transition-colors hover:text-fg">
-            About
+          <Link href="/#client-results" className="text-fg-muted transition-colors hover:text-fg">
+            Client Results
           </Link>
           <Link href="/#work" className="text-fg-muted transition-colors hover:text-fg">
-            Work
+            AI Builds
           </Link>
           <ContactButton className="hidden rounded-md bg-accent-solid px-3.5 py-1.5 font-medium text-accent-contrast transition-opacity hover:opacity-90 sm:inline-block">
             Get in touch

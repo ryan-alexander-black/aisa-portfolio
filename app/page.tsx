@@ -1,29 +1,19 @@
 import Image from "next/image";
 import { projects, workGroups, getProject, isPublished } from "@/lib/projects";
+import { testimonials } from "@/lib/testimonials";
 import { ProjectCard } from "@/components/project-card";
+import { TestimonialCard } from "@/components/testimonial-card";
 import { MarkEyebrow, NodeLabel } from "@/components/blueprint";
 import { HeroActions } from "@/components/hero-actions";
 
-const strengths = [
-  {
-    label: "Range, end to end",
-    body: "Full-stack apps, automation pipelines, AI integrations, custom tooling — I build whatever the job needs and take it from idea to live, not just the fun bits in the middle.",
-  },
-  {
-    label: "Business-minded builder",
-    body: "~7 years running my own businesses — I read a whole operation fast and build for outcomes, not just features that look good in a demo. The context most builders lack.",
-  },
-  {
-    label: "AI-native & fast",
-    body: "I take ideas → live with AI-assisted tooling, with the production guardrails (validation, code-not-LLM for anything numeric, tests) that keep AI reliable once real people use it.",
-  },
-];
-
+// Reconciled into one list (2026-07-04) — the old 3-card "strengths" grid and
+// this "experience" list said largely the same things twice (range, business
+// background, AI-native pace). One clean pass now covers all of it.
 const experience = [
   {
     role: "Builder & founder",
     detail:
-      "~7 years running my own businesses; now building AI software full-time. Flagship is OCLA — a SaaS that unifies a whole coaching business into one system, built solo, live with paying users.",
+      "~7 years running my own businesses; now building AI software full-time. Flagship is OCLA — a SaaS that unifies a whole coaching business into one system, built solo, live with paying users. That background is the context most AI builders lack — I build for outcomes, not just features that look good in a demo.",
   },
   {
     role: "Operations & delivery",
@@ -31,9 +21,14 @@ const experience = [
       "Ran production and installation for a signage company — ~$250k/month, 30+ concurrent projects, a team of 5–6. I understand real-world constraints.",
   },
   {
-    role: "Full range of builds",
+    role: "Range, end to end",
     detail:
-      "Full-stack SaaS, a rules-based data/decision engine, a custom AI media toolset (MCP server + automated video editor), and research/reporting automation pipelines.",
+      "Full-stack SaaS, a rules-based data/decision engine, a custom AI media toolset (MCP server + automated video editor), and research/reporting automation pipelines — I build whatever the job needs, idea to live, not just the fun bits in the middle.",
+  },
+  {
+    role: "AI-native & fast",
+    detail:
+      "I take ideas → live with AI-assisted tooling, with the production guardrails (validation, code-not-LLM for anything numeric, tests) that keep AI reliable once real people use it.",
   },
 ];
 
@@ -46,7 +41,7 @@ export default function Home() {
     <>
       {/* Hero — the statement, the face, and what I bring, as one flow */}
       <section id="about" className="relative overflow-hidden">
-        <div className="mx-auto max-w-5xl px-6 py-20 sm:py-28">
+        <div className="mx-auto max-w-5xl px-6 pb-10 pt-20 sm:pb-14 sm:pt-28">
           {/* Statement + face */}
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_17rem] lg:gap-16">
             <div>
@@ -88,19 +83,8 @@ export default function Home() {
           </div>
 
           {/* Flows straight into what that means in practice — no second "About" heading */}
-          <div className="mt-16 grid gap-4 sm:mt-20 sm:grid-cols-3">
-            {strengths.map((s) => (
-              <div key={s.label} className="glass-card rounded-lg border border-border p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">
-                  {s.label}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-fg-muted">{s.body}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-plate">
-            <dl className="grid gap-4 pt-6">
+          <div className="mt-16 text-plate sm:mt-20">
+            <dl className="grid gap-4">
               {experience.map((e) => (
                 <div key={e.role} className="grid gap-1 sm:grid-cols-[12rem_1fr] sm:gap-4">
                   <dt className="font-display text-sm font-semibold tracking-tight text-fg">
@@ -125,6 +109,27 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Client results — real businesses, real outcomes. Kept ahead of and
+          visually distinct from the personal builds below: a business owner
+          reads trust signals first. */}
+      {testimonials.length > 0 && (
+        <section id="client-results" className="mx-auto max-w-5xl px-6 pt-8 sm:pt-10">
+          <div className="mb-10 text-plate inline-block">
+            <MarkEyebrow>Client work</MarkEyebrow>
+            <h2 className="mt-2 font-display text-2xl font-bold tracking-tight">
+              Client results
+            </h2>
+          </div>
+          <div
+            className={`grid gap-5 ${testimonials.length > 1 ? "sm:grid-cols-2" : "sm:grid-cols-1"}`}
+          >
+            {testimonials.map((t) => (
+              <TestimonialCard key={t.slug} testimonial={t} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Work */}
       <section id="work" className="mx-auto max-w-5xl px-6 py-20">
