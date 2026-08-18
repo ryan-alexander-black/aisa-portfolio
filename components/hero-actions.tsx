@@ -19,14 +19,6 @@ export function HeroActions() {
       >
         Get in touch
       </button>
-      <a
-        href="/Ryan-Alexander-Black-CV.pdf"
-        target="_blank"
-        rel="noopener"
-        className="glass-card rounded-md border border-border px-5 py-2.5 font-medium text-fg transition-colors hover:border-green-brand/50"
-      >
-        Download CV
-      </a>
     </div>
   );
 }

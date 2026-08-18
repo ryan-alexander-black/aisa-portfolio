@@ -48,8 +48,8 @@ export default function Home() {
               <div className="text-plate">
                 <MarkEyebrow>AI Solutions Consultant &amp; Builder</MarkEyebrow>
                 <h1 className="mt-4 font-display text-[1.7rem] font-extrabold leading-[1.12] tracking-tight sm:text-5xl sm:leading-[1.05]">
-                  I build AI software, automations and tools —{" "}
-                  <span className="text-accent">end to end.</span>
+                  I find businesses&rsquo; highest-value AI opportunities —{" "}
+                  <span className="text-accent">then build &amp; install them, end to end.</span>
                 </h1>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-fg-muted">
                   I&apos;m Ryan. I take ideas and turn them into working AI products — full-stack apps,
@@ -95,17 +95,6 @@ export default function Home() {
               ))}
             </dl>
 
-            <p className="mt-8 text-sm text-fg-muted">
-              The full story is in my CV →{" "}
-              <a
-                href="/Ryan-Alexander-Black-CV.pdf"
-                target="_blank"
-                rel="noopener"
-                className="text-accent underline-offset-4 hover:underline"
-              >
-                Download CV
-              </a>
-            </p>
           </div>
         </div>
       </section>

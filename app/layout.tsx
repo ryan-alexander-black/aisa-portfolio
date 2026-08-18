@@ -8,12 +8,12 @@ import { ContactProvider } from "@/components/contact-modal-provider";
 export const metadata: Metadata = {
   title: "Ryan Alexander Black — AI Solutions Consultant & Builder",
   description:
-    "I build AI software, automations and tools — end to end. Full-stack apps, automation pipelines and custom model integrations, backed by ~7 years running my own businesses. Selected builds and case studies.",
+    "I find businesses' highest-value AI opportunities — then build & install them, end to end. Full-stack apps, automation pipelines and custom model integrations, backed by ~7 years running my own businesses. Selected builds and case studies.",
   metadataBase: new URL("https://www.ryanalexanderblack.com"),
   openGraph: {
     title: "Ryan Alexander Black — AI Solutions Consultant & Builder",
     description:
-      "I build AI software, automations and tools — end to end. Full-stack apps, automation pipelines and custom model integrations.",
+      "I find businesses' highest-value AI opportunities — then build & install them, end to end. Full-stack apps, automation pipelines and custom model integrations.",
     type: "website",
     url: "https://www.ryanalexanderblack.com",
     siteName: "Ryan Alexander Black",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ryan Alexander Black — AI Solutions Consultant & Builder",
     description:
-      "I build AI software, automations and tools — end to end. Full-stack apps, automation pipelines and custom model integrations.",
+      "I find businesses' highest-value AI opportunities — then build & install them, end to end. Full-stack apps, automation pipelines and custom model integrations.",
   },
   // og:image / twitter:image are generated automatically from
   // app/opengraph-image.png and app/twitter-image.png (1200×630).
