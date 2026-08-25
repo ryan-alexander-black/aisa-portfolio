@@ -37,8 +37,9 @@ export default function PrivacyPage() {
           <ul className="mt-3 list-disc space-y-2 pl-5">
             <li>
               <strong>No advertising or analytics tracking.</strong> The site
-              sets no ad or analytics cookies. The only thing stored in your
-              browser is your light/dark theme preference.
+              currently sets no ad or analytics cookies; the only thing stored
+              in your browser is your light/dark theme preference. If that ever
+              changes, this policy will be updated first.
             </li>
             <li>
               <strong>Contact form.</strong> If you use the contact form, the
