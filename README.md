@@ -36,6 +36,15 @@ public/
   projects/newsletter/    # the real Issue 01 output + charts (case-study assets)
 ```
 
+## Client work (the lead section, 2026-09-18)
+The home page leads with paid client work. Each client lives once in
+[`lib/clients.ts`](lib/clients.ts) and renders twice: the home card
+(`components/client-card.tsx`) and, when it has a `page`, the case study at
+`/work/<slug>` (`components/client-case-study.tsx`). Add a client there + a
+two-line `app/work/<slug>/page.tsx`. The main CTA ("Get Free AI Opportunity
+Report") opens the shared contact modal's `report` variant. Keep client
+financials, pricing and end-client names out of `clients.ts` — the repo is public.
+
 ## Add / update a project
 Edit [`lib/projects.ts`](lib/projects.ts). Each entry renders a card on the home
 grid; set `caseStudy: true` and add `app/projects/<slug>/page.tsx` to give it a
