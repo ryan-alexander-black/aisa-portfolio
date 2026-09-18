@@ -1,14 +1,40 @@
 import Image from "next/image";
 import { projects, workGroups, getProject, isPublished } from "@/lib/projects";
-import { testimonials } from "@/lib/testimonials";
+import { clients } from "@/lib/clients";
 import { ProjectCard } from "@/components/project-card";
-import { TestimonialCard } from "@/components/testimonial-card";
+import { ClientCard } from "@/components/client-card";
 import { MarkEyebrow, NodeLabel } from "@/components/blueprint";
 import { HeroActions } from "@/components/hero-actions";
 
 // Reconciled into one list (2026-07-04) — the old 3-card "strengths" grid and
 // this "experience" list said largely the same things twice (range, business
 // background, AI-native pace). One clean pass now covers all of it.
+// The hero's proof: three numbers from real client installs (sources in
+// claims-menu.md). The promise above them stays the offer line.
+const proof = [
+  { stat: "~$18k/yr", label: "admin role replaced by AI quoting" },
+  { stat: "15 days", label: "from yes to a live system" },
+  { stat: "To the cent", label: "AI quotes checked against real jobs" },
+];
+
+// How the work runs — the same order every client story follows.
+const method = [
+  {
+    step: "Find",
+    detail:
+      "A free AI Opportunity Report: where your week actually goes, and the biggest wins, ranked by value.",
+  },
+  {
+    step: "Build",
+    detail: "The highest-value automation first — the one that pays for the rest.",
+  },
+  {
+    step: "Install",
+    detail:
+      "Your AI operating system: your tools connected, a live view of the business, and room to grow.",
+  },
+];
+
 const experience = [
   {
     role: "Builder & founder",
@@ -41,9 +67,9 @@ export default function Home() {
     <>
       {/* Hero — the statement, the face, and what I bring, as one flow */}
       <section id="about" className="relative overflow-hidden">
-        <div className="mx-auto max-w-5xl px-6 pb-10 pt-20 sm:pb-14 sm:pt-28">
+        <div className="mx-auto max-w-5xl px-6 pb-10 pt-8 sm:pb-14 sm:pt-28">
           {/* Statement + face */}
-          <div className="grid items-center gap-10 lg:grid-cols-[1fr_17rem] lg:gap-16">
+          <div className="grid items-center gap-6 sm:gap-10 lg:grid-cols-[1fr_17rem] lg:gap-16">
             <div>
               <div className="text-plate">
                 <MarkEyebrow>AI Solutions Consultant &amp; Builder</MarkEyebrow>
@@ -52,19 +78,43 @@ export default function Home() {
                   <span className="text-accent">then build &amp; install them, end to end.</span>
                 </h1>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-fg-muted">
-                  I&apos;m Ryan. I take ideas and turn them into working AI products — full-stack apps,
-                  automation pipelines, and custom model integrations — with the production guardrails that
-                  keep AI reliable. After ~7 years running my own businesses, I build for real outcomes, not
-                  just features: I understand the whole operation a tool has to fit into, the context most
-                  builders lack. Proven across a live SaaS, a decision-support engine, a custom AI media
-                  toolset, and research/reporting automations — all built solo.
+                  I&apos;m Ryan. I start with a free AI Opportunity Report, build the highest-value
+                  automation first, then install the AI operating system that connects your tools.
+                  Seven years running my own businesses means I build for how a business actually
+                  runs.
                 </p>
               </div>
               <HeroActions />
+
+              {/* Proof — the promise, backed by real client numbers */}
+              <div className="mt-10 grid grid-cols-3 gap-2 sm:gap-3">
+                {proof.map((p) => (
+                  <div
+                    key={p.stat}
+                    className="glass-card rounded-lg border border-amber-400/30 px-3 py-3 sm:px-4"
+                  >
+                    <p className="font-display text-lg font-extrabold leading-tight tracking-tight text-amber-400 sm:text-2xl">
+                      {p.stat}
+                    </p>
+                    <p className="mt-1 text-[11px] leading-snug text-fg-muted sm:text-xs">{p.label}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 text-sm text-fg-muted">
+                Client work for{" "}
+                {clients.map((c, i) => (
+                  <span key={c.slug}>
+                    {i > 0 && <span className="text-fg-muted/60"> · </span>}
+                    <a href={c.page ? `/work/${c.slug}` : "#client-work"} className="font-semibold text-fg hover:text-amber-400">
+                      {c.company}
+                    </a>
+                  </span>
+                ))}
+              </p>
             </div>
 
             {/* The face */}
-            <div className="relative order-first mx-auto w-44 sm:w-52 lg:order-none lg:mx-0 lg:w-full">
+            <div className="relative order-first mx-auto w-28 sm:w-52 lg:order-none lg:mx-0 lg:w-full">
               <div
                 className="pointer-events-none absolute -inset-4 -z-10 rounded-2xl bg-green-brand/25 blur-[60px]"
                 aria-hidden
@@ -82,50 +132,66 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Flows straight into what that means in practice — no second "About" heading */}
-          <div className="mt-16 text-plate sm:mt-20">
-            <dl className="grid gap-4">
-              {experience.map((e) => (
-                <div key={e.role} className="grid gap-1 sm:grid-cols-[12rem_1fr] sm:gap-4">
-                  <dt className="font-display text-sm font-semibold tracking-tight text-fg">
-                    {e.role}
-                  </dt>
-                  <dd className="text-sm leading-relaxed text-fg-muted">{e.detail}</dd>
-                </div>
-              ))}
-            </dl>
 
-          </div>
         </div>
       </section>
 
-      {/* Client results — real businesses, real outcomes. Kept ahead of and
-          visually distinct from the personal builds below: a business owner
-          reads trust signals first. */}
-      {testimonials.length > 0 && (
-        <section id="client-results" className="mx-auto max-w-5xl px-6 pt-8 sm:pt-10">
-          <div className="mb-10 text-plate inline-block">
-            <MarkEyebrow>Client work</MarkEyebrow>
-            <h2 className="mt-2 font-display text-2xl font-bold tracking-tight">
-              Client results
-            </h2>
-          </div>
-          <div
-            className={`grid gap-5 ${testimonials.length > 1 ? "sm:grid-cols-2" : "sm:grid-cols-1"}`}
-          >
-            {testimonials.map((t) => (
-              <TestimonialCard key={t.slug} testimonial={t} />
+      {/* How I work — the offer line, as three steps */}
+      <section className="mx-auto max-w-5xl px-6 pt-4">
+        <div className="text-plate inline-block">
+          <MarkEyebrow>How I work</MarkEyebrow>
+        </div>
+        <ol className="mt-5 grid gap-3 sm:grid-cols-3">
+          {method.map((m, i) => (
+            <li key={m.step} className="glass-card rounded-lg border border-border p-5">
+              <p className="font-mono text-xs text-accent">0{i + 1}</p>
+              <p className="mt-1 font-display text-lg font-bold tracking-tight">{m.step}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{m.detail}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* Client work — real businesses, told as found → built → result */}
+      <section id="client-work" className="mx-auto max-w-5xl scroll-mt-20 px-6 pt-16 sm:pt-20">
+        <div className="mb-8 text-plate inline-block">
+          <MarkEyebrow>Client work</MarkEyebrow>
+          <h2 className="mt-2 font-display text-2xl font-bold tracking-tight">
+            Opportunities found, built and running
+          </h2>
+        </div>
+        <div className="grid gap-5 sm:grid-cols-2">
+          {clients.map((c) => (
+            <div key={c.slug} className={c.featured ? "sm:col-span-2" : ""}>
+              <ClientCard client={c} />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Background — who's behind the work (was in the hero) */}
+      <section className="mx-auto max-w-5xl px-6 pt-20">
+        <div className="text-plate">
+          <MarkEyebrow>Background</MarkEyebrow>
+          <dl className="mt-6 grid gap-4">
+            {experience.map((e) => (
+              <div key={e.role} className="grid gap-1 sm:grid-cols-[12rem_1fr] sm:gap-4">
+                <dt className="font-display text-sm font-semibold tracking-tight text-fg">
+                  {e.role}
+                </dt>
+                <dd className="text-sm leading-relaxed text-fg-muted">{e.detail}</dd>
+              </div>
             ))}
-          </div>
-        </section>
-      )}
+          </dl>
+        </div>
+      </section>
 
       {/* Work */}
       <section id="work" className="mx-auto max-w-5xl px-6 py-20">
         <div className="mb-10 text-plate inline-block">
-          <MarkEyebrow>Selected work</MarkEyebrow>
+          <MarkEyebrow>Also built</MarkEyebrow>
           <h2 className="mt-2 font-display text-2xl font-bold tracking-tight">
-            Builds &amp; case studies
+            Products &amp; personal builds
           </h2>
         </div>
 

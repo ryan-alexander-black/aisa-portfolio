@@ -21,8 +21,8 @@ export function SiteHeader() {
           </span>
         </Link>
         <nav className="flex items-center gap-3 text-sm sm:gap-6">
-          <Link href="/#client-results" className="text-fg-muted transition-colors hover:text-fg">
-            Client Results
+          <Link href="/#client-work" className="text-fg-muted transition-colors hover:text-fg">
+            Client Work
           </Link>
           <Link href="/#work" className="text-fg-muted transition-colors hover:text-fg">
             AI Builds

@@ -7,13 +7,40 @@ const inputClass =
 
 type Status = "idle" | "submitting" | "success" | "error";
 
+export type ContactVariant = "message" | "report";
+
+// The words per variant. "report" = the Free AI Opportunity Report request.
+const COPY: Record<
+  ContactVariant,
+  { eyebrow: string; heading: string; intro?: string; messageLabel: string; messagePlaceholder?: string; done: string }
+> = {
+  message: {
+    eyebrow: "Get in touch",
+    heading: "Send me a message",
+    messageLabel: "Message",
+    done: "I’ll get back to you shortly.",
+  },
+  report: {
+    eyebrow: "Free AI Opportunity Report",
+    heading: "Find your biggest AI wins",
+    intro:
+      "Tell me a little about your business. I’ll be in touch to set up a short chat, then send you a report of where AI would save you the most time and money — ranked by value. Free, no obligation.",
+    messageLabel: "What eats the most time in your week?",
+    messagePlaceholder: "e.g. quoting, chasing invoices, reports, rostering…",
+    done: "I’ll be in touch shortly to set up our chat.",
+  },
+};
+
 export function ContactModal({
   open,
   onClose,
+  variant = "message",
 }: {
   open: boolean;
   onClose: () => void;
+  variant?: ContactVariant;
 }) {
+  const copy = COPY[variant];
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -83,14 +110,15 @@ export function ContactModal({
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">
-              Get in touch
+              {copy.eyebrow}
             </p>
             <h2
               id="contact-heading"
               className="mt-1 font-display text-2xl font-extrabold tracking-tight"
             >
-              Send me a message
+              {copy.heading}
             </h2>
+            {copy.intro && <p className="mt-2 text-sm leading-relaxed text-fg-muted">{copy.intro}</p>}
           </div>
           <button
             onClick={onClose}
@@ -107,7 +135,7 @@ export function ContactModal({
           <div className="rounded-lg border border-green-brand/40 bg-surface p-6 text-center">
             <p className="font-display text-lg font-bold tracking-tight">Message sent!</p>
             <p className="mt-1 text-sm text-fg-muted">
-              I&apos;ll get back to you shortly.
+              {copy.done}
             </p>
             <button
               onClick={onClose}
@@ -154,15 +182,32 @@ export function ContactModal({
               />
             </div>
 
+            {variant === "report" && (
+              <div>
+                <input type="hidden" name="request" value="Free AI Opportunity Report" />
+                <label htmlFor="contact-business" className="block text-sm font-medium text-fg">
+                  Business name or website <span className="text-accent">*</span>
+                </label>
+                <input
+                  id="contact-business"
+                  name="business"
+                  type="text"
+                  required
+                  className={inputClass}
+                />
+              </div>
+            )}
+
             <div>
               <label htmlFor="contact-message" className="block text-sm font-medium text-fg">
-                Message <span className="text-accent">*</span>
+                {copy.messageLabel} <span className="text-accent">*</span>
               </label>
               <textarea
                 id="contact-message"
                 name="message"
                 rows={4}
                 required
+                placeholder={copy.messagePlaceholder}
                 className={inputClass}
               />
             </div>
