@@ -25,16 +25,8 @@ export function ClientCaseStudy({ client }: { client: ClientCase }) {
         <p className="mt-5 text-lg leading-relaxed text-fg-muted">{page.intro}</p>
       </header>
 
-      {/* The results up front — the page's answer before its story */}
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
-        {page.changed.slice(0, 3).map((c) => (
-          <div key={c.stat} className="rounded-lg border border-amber-400/30 bg-amber-400/5 p-4">
-            <p className="font-display text-xl font-extrabold tracking-tight text-amber-400 sm:text-2xl">
-              {c.stat}
-            </p>
-          </div>
-        ))}
-      </div>
+      {/* No bare numbers up top (Ryan, 19 Sep): a stat without its context reads as noise —
+          every number lives under "What changed", with its sentence. */}
 
       <Section title="The opportunity">
         {page.opportunity.map((p) => (
