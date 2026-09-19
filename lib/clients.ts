@@ -41,14 +41,14 @@ export const clients: ClientCase[] = [
     logoBg: "dark",
     featured: true,
     opportunity:
-      "Quoting was eating half of Amanda's week — handwritten sheets, scanned, then retyped into Xero by an offshore assistant.",
+      "Quoting took up much of the week — handwritten sheets, scanned, then typed into Xero by hand.",
     built:
       "AI quoting straight into Xero — then the AV Hub: quoting, sales leads, purchase orders, job sheets and a live “crystal ball” dashboard, connected to Xero, Monday and their file server.",
     results: [
-      "~$18k/yr admin role no longer needed",
-      "Quotes accurate to the cent",
-      "4 client quote sheets live in one day",
-      "12-month vision, running in ~10 weeks",
+      "Admin time handed back to the team",
+      "Quotes priced on their own rate card",
+      "Quoting, POs and job sheets in one place",
+      "Their 12-month vision, running early",
     ],
     quote: {
       text: "The quote platform that's been designed is so quick… and accurate.",
@@ -59,7 +59,7 @@ export const clients: ClientCase[] = [
       intro:
         "Advance Visual designs, prints and installs signage across Perth — around 800 quotes a year. Martin, the founder, wanted to spend his time on the creative side of the business, not the day-to-day admin.",
       opportunity: [
-        "The AI Opportunity Report found the biggest leak in quoting. It took at least half of Amanda's week: square metres handwritten on an A4 sheet at the site survey, scanned, then typed into Xero by an offshore assistant. A big multi-site quote could take hours.",
+        "The AI Opportunity Report found the biggest leak in quoting. It took at least half of Amanda's week: square metres handwritten on an A4 sheet at the site survey, scanned, then typed into Xero by hand. A big multi-site quote could take hours.",
         "Then the same job was typed again — into Monday, into the weekly report. Mapping the business turned up 33 hand-offs between people and systems. Only 3 happened on their own.",
       ],
       built: [
@@ -88,7 +88,7 @@ export const clients: ClientCase[] = [
         {
           stat: "~$18k/yr",
           context:
-            "The outsourced admin role that retyped quotes is no longer needed — about two months after we started.",
+            "In admin duties saved — the team's time now goes to higher-value work. About two months after we started.",
         },
         {
           stat: "To the cent",
@@ -146,10 +146,10 @@ export const clients: ClientCase[] = [
     built:
       "The Legends Brain — an AI operating system on accounts Legends owns — with a live dashboard connecting Momence, Xero, Meta, Google Ads and more, plus a speak-a-procedure SOP tool.",
     results: [
-      "Live in 15 days",
-      "8 business systems connected",
-      "Asked Saturday, live Sunday",
-      "Showed which channel turns enquiries into members",
+      "One live view of the whole gym",
+      "Eight business systems connected",
+      "New ideas built in a day",
+      "Clear on which marketing brings in members",
     ],
     quote: {
       text: "It knows me, my culture, my values, it knows everything about Legends.",

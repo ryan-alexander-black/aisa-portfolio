@@ -9,12 +9,13 @@ import { HeroActions } from "@/components/hero-actions";
 // Reconciled into one list (2026-07-04) — the old 3-card "strengths" grid and
 // this "experience" list said largely the same things twice (range, business
 // background, AI-native pace). One clean pass now covers all of it.
-// The hero's proof: three numbers from real client installs (sources in
-// claims-menu.md). The promise above them stays the offer line.
+// The hero's proof: what the work does, said plainly (Ryan, 19 Sep — soft for now: AI is
+// about helping people do higher-value work, not replacing them; the hard numbers live on
+// the case-study pages). The promise above them stays the offer line.
 const proof = [
-  { stat: "~$18k/yr", label: "admin role replaced by AI quoting" },
-  { stat: "15 days", label: "from yes to a live system" },
-  { stat: "To the cent", label: "AI quotes checked against real jobs" },
+  { stat: "Time back", label: "admin handed to AI, so your team gets on with the work that matters" },
+  { stat: "Cost down", label: "less spent on double-handling and busywork" },
+  { stat: "Accuracy", label: "every result checked against your own numbers" },
 ];
 
 // How the work runs — the same order every client story follows.
