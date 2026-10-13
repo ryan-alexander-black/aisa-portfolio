@@ -122,3 +122,27 @@
     opacity: 0.85;
   }
 }
+
+/* How I work — the sloped steps (13 Oct). Each card's top edge rises 2.5rem across its width,
+   with rounded corners. shape() draws the curve; browsers without it get plain rounded cards. */
+.step-card {
+  border-radius: 0.75rem;
+}
+@media (min-width: 640px) {
+  @supports (clip-path: shape(from 0 0, line to 1px 1px)) {
+    .step-card {
+      border-radius: 0;
+      clip-path: shape(
+        from 0 calc(2.5rem + 14px),
+        curve to 14px calc(2.5rem - 2px) with 0 2.5rem,
+        line to calc(100% - 14px) 2px,
+        curve to 100% 14px with 100% 0,
+        line to 100% calc(100% - 14px),
+        curve to calc(100% - 14px) 100% with 100% 100%,
+        line to 14px 100%,
+        curve to 0 calc(100% - 14px) with 0 100%,
+        close
+      );
+    }
+  }
+}

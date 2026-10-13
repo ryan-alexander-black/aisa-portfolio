@@ -26,7 +26,7 @@ const proof = [
 // How the work runs — the same order every client story follows.
 // A ladder, not a funnel (Ryan, 13 Oct): every step stands on its own, and each step further
 // does more for the business. Stop at any one.
-const method = [
+const method: { step: string; tag: string; detail: string; points?: string[] }[] = [
   {
     step: "Find",
     tag: "Free · no obligation",
@@ -38,12 +38,18 @@ const method = [
     tag: "One win at a time",
     detail:
       "If you'd like to work together, we build the highest-value automation first: always the one that saves you the most time and money.",
+    points: ["Built around the tools you already use", "Tested on your real numbers first"],
   },
   {
     step: "Install",
     tag: "The full system",
-    detail:
-      "Your AI operating system: your tools connected, a live view of the business, and room to grow.",
+    detail: "Your AI operating system: the whole business working as one.",
+    points: [
+      "All your tools connected in one place",
+      "A live view of the whole business",
+      "AI that knows how your business runs",
+      "The foundation that future-proofs the business for every automation that comes next",
+    ],
   },
 ];
 
@@ -151,25 +157,42 @@ export default function Home() {
         <div className="text-plate inline-block">
           <MarkEyebrow>How I work</MarkEyebrow>
         </div>
-        <ol className="mt-5 grid gap-3 sm:grid-cols-3 sm:items-start">
+        {/* The slope: bottoms line up, each box is taller than the last, and the top edges are cut
+            on one continuous angle (each box rises 2.5rem across its width, and starts where the
+            last one ended). Phones get plain stacked cards. */}
+        <ol className="mt-5 grid gap-3 sm:grid-cols-3 sm:items-end">
           {method.map((m, i) => (
             <li
               key={m.step}
-              className={`glass-card relative rounded-lg border p-5 ${
-                ["border-border sm:mt-16", "border-green-brand/40 sm:mt-8", "border-green-brand/70 shadow-glow"][i]
+              className={`step-card p-px ${
+                ["bg-border sm:h-[18.5rem]", "bg-green-brand/40 sm:h-[21rem]", "bg-green-brand/70 sm:h-[23.5rem]"][i]
               }`}
             >
-              <div className="flex items-center justify-between gap-2">
-                <p className="font-mono text-xs text-accent">0{i + 1}</p>
-                <span className="rounded-full border border-green-brand/40 bg-green-brand/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent">
-                  {m.tag}
-                </span>
+              <div className="step-card flex h-full flex-col bg-bg p-5 sm:pt-12">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="font-mono text-xs text-accent">0{i + 1}</p>
+                  <span className="rounded-full border border-green-brand/40 bg-green-brand/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent">
+                    {m.tag}
+                  </span>
+                </div>
+                <p className="mt-2 font-display text-lg font-bold tracking-tight">{m.step}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{m.detail}</p>
+                {m.points && (
+                  <ul className="mt-3 space-y-1.5">
+                    {m.points.map((pt) => (
+                      <li key={pt} className="flex gap-2 text-sm leading-snug text-fg-muted">
+                        <span className="text-accent" aria-hidden>
+                          ✓
+                        </span>
+                        {pt}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <p className="mt-auto border-t border-border pt-3 font-mono text-[11px] text-fg-muted max-sm:mt-4">
+                  {i < method.length - 1 ? "You can stop here →" : "As far as it goes"}
+                </p>
               </div>
-              <p className="mt-2 font-display text-lg font-bold tracking-tight">{m.step}</p>
-              <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{m.detail}</p>
-              <p className="mt-4 border-t border-border pt-3 font-mono text-[11px] text-fg-muted">
-                {i < method.length - 1 ? "You can stop here →" : "As far as it goes"}
-              </p>
             </li>
           ))}
         </ol>
