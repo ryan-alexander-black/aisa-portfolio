@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ClientCase } from "@/lib/clients";
 import { Section } from "@/components/section";
@@ -23,6 +24,11 @@ export function ClientCaseStudy({ client }: { client: ClientCase }) {
           {client.company}
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-fg-muted">{page.intro}</p>
+        {page.personal && (
+          <p className="mt-5 rounded-lg border border-green-brand/40 bg-green-brand/5 px-4 py-3 text-[15px] leading-relaxed text-fg">
+            {page.personal}
+          </p>
+        )}
       </header>
 
       {/* No bare numbers up top (Ryan, 19 Sep): a stat without its context reads as noise —
@@ -45,6 +51,28 @@ export function ClientCaseStudy({ client }: { client: ClientCase }) {
         </ul>
       </Section>
 
+      {page.screens && page.screens.length > 0 && (
+        <Section title="See it">
+          <div className="space-y-8">
+            {page.screens.map((s) => (
+              <figure key={s.src}>
+                <Image
+                  src={s.src}
+                  alt={s.alt}
+                  width={1600}
+                  height={1000}
+                  className="h-auto w-full rounded-lg border border-border"
+                />
+                <figcaption className="mt-2 text-sm text-fg-muted">{s.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <p className="text-xs text-fg-muted">
+            Real screens from the live system. Client names and figures are masked.
+          </p>
+        </Section>
+      )}
+
       <Section title="What changed">
         <dl className="grid gap-4">
           {page.changed.map((c) => (
@@ -60,6 +88,23 @@ export function ClientCaseStudy({ client }: { client: ClientCase }) {
           ))}
         </dl>
       </Section>
+
+      {page.next && page.next.length > 0 && (
+        <Section title="What it opens up next">
+          <p className="text-fg-muted">
+            Because the system is theirs and built around how they work, the next step is a small
+            build, not a new subscription.
+          </p>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {page.next.map((n) => (
+              <li key={n.name} className="rounded-lg border border-border bg-surface p-4">
+                <p className="font-display font-semibold tracking-tight">{n.name}</p>
+                <p className="mt-1 text-[15px] text-fg-muted">{n.does}</p>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
 
       <Section title="In their words">
         <div className="space-y-5">

@@ -22,17 +22,33 @@ export function ClientLogo({ client, size = "md" }: { client: ClientCase; size?:
 }
 
 export function ClientCard({ client }: { client: ClientCase }) {
-  const { company, industry, opportunity, built, results, quote, page, featured } = client;
+  const { company, industry, opportunity, built, results, quote, page, featured, cardImage } = client;
 
   return (
     <div className="glass-card flex h-full flex-col rounded-lg border border-amber-400/40 p-6 sm:p-8">
       <div className="flex flex-wrap items-center gap-3">
         <ClientLogo client={client} />
         <div>
-          <p className="font-display text-base font-bold tracking-tight text-fg">{company}</p>
+          <p
+            className={`font-display font-bold tracking-tight text-fg ${featured ? "text-xl sm:text-2xl" : "text-base"}`}
+          >
+            {company}
+          </p>
           <p className="text-xs text-fg-muted">{industry}</p>
         </div>
       </div>
+
+      {featured && cardImage && page && (
+        <Link href={`/work/${client.slug}`} className="mt-6 block">
+          <Image
+            src={cardImage.src}
+            alt={cardImage.alt}
+            width={1464}
+            height={812}
+            className="h-auto w-full rounded-lg border border-border transition-opacity hover:opacity-90"
+          />
+        </Link>
+      )}
 
       <dl className={`mt-6 grid gap-4 ${featured ? "sm:grid-cols-2 sm:gap-8" : ""}`}>
         <div>
@@ -74,9 +90,13 @@ export function ClientCard({ client }: { client: ClientCase }) {
       {page && (
         <Link
           href={`/work/${client.slug}`}
-          className="mt-auto inline-flex items-center gap-1.5 pt-6 font-mono text-xs text-fg-muted transition-colors hover:text-amber-400"
+          className={
+            featured
+              ? "mt-6 inline-flex w-fit items-center gap-1.5 rounded-md border border-amber-400/60 bg-amber-400/10 px-4 py-2 font-mono text-sm text-amber-400 transition-colors hover:bg-amber-400/20"
+              : "mt-auto inline-flex items-center gap-1.5 pt-6 font-mono text-xs text-fg-muted transition-colors hover:text-amber-400"
+          }
         >
-          Read the case study <span aria-hidden>→</span>
+          {featured ? "Read the full case study" : "Read the case study"} <span aria-hidden>→</span>
         </Link>
       )}
     </div>

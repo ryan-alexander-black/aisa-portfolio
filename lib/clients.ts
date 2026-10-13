@@ -20,14 +20,24 @@ export interface ClientCase {
   results: string[]; // short chips — first is the headline
   quote: ClientQuote;
   featured?: boolean; // full-width card
+  cardImage?: { src: string; alt: string }; // a real screen on the featured card
   page?: ClientPage; // has a /work/<slug> case study
+}
+
+export interface ClientScreen {
+  src: string; // path in /public — client data masked before capture
+  alt: string;
+  caption: string;
 }
 
 export interface ClientPage {
   intro: string;
+  personal?: string; // why Ryan, for this client — one short line
   opportunity: string[];
   built: { name: string; does: string }[];
+  screens?: ClientScreen[]; // real screens from the build, client data masked
   changed: { stat: string; context: string }[];
+  next?: { name: string; does: string }[]; // what the build opens up — possibilities, not promises
   quotes: ClientQuote[];
   stack: string[];
 }
@@ -40,14 +50,18 @@ export const clients: ClientCase[] = [
     logo: "/clients/advance-visual-logo.svg",
     logoBg: "dark",
     featured: true,
+    cardImage: {
+      src: "/clients/av/taskmaster.jpg",
+      alt: "The AV Hub's Taskmaster screen: every live job and each department's workload",
+    },
     opportunity:
-      "Quoting took up much of the week — handwritten sheets, scanned, then typed into Xero by hand.",
+      "Quoting took up much of the week — handwritten sheets, scanned, then typed into Xero by hand. Then every job was typed again into monday.com, the online board they tracked jobs on.",
     built:
-      "AI quoting straight into Xero — then the AV Hub: quoting, sales leads, purchase orders, job sheets and a live “crystal ball” dashboard, connected to Xero, Monday and their file server.",
+      "The AV Hub — their own system for quoting, sales leads, purchase orders, job sheets and Taskmaster (every live job and every department's workload on one screen), plus a live “crystal ball” dashboard. Connected to Xero, monday.com, email and their file server.",
     results: [
       "Admin time handed back to the team",
       "Quotes priced on their own rate card",
-      "Quoting, POs and job sheets in one place",
+      "Every live job on one screen",
       "Their 12-month vision, running early",
     ],
     quote: {
@@ -57,31 +71,68 @@ export const clients: ClientCase[] = [
     },
     page: {
       intro:
-        "Advance Visual designs, prints and installs signage across Perth — around 800 quotes a year. Martin, the founder, wanted to spend his time on the creative side of the business, not the day-to-day admin.",
+        "Advance Visual designs, prints and installs signage across Perth — around 800 quotes a year, for national retail brands and local businesses. Martin, the founder, wanted his time back for the creative side of the business, and a business that ran from one system instead of five.",
+      personal:
+        "I spent nearly a decade at Advance Visual, most recently running production and installation, before I went out on my own. So I knew where the time went before we started.",
       opportunity: [
-        "The AI Opportunity Report found the biggest leak in quoting. It took at least half of Amanda's week: square metres handwritten on an A4 sheet at the site survey, scanned, then typed into Xero by hand. A big multi-site quote could take hours.",
-        "Then the same job was typed again — into Monday, into the weekly report. Mapping the business turned up 33 hand-offs between people and systems. Only 3 happened on their own.",
+        "The AI Opportunity Report found the biggest leak in quoting. Amanda, AV's sales manager, spent at least half her week on it: square metres handwritten on an A4 sheet at the site survey, scanned, then typed into Xero (their accounting system) by hand. A big multi-site quote could take hours.",
+        "Then the same job was typed again — into monday.com (the online board AV tracked every job on) and into the weekly report. To print a job sheet, the team was creating and voiding about two invoices a day in Xero.",
+        "Mapping the whole business turned up 33 hand-offs between people and systems. Only 3 happened on their own.",
       ],
       built: [
         {
           name: "AI quoting",
-          does: "A digital quote sheet for each major client, priced on AV's own rate card, pushed straight into Xero as a branded quote with the worksheet attached.",
+          does: "A digital quote sheet for each major client, priced on AV's own rate card and sent straight into Xero as a branded quote with the worksheet attached. Talk to a sign and the sheet fills itself; AI reads the client's artwork proofs too.",
         },
         {
           name: "The AV Hub",
-          does: "Their own system: sales leads, quoting, requotes and edits, purchase orders, job sheets and the price book — one place, with logins the team manages themselves.",
+          does: "Their own system, in one place: sales leads, quoting, requotes and edits to any old quote, purchase orders emailed to suppliers, job sheets, the price book and team leave — with logins the team manages themselves.",
         },
         {
-          name: "Everything connected",
-          does: "Xero, Monday.com, Microsoft 365 email and the office file server. One press in the Hub updates them all — no retyping.",
+          name: "Taskmaster",
+          does: "Every live job on one screen, in the order it moves: sales, design, production, installation. Each department's workload for the next five working days, worked out from the hours on the quote, plus what needs a person today. Built to take over from monday.com — it runs alongside while the team moves across.",
         },
         {
           name: "The crystal ball",
-          does: "A live dashboard of the pipeline and cash flow, straight from Xero and Monday — the view Martin asked for in the first meeting.",
+          does: "A live dashboard of the sales pipeline and cash flow, straight from Xero and monday.com — the view Martin asked for in the first meeting.",
         },
         {
-          name: "AI on top",
-          does: "Talk to a sign and the quote sheet fills itself. AI reads client artwork proofs, and quotes that were started outside the Hub.",
+          name: "One record of every customer",
+          does: "A contact book linking every client, store and contact to their jobs, and AV's old job archive, searchable from the same screen.",
+        },
+        {
+          name: "Aslan, the AV brain",
+          does: "An AI assistant, named after the office dog, that answers questions from the Hub's live data — what's due this week, who has room, where a job is up to. It reads; it never changes anything.",
+        },
+        {
+          name: "Everything connected",
+          does: "Xero, monday.com, Microsoft 365 email and the office file server. One press in the Hub updates them all — no retyping.",
+        },
+      ],
+      screens: [
+        {
+          src: "/clients/av/taskmaster.jpg",
+          alt: "Taskmaster overview: every live job by stage, and each department's workload for the next five working days",
+          caption:
+            "Taskmaster — every live job in the order it moves, and each department's hours for the next five working days, worked out from the quotes.",
+        },
+        {
+          src: "/clients/av/dashboard.jpg",
+          alt: "The crystal ball dashboard: invoiced this month, pipeline, quotes out, and where the work sits from quote to install",
+          caption:
+            "The crystal ball — live from Xero and monday.com: what's invoiced, what's out for quote, and where every dollar sits on its way from quote to install.",
+        },
+        {
+          src: "/clients/av/sales-lead.jpg",
+          alt: "The new sales lead form, with client matches coming straight from Xero",
+          caption:
+            "A new sales lead — start typing the client and it matches straight from Xero, so a job starts with the right details and is never typed twice.",
+        },
+        {
+          src: "/clients/av/team-leave.jpg",
+          alt: "The team leave calendar with a request waiting for approval",
+          caption:
+            "Team leave — book it, approve it, and it flows straight into the workload numbers on Taskmaster.",
         },
       ],
       changed: [
@@ -93,7 +144,12 @@ export const clients: ClientCase[] = [
         {
           stat: "To the cent",
           context:
-            "The engine re-prices AV's own past quotes exactly, and every change is tested against them before it ships.",
+            "The engine re-prices AV's own past quotes exactly. It was stress-tested on 875 real quotes before the team touched it, and every change is tested again before it ships.",
+        },
+        {
+          stat: "One screen",
+          context:
+            "Every live job, every department's hours and what needs a person today — where it used to take a phone call and a guess.",
         },
         {
           stat: "1 day",
@@ -101,13 +157,13 @@ export const clients: ClientCase[] = [
             "Four client quote sheets designed, built and live in a single day. The purchase-order system took one day too — the first real PO went out within the hour.",
         },
         {
+          stat: "13 days",
+          context: "From yes to the first real quotes going out — and Amanda kept every price.",
+        },
+        {
           stat: "~10 weeks",
           context:
             "Their own custom Hub was pitched as the 12-month goal. It was running AV's quoting in about ten weeks.",
-        },
-        {
-          stat: "13 days",
-          context: "From yes to the first real quotes going out — and Amanda kept every price.",
         },
       ],
       quotes: [
@@ -117,18 +173,23 @@ export const clients: ClientCase[] = [
           role: "Founder",
         },
         {
+          text: "It's almost like all my dreams have been answered at once… to know that there's 3.5 hours in laminating, there's seven hours in this… That's next level.",
+          name: "Martin",
+          role: "Founder",
+        },
+        {
           text: "I can check in with my crystal ball… every morning. Which is next level stuff.",
           name: "Martin",
           role: "Founder",
         },
-        { text: "Gee you're a genius! Love it!!", name: "Amanda", role: "General Manager" },
+        { text: "Gee you're a genius! Love it!!", name: "Amanda", role: "Sales Manager" },
       ],
       stack: [
         "Next.js",
         "Vercel",
         "Supabase",
         "Xero API",
-        "Monday.com API",
+        "monday.com API",
         "Microsoft 365",
         "Synology NAS",
         "Claude",
