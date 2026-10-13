@@ -152,11 +152,6 @@ export const clients: ClientCase[] = [
             "Every live job, every department's hours and what needs a person today — where it used to take a phone call and a guess.",
         },
         {
-          stat: "1 day",
-          context:
-            "Four client quote sheets designed, built and live in a single day. The purchase-order system took one day too — the first real PO went out within the hour.",
-        },
-        {
           stat: "13 days",
           context: "From yes to the first real quotes going out — and Amanda kept every price.",
         },
@@ -164,6 +159,11 @@ export const clients: ClientCase[] = [
           stat: "~10 weeks",
           context:
             "Their own custom Hub was pitched as the 12-month goal. It was running AV's quoting in about ten weeks.",
+        },
+        {
+          stat: "Built to grow",
+          context:
+            "The groundwork — the pricing engine and the connections — took the weeks. Once it was in, new pieces came quickly: four client quote sheets went live in a day, the purchase-order system in another, and the first real PO went out within the hour.",
         },
       ],
       quotes: [
