@@ -12,25 +12,36 @@ import { HeroActions } from "@/components/hero-actions";
 // The hero's proof: what the work does, said plainly (Ryan, 19 Sep — soft for now: AI is
 // about helping people do higher-value work, not replacing them; the hard numbers live on
 // the case-study pages). The promise above them stays the offer line.
+// 13 Oct: four panels, generic to any business (Ryan: the case studies carry the specifics).
 const proof = [
   { stat: "Time back", label: "admin handed to AI, so your team gets on with the work that matters" },
-  { stat: "Cost down", label: "less spent on double-handling and busywork" },
-  { stat: "Accuracy", label: "every result checked against your own numbers" },
+  {
+    stat: "Cost down",
+    label: "less spent on manual work, rework and costly mistakes, so more of every dollar stays in the business",
+  },
+  { stat: "Accuracy", label: "AI-checked work, consistent every time, with no human slip-ups" },
+  { stat: "Speed", label: "hours of manual work done in minutes, so the business moves faster" },
 ];
 
 // How the work runs — the same order every client story follows.
+// A ladder, not a funnel (Ryan, 13 Oct): every step stands on its own, and each step further
+// does more for the business. Stop at any one.
 const method = [
   {
     step: "Find",
+    tag: "Free · no obligation",
     detail:
-      "A free AI Opportunity Report: where your week actually goes, and the biggest wins, ranked by value.",
+      "A free AI Opportunity Report: where your week actually goes, and the biggest wins, ranked by value. Take it and run with it yourself if you like.",
   },
   {
     step: "Build",
-    detail: "The highest-value automation first — the one that pays for the rest.",
+    tag: "One win at a time",
+    detail:
+      "If you'd like to work together, we build the highest-value automation first: always the one that saves you the most time and money.",
   },
   {
     step: "Install",
+    tag: "The full system",
     detail:
       "Your AI operating system: your tools connected, a live view of the business, and room to grow.",
   },
@@ -40,12 +51,12 @@ const experience = [
   {
     role: "Builder & founder",
     detail:
-      "~7 years running my own businesses; now building AI software full-time. Flagship is OCLA — a SaaS that unifies a whole coaching business into one system, built solo, live with paying users. That background is the context most AI builders lack — I build for outcomes, not just features that look good in a demo.",
+      "~7 years running my own businesses; now building AI systems for businesses full-time — most recently the AV Hub for a Perth signage company and the Legends Brain for a martial-arts gym. Before that, OCLA: a SaaS that runs a whole coaching business from one system, built solo, live with paying users. Running businesses is the context most AI builders lack — I build for outcomes, not features that only look good in a demo.",
   },
   {
     role: "Operations & delivery",
     detail:
-      "Ran production and installation for a signage company — ~$250k/month, 30+ concurrent projects, a team of 5–6. I understand real-world constraints.",
+      "Nearly a decade at Advance Visual, a Perth signage company — most recently running production and installation: ~$250k/month, 30+ concurrent projects, a team of 5–6. I know how a busy shop floor actually runs.",
   },
   {
     role: "Range, end to end",
@@ -79,22 +90,20 @@ export default function Home() {
                   <span className="text-accent">then build &amp; install them, end to end.</span>
                 </h1>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-fg-muted">
-                  I&apos;m Ryan. I start with a free AI Opportunity Report, build the highest-value
-                  automation first, then install the AI operating system that connects your tools.
-                  Seven years running my own businesses means I build for how a business actually
-                  runs.
+                  Hey, I&apos;m Ryan. I run businesses myself, so I build AI that saves real hours
+                  and real money around the way businesses actually work.
                 </p>
               </div>
               <HeroActions />
 
               {/* Proof — the promise, backed by real client numbers */}
-              <div className="mt-10 grid grid-cols-3 gap-2 sm:gap-3">
+              <div className="mt-10 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
                 {proof.map((p) => (
                   <div
                     key={p.stat}
                     className="glass-card rounded-lg border border-amber-400/30 px-3 py-3 sm:px-4"
                   >
-                    <p className="font-display text-lg font-extrabold leading-tight tracking-tight text-amber-400 sm:text-2xl">
+                    <p className="whitespace-nowrap font-display text-lg font-extrabold leading-tight tracking-tight text-amber-400 sm:text-xl">
                       {p.stat}
                     </p>
                     <p className="mt-1 text-[11px] leading-snug text-fg-muted sm:text-xs">{p.label}</p>
@@ -142,15 +151,32 @@ export default function Home() {
         <div className="text-plate inline-block">
           <MarkEyebrow>How I work</MarkEyebrow>
         </div>
-        <ol className="mt-5 grid gap-3 sm:grid-cols-3">
+        <ol className="mt-5 grid gap-3 sm:grid-cols-3 sm:items-start">
           {method.map((m, i) => (
-            <li key={m.step} className="glass-card rounded-lg border border-border p-5">
-              <p className="font-mono text-xs text-accent">0{i + 1}</p>
-              <p className="mt-1 font-display text-lg font-bold tracking-tight">{m.step}</p>
+            <li
+              key={m.step}
+              className={`glass-card relative rounded-lg border p-5 ${
+                ["border-border sm:mt-16", "border-green-brand/40 sm:mt-8", "border-green-brand/70 shadow-glow"][i]
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <p className="font-mono text-xs text-accent">0{i + 1}</p>
+                <span className="rounded-full border border-green-brand/40 bg-green-brand/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent">
+                  {m.tag}
+                </span>
+              </div>
+              <p className="mt-2 font-display text-lg font-bold tracking-tight">{m.step}</p>
               <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{m.detail}</p>
+              <p className="mt-4 border-t border-border pt-3 font-mono text-[11px] text-fg-muted">
+                {i < method.length - 1 ? "You can stop here →" : "As far as it goes"}
+              </p>
             </li>
           ))}
         </ol>
+        <div className="mt-4 flex items-center gap-3">
+          <div className="h-1.5 flex-1 rounded-full bg-gradient-to-r from-green-brand/10 via-green-brand/50 to-green-brand" />
+          <p className="shrink-0 text-xs text-fg-muted">Stop at any step. Each one further does more.</p>
+        </div>
       </section>
 
       {/* Client work — real businesses, told as found → built → result */}
