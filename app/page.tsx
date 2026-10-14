@@ -190,7 +190,7 @@ export default function Home() {
                   </ul>
                 )}
                 <p className="mt-auto border-t border-border pt-3 font-mono text-[11px] text-fg-muted max-sm:mt-4">
-                  {i < method.length - 1 ? "You can stop here →" : "As far as it goes"}
+                  {i < method.length - 1 ? "You can stop here →" : "Keeps growing with your business"}
                 </p>
               </div>
             </li>
