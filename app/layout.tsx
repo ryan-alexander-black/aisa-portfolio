@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteBackground } from "@/components/site-background";
 import { ContactProvider } from "@/components/contact-modal-provider";
+import { Analytics } from "@/components/analytics";
 
 export const metadata: Metadata = {
   title: "Ryan Alexander Black — AI Solutions Consultant & Builder",
@@ -47,6 +48,7 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <SiteFooter />
         </ContactProvider>
+        <Analytics />
       </body>
     </html>
   );

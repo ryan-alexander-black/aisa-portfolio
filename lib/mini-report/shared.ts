@@ -1,0 +1,42 @@
+// Types, the fit rule and the money maths, shared by the server and the browser.
+// (Kept apart from prompts.ts so the page doesn't ship the AI prompt to every visitor.)
+
+export const CATEGORIES = [
+  "quotes", "followups", "scheduling", "bookings", "reporting", "messages",
+  "marketing", "ordering", "paperwork", "other",
+] as const;
+export type Category = (typeof CATEGORIES)[number];
+
+export type Answers = {
+  role?: string; role_other?: string;
+  team?: string; revenue?: string;
+  week_goes?: string[]; week_goes_other?: string;
+  enquiries?: string[]; enquiries_other?: string;
+  tools?: string[]; tools_other?: string;
+  admin_task?: string;
+};
+
+export type Opportunity = {
+  title: string; category: Category; today: string; with_ai: string; evidence: string;
+  hours_low: number; hours_high: number;
+};
+export type Report = { business_name: string; opportunities: Opportunity[] };
+
+// Fit (Ryan, 15 Oct): owner/manager AND (team 2+ OR revenue $250k+).
+// Skipped the questions = unknown = still shown the offer; Ryan qualifies on the call.
+export type Fit = "good" | "low" | "unknown";
+export function fitOf(a: Answers): Fit {
+  const { role, team, revenue: rev } = a;
+  const bigRev = rev === "$250k–$1M" || rev === "$1M–$5M" || rev === "$5M+";
+  const hasTeam = !!team && team !== "Just me";
+  if (!role && !team && !rev) return "unknown";
+  if (role === "Other") return "low";
+  if (hasTeam || bigRev || (!team && !rev)) return "good";
+  return "low";
+}
+
+// Money maths (deterministic, never the AI's): a $75k salary is about $36 an hour.
+export const HOURLY_RATE = 75000 / 52 / 40;
+export function yearlyDollars(hoursPerWeek: number): string {
+  return "$" + (Math.round((hoursPerWeek * HOURLY_RATE * 52) / 100) * 100).toLocaleString("en-NZ");
+}

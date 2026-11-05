@@ -1,0 +1,121 @@
+// Emails for the mini-report, sent with Resend (the site's existing sender):
+//   1. the visitor's copy of their report ("A copy is in your inbox")
+//   2. an alert to Ryan for every report (every report is a lead)
+//   3. an alert to Ryan for every application for the full AI Opportunity Report
+// With no RESEND_API_KEY (local dev) nothing is sent; each email is logged instead.
+import { Resend } from "resend";
+import { answersText } from "./prompts";
+import { yearlyDollars, type Answers, type Fit, type Report } from "./shared";
+
+const TO_RYAN = process.env.OPERATOR_FORM_TO || "ryanalexanderblack@gmail.com";
+const FROM = process.env.MAIL_FROM || "Ryan Alexander Black <hello@ryanalexanderblack.com>";
+
+export type Utm = Partial<Record<"utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "gclid" | "fbclid" | "landing", string>>;
+
+const esc = (s: string) =>
+  String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+
+async function send(msg: { to: string; subject: string; html: string; text: string; replyTo?: string }) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) {
+    console.log(`[mini-report] email not sent (no RESEND_API_KEY): to=${msg.to} subject="${msg.subject}"`);
+    return;
+  }
+  const { error } = await new Resend(key).emails.send({ from: FROM, ...msg });
+  if (error) console.error("[mini-report] resend error", error);
+}
+
+function ideasHtml(rep: Report): string {
+  return rep.opportunities.map((o, i) => `
+    <div style="border:1px solid #E6EBE8;border-radius:12px;padding:14px 16px;margin:0 0 12px">
+      <div style="font-weight:700;font-size:16px;margin:0 0 8px">${i + 1}. ${esc(o.title)}</div>
+      <p style="margin:0 0 6px"><b>Today:</b> ${esc(o.today)}</p>
+      <p style="margin:0 0 6px"><b>With AI:</b> ${esc(o.with_ai)}</p>
+      <p style="margin:0 0 6px;color:#5C6B64;font-style:italic">Based on: ${esc(o.evidence)}</p>
+      <p style="margin:0;color:#047857;font-weight:600">~${o.hours_low}–${o.hours_high} hrs a week back · ≈ ${yearlyDollars(o.hours_low)}–${yearlyDollars(o.hours_high)} a year in admin time</p>
+    </div>`).join("");
+}
+
+function ideasText(rep: Report): string {
+  return rep.opportunities.map((o, i) =>
+    `${i + 1}. ${o.title}\nToday: ${o.today}\nWith AI: ${o.with_ai}\nBased on: ${o.evidence}\n` +
+    `~${o.hours_low}–${o.hours_high} hrs a week back · ≈ ${yearlyDollars(o.hours_low)}–${yearlyDollars(o.hours_high)} a year`,
+  ).join("\n\n");
+}
+
+function totals(rep: Report) {
+  const lo = rep.opportunities.reduce((s, o) => s + o.hours_low, 0);
+  const hi = rep.opportunities.reduce((s, o) => s + o.hours_high, 0);
+  return { lo, hi, line: `~${lo}–${hi} hrs a week back, ≈ ${yearlyDollars(lo)}–${yearlyDollars(hi)} a year in admin time` };
+}
+
+const BASIS = "Money figures assume a $75,000 a year salary (about $36 an hour). Every figure is a rough estimate, not a promise.";
+const utmText = (u: Utm) => Object.entries(u).filter(([, v]) => v).map(([k, v]) => `${k}=${v}`).join(" · ") || "(none)";
+
+export async function sendReportEmails(ctx: {
+  email: string; site: string; rep: Report; answers: Answers; fit: Fit; utm: Utm; costUsd: number;
+}) {
+  const { email, site, rep, answers, fit, utm } = ctx;
+  const t = totals(rep);
+  const subject = `3 places AI could save ${rep.business_name} time`;
+
+  // 1. The visitor's copy. Replies come straight to Ryan.
+  const offer = fit === "low"
+    ? `<p>Short, practical AI ideas for small businesses are on their way, once a week. If your team grows, reply to this email and we'll talk.</p>`
+    : `<p>That was the 2-minute version. The free <b>AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit in Hawke's Bay, then your plan, walked through in person. Ryan only takes on 2 a month. <a href="https://www.ryanalexanderblack.com/ai-report">Apply on the site</a>, or just reply to this email.</p>`;
+  await send({
+    to: email,
+    replyTo: TO_RYAN,
+    subject,
+    text: `${subject}\n\n${t.line}\n\n${ideasText(rep)}\n\n${BASIS}\n\nRyan Alexander Black · ryanalexanderblack.com`,
+    html: `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#0A0F0D;max-width:600px">
+      <h2 style="margin:0 0 6px">${esc(subject)}</h2>
+      <p style="margin:0 0 16px;color:#5C6B64">Built from your website and your answers. ✦ Written by AI.</p>
+      <p style="margin:0 0 16px;font-weight:600">${esc(t.line)}</p>
+      ${ideasHtml(rep)}
+      <p style="font-size:12px;color:#5C6B64">${BASIS}</p>
+      ${offer}
+      <p style="margin-top:20px">Ryan Alexander Black<br><a href="https://www.ryanalexanderblack.com">ryanalexanderblack.com</a></p>
+    </div>`,
+  });
+
+  // 2. Ryan's lead alert.
+  await send({
+    to: TO_RYAN,
+    replyTo: email,
+    subject: `Mini-report: ${rep.business_name} (fit: ${fit})`,
+    text: `${email} · ${site}\nFit: ${fit}\nUTM: ${utmText(utm)}\nAI cost: ~US$${ctx.costUsd}\n\n${answersText(answers)}\n\n${t.line}\n\n${ideasText(rep)}`,
+    html: `<div style="font-family:system-ui,sans-serif;font-size:14px;line-height:1.55;color:#111;max-width:640px">
+      <h2 style="margin:0 0 10px">Mini-report: ${esc(rep.business_name)} <span style="color:#047857">(fit: ${fit})</span></h2>
+      <p style="margin:0 0 4px"><b>Email:</b> ${esc(email)} · <b>Site:</b> ${esc(site)}</p>
+      <p style="margin:0 0 4px"><b>Source:</b> ${esc(utmText(utm))}</p>
+      <p style="margin:0 0 12px;color:#5C6B64">AI cost ~US$${ctx.costUsd}</p>
+      <pre style="white-space:pre-wrap;font:inherit;background:#F5F8F6;padding:10px 12px;border-radius:8px">${esc(answersText(answers))}</pre>
+      <p style="font-weight:600">${esc(t.line)}</p>
+      ${ideasHtml(rep)}
+    </div>`,
+  });
+}
+
+export async function sendApplication(ctx: {
+  name: string; mobile: string; when: string; email: string; site: string; business: string;
+  fit: Fit; answers: Answers; ideas: string[]; utm: Utm;
+}) {
+  const { name, mobile, when, email, site, business, fit, answers, ideas, utm } = ctx;
+  const lines = [
+    `Name: ${name}`, `Mobile: ${mobile}`, `Best time to call: ${when || "(not given)"}`,
+    `Email: ${email}`, `Business: ${business} · ${site}`, `Fit: ${fit}`, `Source: ${utmText(utm)}`,
+    "", answersText(answers), "", "Their 3 ideas:", ...ideas.map((t, i) => `${i + 1}. ${t}`),
+  ];
+  await send({
+    to: TO_RYAN,
+    replyTo: email,
+    subject: `AI Opportunity Report application: ${business} (${name})`,
+    text: lines.join("\n"),
+    html: `<div style="font-family:system-ui,sans-serif;font-size:14px;line-height:1.55;color:#111;max-width:640px">
+      <h2 style="margin:0 0 10px">Application: ${esc(business)} <span style="color:#047857">(fit: ${fit})</span></h2>
+      <p style="margin:0 0 12px">Call within one business day.</p>
+      <pre style="white-space:pre-wrap;font:inherit;background:#F5F8F6;padding:10px 12px;border-radius:8px">${esc(lines.join("\n"))}</pre>
+    </div>`,
+  });
+}

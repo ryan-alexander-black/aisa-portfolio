@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 // Effective date is maintained by hand — bump it whenever the policy's substance changes.
-const EFFECTIVE = "26 August 2026";
+const EFFECTIVE = "5 November 2026";
 
 export default function PrivacyPage() {
   return (
@@ -36,10 +36,13 @@ export default function PrivacyPage() {
           <h2>This website</h2>
           <ul className="mt-3 list-disc space-y-2 pl-5">
             <li>
-              <strong>No advertising or analytics tracking.</strong> The site
-              currently sets no ad or analytics cookies; the only thing stored
-              in your browser is your light/dark theme preference. If that ever
-              changes, this policy will be updated first.
+              <strong>Analytics and ad measurement.</strong> To see which pages
+              and ads bring people here, the site may use Google Analytics,
+              Google Ads conversion tracking and the Meta (Facebook/Instagram)
+              Pixel. These set cookies and send those companies details such as
+              the pages you visit and whether you asked for a report. Your
+              browser also stores your light/dark theme preference and, for
+              the current visit only, the campaign link you arrived from.
             </li>
             <li>
               <strong>Contact form.</strong> If you use the contact form, the
@@ -51,6 +54,39 @@ export default function PrivacyPage() {
               <strong>Hosting.</strong> The site is hosted on Vercel, which may
               keep standard server logs (IP address, request time) for security
               and operations.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>The free AI report</h2>
+          <p>
+            If you ask for the free AI report on this site, here is what
+            happens with your information:
+          </p>
+          <ul className="mt-3 list-disc space-y-2 pl-5">
+            <li>
+              <strong>What I collect:</strong> your email, your business
+              website address, the answers you choose to give (role, team size,
+              revenue band, tools and so on), the campaign link you arrived
+              from, and, if you apply for the full AI Opportunity Report, your
+              name, mobile and best time to call.
+            </li>
+            <li>
+              <strong>How the report is made:</strong> the public pages of your
+              website are read by Firecrawl, and the report is written by
+              Anthropic&apos;s Claude AI from those pages and your answers.
+            </li>
+            <li>
+              <strong>How it&apos;s used:</strong> your report is emailed to you
+              (sent through Resend), and I get a copy so I can follow up. If
+              you apply for the full report, I&apos;ll ring you to talk it
+              through. You&apos;ll also get short AI tips by email; every email
+              lets you unsubscribe.
+            </li>
+            <li>
+              Your details are never sold or shared beyond the services named
+              here, and I&apos;ll delete them whenever you ask.
             </li>
           </ul>
         </section>
