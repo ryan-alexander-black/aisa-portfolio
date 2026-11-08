@@ -1,9 +1,10 @@
 import { after } from "next/server";
 import {
-  VisibleError, cleanAnswers, cleanUtm, clientIp, rateLimited, verifyRead, writeReport,
+  HELD_MESSAGE, VisibleError, cleanAnswers, cleanUtm, clientIp, rateLimited, verifyRead, writeReport,
+  type SiteRead,
 } from "@/lib/mini-report/server";
 import { fitOf } from "@/lib/mini-report/shared";
-import { sendReportEmails } from "@/lib/mini-report/emails";
+import { sendReportEmails, sendServiceAlert } from "@/lib/mini-report/emails";
 
 // Step 2 of the mini-report: write the three-idea report from the signed site read + the answers.
 // The emails (the visitor's copy, Ryan's lead alert) go out after the response, so the report
@@ -17,8 +18,10 @@ export async function POST(request: Request) {
   } catch {
     return Response.json({ error: "Invalid request." }, { status: 400 });
   }
+  let lead: SiteRead | null = null;
   try {
     const read = verifyRead(String(body.token || ""));
+    lead = read;
     if (rateLimited(`report-ip:${clientIp(request)}`, 8, 60 * 60 * 1000)) {
       throw new VisibleError("You've run a few reports already. Please try again later.", 429);
     }
@@ -35,7 +38,14 @@ export async function POST(request: Request) {
     return Response.json({ business_name: rep.business_name, opportunities: rep.opportunities, fit });
   } catch (e) {
     if (e instanceof VisibleError) return Response.json({ error: e.message }, { status: e.status });
+    // Our side failed (the AI's spend limit, an outage): the visitor is still a lead, so alert Ryan.
     console.error("[mini-report] report failed", e);
-    return Response.json({ error: "Something went wrong writing your report. Please try again." }, { status: 502 });
+    if (lead) {
+      const { email, site } = lead;
+      const detail = (e as Error).message || "unknown error";
+      after(() => sendServiceAlert({ step: "report", email, site, detail })
+        .catch((err) => console.error("[mini-report] service alert failed", err)));
+    }
+    return Response.json({ error: HELD_MESSAGE, held: true }, { status: 503 });
   }
 }

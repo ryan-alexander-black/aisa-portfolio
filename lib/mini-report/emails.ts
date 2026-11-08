@@ -2,6 +2,7 @@
 //   1. the visitor's copy of their report ("A copy is in your inbox")
 //   2. an alert to Ryan for every report (every report is a lead)
 //   3. an alert to Ryan for every application for the full AI Opportunity Report
+//   4. an alert to Ryan when the report engine fails on our side (the visitor is still a lead)
 // With no RESEND_API_KEY (local dev) nothing is sent; each email is logged instead.
 import { Resend } from "resend";
 import { answersText } from "./prompts";
@@ -61,7 +62,7 @@ export async function sendReportEmails(ctx: {
 
   // 1. The visitor's copy. Replies come straight to Ryan.
   const offer = fit === "low"
-    ? `<p>Short, practical AI ideas for small businesses are on their way, once a week. If your team grows, reply to this email and we'll talk.</p>`
+    ? `<p>The weekly business pulse is on its way: what's moving for NZ business, and how AI gives you the edge. If your team grows, reply to this email and we'll talk.</p>`
     : `<p>That was the 2-minute version. The free <b>AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit in Hawke's Bay, then your plan, walked through in person. Ryan only takes on 2 a month. <a href="https://www.ryanalexanderblack.com/ai-report">Apply on the site</a>, or just reply to this email.</p>`;
   await send({
     to: email,
@@ -93,6 +94,30 @@ export async function sendReportEmails(ctx: {
       <pre style="white-space:pre-wrap;font:inherit;background:#F5F8F6;padding:10px 12px;border-radius:8px">${esc(answersText(answers))}</pre>
       <p style="font-weight:600">${esc(t.line)}</p>
       ${ideasHtml(rep)}
+    </div>`,
+  });
+}
+
+export async function sendServiceAlert(ctx: { step: "read" | "report"; email: string; site: string; detail: string }) {
+  const { step, email, site, detail } = ctx;
+  const lines = [
+    `Step: ${step === "read" ? "reading their website" : "writing their report"}`,
+    `Cause: ${detail}`,
+    `Email: ${email}`,
+    `Site: ${site}`,
+    "",
+    "They were told: their details are with you, and you'll email their report once it's back up.",
+    "The fix: sort the cause (top up Firecrawl credits, or check the Anthropic key's spend limit), then run their " +
+      "website on ryanalexanderblack.com/ai-report with their email, so the report goes straight to them.",
+  ];
+  await send({
+    to: TO_RYAN,
+    replyTo: email,
+    subject: `⚠ Mini-report down: ${site} didn't get a report`,
+    text: lines.join("\n"),
+    html: `<div style="font-family:system-ui,sans-serif;font-size:14px;line-height:1.55;color:#111;max-width:640px">
+      <h2 style="margin:0 0 10px;color:#B42318">⚠ Mini-report down: ${esc(site)}</h2>
+      <pre style="white-space:pre-wrap;font:inherit;background:#FEF3F2;padding:10px 12px;border-radius:8px">${esc(lines.join("\n"))}</pre>
     </div>`,
   });
 }

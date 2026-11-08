@@ -81,8 +81,8 @@ export default function PrivacyPage() {
               <strong>How it&apos;s used:</strong> your report is emailed to you
               (sent through Resend), and I get a copy so I can follow up. If
               you apply for the full report, I&apos;ll ring you to talk it
-              through. You&apos;ll also get short AI tips by email; every email
-              lets you unsubscribe.
+              through. You&apos;ll also get the weekly business pulse by email;
+              every email lets you unsubscribe.
             </li>
             <li>
               Your details are never sold or shared beyond the services named

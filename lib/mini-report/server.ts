@@ -39,16 +39,33 @@ export function normaliseSite(raw: string): string {
 
 type Page = { url: string; title: string; markdown: string };
 
+/** Our side failed (a supplier out of credit, rate-limited or not set up), not the visitor's input.
+ *  The routes alert Ryan and tell the visitor their details are with him. */
+export class ServiceDown extends Error {}
+
+/** What the visitor sees when our side fails. The alert gives Ryan their email + website to follow up. */
+export const HELD_MESSAGE =
+  "Our report engine is down for a moment, so we've passed your details to Ryan. He'll email your report to you as soon as it's back up.";
+
+class FirecrawlError extends Error {
+  constructor(public status: number, public code: string) {
+    super(`Firecrawl ${status}${code ? ` ${code}` : ""}`);
+  }
+}
+
 async function scrape(url: string, links = false): Promise<Page & { links: string[]; finalUrl: string }> {
   const key = process.env.FIRECRAWL_API_KEY;
-  if (!key) throw new Error("FIRECRAWL_API_KEY is not set");
+  if (!key) throw new FirecrawlError(0, "FIRECRAWL_API_KEY is not set");
   const r = await fetch(FIRECRAWL, {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
     body: JSON.stringify({ url, formats: links ? ["markdown", "links"] : ["markdown"], onlyMainContent: true }),
     signal: AbortSignal.timeout(45_000),
   });
-  if (!r.ok) throw new Error(`Firecrawl ${r.status}`);
+  if (!r.ok) {
+    const j = (await r.json().catch(() => ({}))) as { code?: string };
+    throw new FirecrawlError(r.status, j.code || "");
+  }
   const data = ((await r.json()) as { data?: Record<string, unknown> }).data || {};
   const meta = (data.metadata || {}) as Record<string, string>;
   return {
@@ -112,7 +129,12 @@ export type SiteRead = {
 
 export async function readSite(site: string, email: string): Promise<SiteRead> {
   const t0 = Date.now();
-  const home = await scrape(site, true).catch(() => {
+  const home = await scrape(site, true).catch((e) => {
+    // Out of credits (402), rate-limited (429), a bad key (401) or no key (0) is our problem, not
+    // the visitor's address. Seen 9 Nov 2026: a 402 insufficient_credits read as "check the address".
+    if (e instanceof FirecrawlError && [0, 401, 402, 429].includes(e.status)) {
+      throw new ServiceDown(`the website reader (Firecrawl) failed: ${e.message}`);
+    }
     throw new VisibleError("Couldn't read that website. Check the address and try again.", 422);
   });
   // The site must load before any AI runs (the guard against junk addresses).

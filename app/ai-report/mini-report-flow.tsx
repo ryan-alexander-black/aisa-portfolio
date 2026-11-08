@@ -73,7 +73,10 @@ const poss = (n: string) => (/s$/i.test(n) ? `${n}’` : `${n}’s`);
 async function api<T>(path: string, body: unknown): Promise<T> {
   const r = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
   const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(j.error || `Something went wrong (${r.status}).`);
+  if (!r.ok) {
+    // held = our side failed and Ryan has the visitor's details, so retrying won't help.
+    throw Object.assign(new Error(j.error || `Something went wrong (${r.status}).`), { held: !!j.held });
+  }
   return j as T;
 }
 
@@ -101,6 +104,7 @@ export function MiniReportFlow() {
   const meter3 = useMeter(94);
   const [rep, setRep] = useState<ReportResult | null>(null);
   const [repErr, setRepErr] = useState("");
+  const [held, setHeld] = useState(false);
 
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
@@ -141,14 +145,14 @@ export function MiniReportFlow() {
   const start = (e: FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !site.trim() || email.indexOf("@") < 1) { setErr1("Add your email and website to get started."); return; }
-    setErr1(""); setReadErr(""); setRead(null); setReady(false); chosen.current = false;
+    setErr1(""); setReadErr(""); setHeld(false); setRead(null); setReady(false); chosen.current = false;
     track("report_requested");
     const p = api<ReadResult>("/api/mini-report/read", { email, site, company_website: trap });
     readP.current = p;
     p.then((d) => {
       setRead(d);
       meter2.finish(() => { if (!chosen.current) setReady(true); });
-    }).catch((err: Error) => { meter2.stop(); setReadErr(err.message); });
+    }).catch((err: Error & { held?: boolean }) => { meter2.stop(); setHeld(!!err.held); setReadErr(err.message); });
     go(2);
     meter2.start();
     meter2.to(30);
@@ -170,13 +174,14 @@ export function MiniReportFlow() {
       meter3.finish(() => setTimeout(() => { setRep(r); track("report_viewed", { fit: r.fit }); window.scrollTo(0, 0); }, 400));
     } catch (err) {
       meter3.stop();
+      setHeld(!!(err as Error & { held?: boolean }).held);
       setRepErr((err as Error).message);
     }
   };
 
   const restart = () => {
     meter2.stop(); meter3.stop();
-    setRead(null); setReadErr(""); setReady(false); setRep(null); setRepErr(""); chosen.current = false;
+    setRead(null); setReadErr(""); setHeld(false); setReady(false); setRep(null); setRepErr(""); chosen.current = false;
     go(1);
   };
 
@@ -225,7 +230,7 @@ export function MiniReportFlow() {
             </div>
             {err1 && <div className="err">{err1}</div>}
             <button className="btn solid big" type="submit"><span>✦</span> Get my free AI report</button>
-            <div className="fine">You&apos;ll get your report by email as soon as it&apos;s ready, plus weekly AI tips. Unsubscribe any time. <a href="/privacy">Privacy</a></div>
+            <div className="fine">You&apos;ll get your report by email as soon as it&apos;s ready, plus the weekly business pulse: what&apos;s moving for NZ business, and how AI gives you the edge. Unsubscribe any time. <a href="/privacy">Privacy</a></div>
           </form>
         </section>
       )}
@@ -235,7 +240,7 @@ export function MiniReportFlow() {
           <div className="prog">
             <div className="top">
               <span className="pulse" />
-              <span>{readErr ? `Couldn’t read that website: ${readErr}` : ready ? `✦ Ready to write ${poss(biz)} report` : "✦ AI is working on your report"}</span>
+              <span>{readErr ? readErr : ready ? `✦ Ready to write ${poss(biz)} report` : "✦ AI is working on your report"}</span>
               <span className="pct">{meter2.pct}%</span>
             </div>
             <div className="bar"><i style={{ width: `${meter2.pct}%` }} /></div>
@@ -246,7 +251,7 @@ export function MiniReportFlow() {
               <div className={cls(3, stage2)}>Writing your report</div>
             </div>
             {ready && <div className="readynote">Ready when you are. Answer as many as you like, then choose an option at the bottom.</div>}
-            {readErr && <button className="btn again" onClick={restart}>Try another website</button>}
+            {readErr && !held && <button className="btn again" onClick={restart}>Try another website</button>}
           </div>
           <h2 style={{ fontSize: 21 }}>While AI works, make your report sharper</h2>
           <p className="lede">A few quick taps, about a minute. The more you add, the more specific your report. Skip anything you like.</p>
@@ -288,9 +293,9 @@ export function MiniReportFlow() {
           {!rep ? (
             <div className="load3">
               <div className="rhead"><div className="eyebrow" style={{ margin: 0 }}>Your AI report</div><span className="badge">✦ AI at work</span></div>
-              <h2>{repErr ? `Something went wrong: ${repErr}` : `Finalising ${poss(biz)} report`}</h2>
+              <h2>{repErr ? repErr : `Finalising ${poss(biz)} report`}</h2>
               {repErr ? (
-                <button className="btn again" onClick={restart}>Start again</button>
+                !held && <button className="btn again" onClick={restart}>Start again</button>
               ) : (
                 <div className="prog" style={{ margin: "16px 0 0" }}>
                   <div className="top"><span className="pulse" /><span>✦ Nearly there, usually under a minute</span><span className="pct">{p3}%</span></div>
@@ -369,8 +374,8 @@ export function MiniReportFlow() {
                 </div>
               ) : (
                 <div className="soft">
-                  <h3>You&apos;re on the list for weekly AI tips</h3>
-                  <p>Short, practical ideas for small businesses, once a week. If your team grows, reply to any email and we&apos;ll talk.</p>
+                  <h3>You&apos;re on the list for the weekly business pulse</h3>
+                  <p>What&apos;s moving for NZ business, and how AI gives you the edge, once a week. If your team grows, reply to any email and we&apos;ll talk.</p>
                 </div>
               )}
             </div>
