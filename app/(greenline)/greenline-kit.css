@@ -1,0 +1,215 @@
+/* Greenline AI — generated from the Greenline design system (Nexus brand/greenline/project, v1 locked 10 Nov 2026).
+   Don't edit the token or component blocks by hand: change the kit, then re-run scripts/greenline-kit-css.py.
+   Light theme only: the page is light with a dark band. Fonts load in app/(greenline)/layout.tsx. */
+
+.gl-root {
+  --bg: #FFFFFF;
+  --surface: #F5F8F6;
+  --elevated: #FFFFFF;
+  --border: #E6EBE8;
+  --text: #0A0F0D;
+  --text-muted: #5C6B64;
+  --accent: #047857;
+  --accent-solid: #11D38B;
+  --accent-contrast: #0A0F0D;
+  --mark: #11D38B;
+  --green-tint: #E6F7EF;
+  --band: #0A0F0D;
+  --band-text: #F5F8F6;
+  --band-muted: #9FB0A8;
+  --band-accent: #2EE6A6;
+  --band-line: #1E2723;
+  --chart-grid: #CDD6D1;
+  --success: #11D38B;
+  --warning: #B45309;
+  --error: #DC2626;
+  --info: #0F766E;
+  --green-brand: #11D38B;
+  --green-bright: #2EE6A6;
+  --green-deep: #047857;
+  --ink-50: #F5F8F6;
+  --ink-100: #E6EBE8;
+  --ink-200: #CDD6D1;
+  --ink-300: #9FB0A8;
+  --ink-400: #5C6B64;
+  --ink-500: #3A4742;
+  --ink-600: #2A3530;
+  --ink-700: #1E2723;
+  --ink-800: #121917;
+  --ink-900: #0A0F0D;
+  --white: #FFFFFF;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --section-y: 72px;
+  --page-x: 88px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px 0 rgba(10,15,13,0.06);
+  --shadow-md: 0 4px 16px -2px rgba(10,15,13,0.10);
+  --shadow-lg: 0 12px 32px -8px rgba(10,15,13,0.18);
+  --shadow-glow: 0 0 0 1px rgba(17,211,139,0.30), 0 8px 32px -6px rgba(17,211,139,0.35);
+  --focus-ring: 0 0 0 2px #FFFFFF, 0 0 0 4px #047857;
+  --font-display: Sora, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* type styles */
+.gl-root .display-xl { font-family: var(--font-display); font-size: 54px; line-height: 1.08; font-weight: 700; letter-spacing: -0.02em; }
+.gl-root .display-lg { font-family: var(--font-display); font-size: 38px; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; }
+.gl-root .display-md { font-family: var(--font-display); font-size: 28px; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; }
+.gl-root .display-sm { font-family: var(--font-display); font-size: 22px; line-height: 1.25; font-weight: 700; letter-spacing: -0.02em; }
+.gl-root .title { font-family: var(--font-display); font-size: 18px; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em; }
+.gl-root .lede { font-family: var(--font-body); font-size: 19px; line-height: 1.6; font-weight: 400; }
+.gl-root .body { font-family: var(--font-body); font-size: 16px; line-height: 1.6; font-weight: 400; }
+.gl-root .body-sm { font-family: var(--font-body); font-size: 15px; line-height: 1.6; font-weight: 400; }
+.gl-root .small { font-family: var(--font-body); font-size: 14px; line-height: 1.5; font-weight: 400; }
+.gl-root .label { font-family: var(--font-body); font-size: 13px; line-height: 1.4; font-weight: 600; }
+.gl-root .caption { font-family: var(--font-body); font-size: 13px; line-height: 1.5; font-weight: 400; }
+.gl-root .fine { font-family: var(--font-body); font-size: 12px; line-height: 1.5; font-weight: 400; }
+.gl-root .button { font-family: var(--font-body); font-size: 17px; line-height: 1.2; font-weight: 600; }
+.gl-root .button-sm { font-family: var(--font-body); font-size: 15px; line-height: 1.2; font-weight: 600; }
+.gl-root .eyebrow { font-family: var(--font-mono); font-size: 13px; line-height: 1.4; font-weight: 500; letter-spacing: 0.1em; }
+.gl-root .tag { font-family: var(--font-mono); font-size: 12px; line-height: 1.4; font-weight: 500; letter-spacing: 0.08em; }
+
+/* ---- components (from the kit's components/bundle.css) ---- */
+
+/* Greenline AI components. Plain CSS classes (gl-*) on top of tokens.css.
+   Text styles come from the type classes tokens.css generates (.display-xl, .lede, .eyebrow ...). */
+
+.gl-pad { padding: var(--space-6); }
+.gl-row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+
+/* Button: Signal Green fill, ink label. */
+.gl-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); font-family: var(--font-body); padding: 16px 28px; border: 0; border-radius: var(--radius-md); background: var(--accent-solid); color: var(--accent-contrast); text-decoration: none; white-space: nowrap; cursor: pointer; transition: box-shadow .15s ease; }
+.gl-btn:hover { box-shadow: var(--shadow-glow); }
+.gl-btn:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+.gl-btn-sm { padding: 12px 20px; }
+.gl-btn-block { display: flex; width: 100%; }
+@media (prefers-reduced-motion: reduce) { .gl-btn { transition: none; } }
+
+/* Lockup: the mark, then the name with AI in accent, then the byline. */
+.gl-lockup { display: flex; align-items: center; gap: var(--space-3); }
+.gl-mark { display: block; flex: none; color: var(--mark); }
+.gl-lockup-name { font-family: var(--font-display); font-weight: 700; font-size: 24px; line-height: 1.15; letter-spacing: -0.02em; color: var(--text); }
+.gl-lockup-name b { font-weight: 700; color: var(--accent); }
+.gl-lockup-by { font-size: 13px; line-height: 1.3; color: var(--text-muted); }
+.gl-band .gl-mark, .gl-on-band .gl-mark { color: var(--band-accent); }
+.gl-band .gl-lockup-name, .gl-on-band .gl-lockup-name { color: var(--band-text); }
+.gl-band .gl-lockup-name b, .gl-on-band .gl-lockup-name b { color: var(--band-accent); }
+.gl-band .gl-lockup-by, .gl-on-band .gl-lockup-by { color: var(--band-muted); }
+.gl-on-band { background: var(--band); color: var(--band-text); }
+
+/* Page frame */
+.gl-header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: 22px var(--page-x); background: var(--bg); border-bottom: 1px solid var(--border); }
+.gl-section { padding: var(--section-y) var(--page-x); background: var(--bg); }
+.gl-section-mist { background: var(--surface); }
+.gl-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2); padding: 20px var(--page-x); background: var(--bg); color: var(--text-muted); }
+.gl-footer a { color: inherit; text-decoration: none; }
+.gl-footer a:hover { color: var(--text); }
+
+/* Faces. Sizes come from the type classes; these keep the right face if a class is missing. */
+.gl-heading, .gl-form-title, .gl-card-who, .gl-step h3, .gl-faq-item h3, .gl-compare-col h3, .gl-stat b, .gl-hero h1 { font-family: var(--font-display); }
+.gl-eyebrow, .gl-step-tag { font-family: var(--font-mono); }
+
+/* Section header: eyebrow, heading, lede. */
+.gl-eyebrow { margin: 0; text-transform: uppercase; color: var(--accent); }
+.gl-heading { margin: var(--space-3) 0 14px; color: var(--text); text-wrap: balance; }
+.gl-lede { margin: 0; max-width: 760px; color: var(--text-muted); }
+.gl-cta { margin-top: 36px; }
+
+/* Hero: words left, the form right. */
+.gl-hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; align-items: center; padding: var(--section-y) var(--page-x) 56px; background-color: var(--bg); background-size: cover; background-position: center; }
+.gl-hero h1 { margin: var(--space-4) 0 20px; text-wrap: balance; }
+.gl-hero .gl-lede { max-width: 600px; }
+
+/* Report form */
+.gl-form { background: var(--elevated); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-8); box-shadow: var(--shadow-lg); }
+.gl-form-title { margin: 0 0 6px; }
+.gl-form-sub { margin: 0 0 18px; color: var(--text-muted); }
+.gl-field { margin-top: var(--space-3); }
+.gl-label { display: block; margin-bottom: 6px; color: var(--text); }
+.gl-input { box-sizing: border-box; width: 100%; font-family: var(--font-body); padding: 13px 14px; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); }
+.gl-input::placeholder { color: var(--text-muted); }
+.gl-input:focus, .gl-input.is-focus { outline: 2px solid transparent; background: var(--elevated); box-shadow: var(--focus-ring); }
+.gl-input[aria-invalid="true"] { border-color: var(--error); }
+.gl-field-error { margin: 6px 0 0; color: var(--error); }
+.gl-form .gl-btn { margin-top: 18px; }
+.gl-fine { margin: 12px 0 0; color: var(--text-muted); }
+
+/* Stat bar: four facts about the offer. */
+.gl-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); padding: 0 var(--page-x); background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.gl-stat { padding: 22px 0; }
+.gl-stat b { display: block; color: var(--text); }
+.gl-stat span { color: var(--text-muted); }
+
+/* Two ways: the usual way (mist) beside the Greenline way (band). */
+.gl-compare { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.gl-compare-col { padding: 30px var(--space-8); }
+.gl-compare-col h3 { margin: 0 0 var(--space-4); }
+.gl-compare-col ul { margin: 0; padding: 0; list-style: none; }
+.gl-compare-col li { position: relative; padding: 10px 0 10px 30px; border-top: 1px solid var(--border); }
+.gl-compare-usual { background: var(--surface); }
+.gl-compare-usual h3, .gl-compare-usual li { color: var(--text-muted); }
+.gl-compare-usual li::before { content: "\2192"; position: absolute; left: 0; color: var(--text-muted); }
+.gl-compare-green { background: var(--band); color: var(--band-text); }
+.gl-compare-green h3 { color: var(--band-accent); }
+.gl-compare-green li { border-top-color: var(--band-line); }
+.gl-compare-green li::before { content: "\2713"; position: absolute; left: 0; font-weight: 700; color: var(--band-accent); }
+
+/* Proof card: a client, three results, their words. */
+.gl-card { display: flex; flex-direction: column; background: var(--elevated); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-6); }
+.gl-card-who { margin: 0; color: var(--text); }
+.gl-card-meta { margin: 2px 0 14px; color: var(--text-muted); }
+.gl-card ul { margin: 0; padding: 0; list-style: none; }
+.gl-card li { position: relative; padding: 5px 0 5px 22px; }
+.gl-card li::before { content: ""; position: absolute; left: 0; top: 13px; width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--accent-solid); }
+.gl-quote { margin: var(--space-4) 0 0; padding-left: 14px; border-left: 3px solid var(--accent-solid); font-style: italic; color: var(--text); }
+.gl-quote cite { display: block; margin-top: 6px; font-style: normal; color: var(--text-muted); }
+
+/* Step card and FAQ */
+.gl-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.gl-step { background: var(--surface); border-radius: var(--radius-lg); padding: 28px; }
+.gl-step-tag { margin: 0; text-transform: uppercase; color: var(--accent); }
+.gl-step h3 { margin: var(--space-2) 0; color: var(--text); }
+.gl-step p { margin: 0; color: var(--text-muted); }
+.gl-faq { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4) 40px; }
+.gl-faq-item { border-top: 1px solid var(--border); padding-top: var(--space-4); }
+.gl-faq-item h3 { margin: 0 0 6px; color: var(--text); }
+.gl-faq-item p { margin: 0; color: var(--text-muted); }
+
+/* The profit illustration */
+.gl-profit { display: block; width: 100%; height: auto; }
+.gl-profit .axis { stroke: var(--chart-grid); }
+.gl-profit .revenue { stroke: var(--text-muted); }
+.gl-profit .profit { stroke: var(--mark); }
+.gl-profit .node { fill: var(--mark); }
+.gl-key { display: flex; flex-wrap: wrap; gap: 20px; align-items: baseline; margin-top: 10px; color: var(--text-muted); }
+.gl-key .is-profit { color: var(--accent); font-weight: 600; }
+
+/* The dark band: the final form section. */
+.gl-band { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: var(--section-y) var(--page-x); background-color: var(--band); background-size: cover; background-position: center; color: var(--band-text); }
+.gl-band .gl-eyebrow { color: var(--band-accent); }
+.gl-band .gl-heading { color: var(--band-text); }
+.gl-band .gl-lede { color: var(--band-muted); }
+
+@media (max-width: 760px) {
+  .gl-header, .gl-section, .gl-footer, .gl-stats { padding-left: 16px; padding-right: 16px; }
+  .gl-hero, .gl-band { grid-template-columns: 1fr; padding-left: 16px; padding-right: 16px; gap: var(--space-8); }
+  .gl-stats { grid-template-columns: 1fr 1fr; }
+  .gl-compare, .gl-steps, .gl-faq { grid-template-columns: 1fr; }
+  .gl-btn { white-space: normal; text-align: center; }
+}

@@ -83,11 +83,21 @@ async function api<T>(path: string, body: unknown): Promise<T> {
 type ReadResult = { token: string; business_name: string; what_they_do: string };
 type ReportResult = { business_name: string; opportunities: Opportunity[]; fit: Fit };
 
-export function MiniReportFlow() {
+/** The first-step check, shared by any page that collects the email + website itself. */
+export function startError(email: string, site: string): string {
+  return !email.trim() || !site.trim() || email.indexOf("@") < 1 ? "Add your email and website to get started." : "";
+}
+
+/** `initial`: another page already took the email + website, so the flow starts the read at once
+ *  (skipping its own first screen). `onRestart`: where "start again" goes instead of screen 1. */
+export type MiniReportStart = { email: string; site: string; trap?: string };
+type FlowProps = { initial?: MiniReportStart; onRestart?: () => void };
+
+export function MiniReportFlow({ initial, onRestart }: FlowProps = {}) {
   const [screen, setScreen] = useState<1 | 2 | 3>(1);
-  const [email, setEmail] = useState("");
-  const [site, setSite] = useState("");
-  const [trap, setTrap] = useState("");
+  const [email, setEmail] = useState(initial?.email ?? "");
+  const [site, setSite] = useState(initial?.site ?? "");
+  const [trap, setTrap] = useState(initial?.trap ?? "");
   const [err1, setErr1] = useState("");
 
   const [picked, setPicked] = useState<Record<string, string[]>>({});
@@ -142,12 +152,10 @@ export function MiniReportFlow() {
   };
 
   // ---- Screen 1 → 2. The site read starts at once; the questions fill the wait.
-  const start = (e: FormEvent) => {
-    e.preventDefault();
-    if (!email.trim() || !site.trim() || email.indexOf("@") < 1) { setErr1("Add your email and website to get started."); return; }
+  const begin = (em: string, st: string, tr: string) => {
     setErr1(""); setReadErr(""); setHeld(false); setRead(null); setReady(false); chosen.current = false;
     track("report_requested");
-    const p = api<ReadResult>("/api/mini-report/read", { email, site, company_website: trap });
+    const p = api<ReadResult>("/api/mini-report/read", { email: em, site: st, company_website: tr });
     readP.current = p;
     p.then((d) => {
       setRead(d);
@@ -157,6 +165,20 @@ export function MiniReportFlow() {
     meter2.start();
     meter2.to(30);
   };
+  const start = (e: FormEvent) => {
+    e.preventDefault();
+    const bad = startError(email, site);
+    if (bad) { setErr1(bad); return; }
+    begin(email, site, trap);
+  };
+  // Handed the details by another page: start straight away, once (StrictMode runs effects twice in dev).
+  const begun = useRef(false);
+  useEffect(() => {
+    if (!initial || begun.current) return;
+    begun.current = true;
+    begin(initial.email, initial.site, initial.trap ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // ---- Screen 2 → 3: a finalising screen while the report is written.
   const finish = async () => {
@@ -182,6 +204,7 @@ export function MiniReportFlow() {
   const restart = () => {
     meter2.stop(); meter3.stop();
     setRead(null); setReadErr(""); setHeld(false); setReady(false); setRep(null); setRepErr(""); chosen.current = false;
+    if (onRestart) { onRestart(); return; }
     go(1);
   };
 

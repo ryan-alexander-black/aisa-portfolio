@@ -1,0 +1,54 @@
+/* Greenline AI page layout: what belongs to this page rather than the kit. Every value is a kit token
+   from greenline-kit.css (generated). Zero-specificity resets so the kit's rules always win. */
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+body { margin: 0; }
+:where(.gl-root) *, :where(.gl-root) *::before, :where(.gl-root) *::after { box-sizing: border-box; }
+:where(.gl-root) :where(h1, h2, h3, p, ul, blockquote) { margin: 0; }
+:where(.gl-root) a { color: inherit; }
+
+/* One content width: the gutter grows so content stays within 1024px on wide screens. */
+.gl-root { --gutter: max(var(--page-x), calc((100% - 1024px) / 2)); }
+.gl-root .gl-header, .gl-root .gl-hero, .gl-root .gl-section, .gl-root .gl-band, .gl-root .gl-stats, .gl-root .gl-footer {
+  padding-left: var(--gutter); padding-right: var(--gutter);
+}
+.gl-header-in { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+
+/* Backgrounds: a still (or a short loop once there is one) under a wash, behind the section's content. */
+.gl-has-bg { position: relative; isolation: isolate; }
+.gl-has-bg > :not(.gl-backdrop) { position: relative; z-index: 1; }
+.gl-backdrop { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.gl-backdrop-still, .gl-backdrop-video { object-fit: cover; object-position: center; }
+.gl-backdrop-video { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gl-backdrop-wash { position: absolute; inset: 0; }
+@media (prefers-reduced-motion: reduce) { .gl-backdrop-video { display: none; } }
+
+/* Section layouts */
+.gl-gap-top { margin-top: 36px; }
+.gl-mt-2 { margin-top: var(--space-2); }
+.gl-line { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-12); align-items: center; margin-top: 40px; }
+.gl-proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.gl-faq-top { margin-top: 28px; }
+.gl-hero .gl-form { width: 100%; }
+.gl-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.gl-fine a { color: var(--accent); text-decoration: underline; }
+
+/* The report flow, once it takes over the page */
+.gl-root + .mr { padding-top: var(--space-8, 32px); }
+
+@media (max-width: 900px) {
+  .gl-proof { grid-template-columns: 1fr; }
+  .gl-line { grid-template-columns: 1fr; gap: var(--space-6); }
+}
+@media (max-width: 760px) {
+  .gl-root { --gutter: 16px; }
+  .gl-root .gl-hero, .gl-root .gl-section, .gl-root .gl-band { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+  .gl-root .display-xl { font-size: 38px; }
+  .gl-root .display-lg { font-size: 30px; }
+  .gl-root .display-md { font-size: 24px; }
+  .gl-root .lede { font-size: 17px; }
+  .gl-form { padding: var(--space-6); }
+}
+@media (max-width: 560px) {
+  .gl-header .gl-btn { display: none; }
+  .gl-root .gl-header { padding-top: 16px; padding-bottom: 16px; }
+}
