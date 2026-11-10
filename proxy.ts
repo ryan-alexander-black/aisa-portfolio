@@ -5,8 +5,10 @@ import { NextResponse, type NextRequest } from "next/server";
 // localhost) passes straight through.
 const GREENLINE = /^(www\.)?greenlineai\.(nz|co\.nz)$/;
 const CANONICAL = "greenlineai.nz";
-// What the page needs on its own domain besides itself: the report form's API, privacy and terms.
-const PASS = /^\/(api\/mini-report\/|privacy$|terms$)/;
+// What the page needs on its own domain besides itself: the report form's API.
+const PASS = /^\/api\/mini-report\//;
+// Greenline's own pages, at their short addresses.
+const PAGES: Record<string, string> = { "/": "/greenline", "/privacy": "/greenline/privacy", "/terms": "/greenline/terms" };
 
 export function proxy(req: NextRequest) {
   const host = (req.headers.get("host") || "").split(":")[0].toLowerCase();
@@ -16,13 +18,13 @@ export function proxy(req: NextRequest) {
   const home = (path: string) => new URL(`https://${CANONICAL}${path}${search}`);
   // One address: www. and .co.nz move to greenlineai.nz, keeping the path and campaign tags.
   if (host !== CANONICAL) return NextResponse.redirect(home(pathname), 308);
-  if (pathname === "/") {
+  if (PAGES[pathname]) {
     const url = req.nextUrl.clone();
-    url.pathname = "/greenline";
+    url.pathname = PAGES[pathname];
     return NextResponse.rewrite(url);
   }
   if (PASS.test(pathname)) return NextResponse.next();
-  // Anything else (including /greenline itself) goes to the page's one address, tags kept.
+  // Anything else (including the /greenline paths themselves) goes to the page's one address, tags kept.
   return NextResponse.redirect(home("/"), 307);
 }
 

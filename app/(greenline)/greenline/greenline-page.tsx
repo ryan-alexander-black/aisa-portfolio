@@ -9,48 +9,13 @@ import Image from "next/image";
 import { useState, type FormEvent } from "react";
 import { MiniReportFlow, startError, type MiniReportStart } from "../../(site)/ai-report/mini-report-flow";
 import type { ClientQuote } from "@/lib/clients";
+import { CTA, Footer, Header } from "./chrome";
 
 export type Proof = { company: string; industry: string; results: string[]; quote: ClientQuote };
-
-const CTA = "Get my free AI Opportunity Report";
 
 // Moving backgrounds: drop a short loop in /public/greenline and set its path here. Until then the
 // still shows (it is also the poster, and what reduced-motion visitors always see).
 const MOTION: { hero?: string; band?: string } = {};
-
-function Mark({ size = 34 }: { size?: number }) {
-  return (
-    <svg className="gl-mark" width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-      <polyline points="2,18 8,14 13,16 21,5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="2.5" cy="18" r="1.8" fill="currentColor" />
-      <circle cx="13" cy="16" r="1.8" fill="currentColor" />
-      <circle cx="21" cy="5" r="2.2" fill="currentColor" />
-    </svg>
-  );
-}
-
-function Lockup() {
-  return (
-    <div className="gl-lockup">
-      <Mark />
-      <div>
-        <div className="gl-lockup-name">Greenline <b>AI</b></div>
-        <div className="gl-lockup-by">with Ryan Alexander Black · AI for NZ businesses</div>
-      </div>
-    </div>
-  );
-}
-
-function Header({ withButton = true }: { withButton?: boolean }) {
-  return (
-    <header className="gl-header">
-      <div className="gl-header-in">
-        <Lockup />
-        {withButton && <a className="gl-btn gl-btn-sm button-sm" href="#report">{CTA}</a>}
-      </div>
-    </header>
-  );
-}
 
 function Backdrop({ still, video, wash, first }: { still: string; video?: string; wash: string; first?: boolean }) {
   return (
@@ -114,7 +79,7 @@ export function GreenlinePage({ proof }: { proof: Proof[] }) {
   if (started) {
     return (
       <>
-        <div className="gl-root"><Header withButton={false} /></div>
+        <div className="gl-root"><Header cta={null} /></div>
         <MiniReportFlow initial={started} onRestart={() => { setStarted(null); window.scrollTo(0, 0); }} />
       </>
     );
@@ -245,10 +210,7 @@ export function GreenlinePage({ proof }: { proof: Proof[] }) {
         </section>
       </main>
 
-      <footer className="gl-footer caption">
-        <span>Greenline AI · with Ryan Alexander Black · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
-        <span>greenlineai.nz</span>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
-import { notFound } from "next/navigation";
 import { clients } from "@/lib/clients";
 import { GreenlinePage, type Proof } from "./greenline-page";
-
-// The page exists only on Greenline's own domains (and locally for review). On the portfolio's host
-// it 404s, so nobody can trim a URL back into the portfolio (money-engine/greenline-page.md).
-const HOSTS = /^(www\.)?greenlineai\.(nz|co\.nz)$|^localhost$|^127\.0\.0\.1$/;
+import { greenlineHostOnly } from "./host";
 
 export const metadata: Metadata = {
   title: "Greenline AI · Grow your profit, not just your revenue",
@@ -19,8 +14,7 @@ export const metadata: Metadata = {
 const PROOF_SLUGS = ["advance-visual", "legends-academy", "cash-direct"];
 
 export default async function Page() {
-  const host = ((await headers()).get("host") || "").split(":")[0].toLowerCase();
-  if (!HOSTS.test(host)) notFound();
+  await greenlineHostOnly();
 
   const proof: Proof[] = PROOF_SLUGS.flatMap((slug) => {
     const c = clients.find((x) => x.slug === slug);
