@@ -6,7 +6,7 @@ import { greenlineHostOnly } from "./host";
 export const metadata: Metadata = {
   title: "Greenline AI · Grow your profit, not just your revenue",
   description:
-    "Growing is only worth it if your profit grows too. Get your free AI Opportunity Report: 3 places AI could grow your profit, specific to your business.",
+    "Growing is only worth it if your profit grows too. Get your free AI Profit Snapshot: 3 places AI could grow your profit, specific to your business.",
   alternates: { canonical: "/" },
   // The share image is opengraph-image.png / twitter-image.png beside this file (source: Nexus
   // brand/greenline/share-image.html, rendered at 1200x630).
@@ -15,12 +15,12 @@ export const metadata: Metadata = {
     url: "https://greenlineai.nz",
     siteName: "Greenline AI",
     title: "Grow your profit, not just your revenue",
-    description: "Get your free AI Opportunity Report: 3 places AI could grow your profit, specific to your business. About 2 minutes.",
+    description: "Get your free AI Profit Snapshot: 3 places AI could grow your profit, specific to your business. About 90 seconds.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Grow your profit, not just your revenue",
-    description: "Get your free AI Opportunity Report: 3 places AI could grow your profit, specific to your business.",
+    description: "Get your free AI Profit Snapshot: 3 places AI could grow your profit, specific to your business.",
   },
 };
 

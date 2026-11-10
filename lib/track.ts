@@ -16,7 +16,8 @@ const ADS_LABELS: Record<string, string | undefined> = {
 // Meta: the application is the standard "Lead"; the rest are custom events.
 const META_STANDARD: Record<string, string> = { audit_applied: "Lead" };
 
-export type TrackEvent = "report_requested" | "report_viewed" | "audit_applied";
+// next_viewed: a good fit opened Greenline's /next (the Full AI Opportunity Report page) from their snapshot.
+export type TrackEvent = "report_requested" | "report_viewed" | "next_viewed" | "audit_applied";
 
 export function track(event: TrackEvent, params: Record<string, string | number> = {}) {
   try {

@@ -5,7 +5,7 @@ import { greenlineHostOnly } from "../host";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Greenline AI",
-  description: "How Greenline AI handles your details when you ask for the free AI report, and the data in client work.",
+  description: "How Greenline AI handles your details when you ask for the free AI Profit Snapshot, and the data in client work.",
   alternates: { canonical: "/privacy" },
 };
 

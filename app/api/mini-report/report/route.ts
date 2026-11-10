@@ -31,7 +31,10 @@ export async function POST(request: Request) {
     const fit = fitOf(answers);
 
     after(() =>
-      sendReportEmails({ email: read.email, site: read.site, rep, answers, fit, utm, costUsd: rep.meta.cost_usd })
+      sendReportEmails({
+        email: read.email, site: read.site, rep, answers, fit, utm, costUsd: rep.meta.cost_usd,
+        brand: body.brand === "greenline" ? "greenline" : "site",
+      })
         .catch((e) => console.error("[mini-report] report emails failed", e)),
     );
     console.log(`[mini-report] report for ${read.business_name}: ${rep.meta.seconds.toFixed(1)}s, ~US$${rep.meta.cost_usd}, fit ${fit}`);

@@ -1,7 +1,7 @@
 // Emails for the mini-report, sent with Resend (the site's existing sender):
-//   1. the visitor's copy of their report ("A copy is in your inbox")
-//   2. an alert to Ryan for every report (every report is a lead)
-//   3. an alert to Ryan for every application for the full AI Opportunity Report
+//   1. the visitor's copy of their AI Profit Snapshot ("A copy is on its way to your inbox")
+//   2. an alert to Ryan for every snapshot (every snapshot is a lead)
+//   3. an alert to Ryan for every application for the Full AI Opportunity Report
 //   4. an alert to Ryan when the report engine fails on our side (the visitor is still a lead)
 // With no RESEND_API_KEY (local dev) nothing is sent; each email is logged instead.
 import { Resend } from "resend";
@@ -53,22 +53,35 @@ function totals(rep: Report) {
 const BASIS = "Money figures assume a $75,000 a year salary (about $36 an hour). Every figure is a rough estimate, not a promise.";
 const utmText = (u: Utm) => Object.entries(u).filter(([, v]) => v).map(([k, v]) => `${k}=${v}`).join(" · ") || "(none)";
 
+// Which front door the snapshot came through: Greenline AI (greenlineai.nz, whose good fits go on to
+// /next) or the portfolio's /ai-report. It sets the next-step link, the list's name and the sign-off.
+export type Brand = "greenline" | "site";
+
 export async function sendReportEmails(ctx: {
-  email: string; site: string; rep: Report; answers: Answers; fit: Fit; utm: Utm; costUsd: number;
+  email: string; site: string; rep: Report; answers: Answers; fit: Fit; utm: Utm; costUsd: number; brand?: Brand;
 }) {
   const { email, site, rep, answers, fit, utm } = ctx;
+  const greenline = ctx.brand === "greenline";
   const t = totals(rep);
-  const subject = `3 places AI could save ${rep.business_name} time`;
+  const subject = `Your AI Profit Snapshot: 3 places AI could save ${rep.business_name} time`;
 
   // 1. The visitor's copy. Replies come straight to Ryan.
   const offer = fit === "low"
-    ? `<p>The weekly business pulse is on its way: what's moving for NZ business, and how AI gives you the edge. If your team grows, reply to this email and we'll talk.</p>`
-    : `<p>That was the 2-minute version. The free <b>AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit in Hawke's Bay, then your plan, walked through in person. Ryan only takes on 2 a month. <a href="https://www.ryanalexanderblack.com/ai-report">Apply on the site</a>, or just reply to this email.</p>`;
+    ? (greenline
+        ? `<p>You're on the list for Signal over Noise: what's working for NZ businesses each week, and one AI idea to grow your profit. If your team grows, reply to this email and we'll talk.</p>`
+        : `<p>The weekly business pulse is on its way: what's moving for NZ business, and how AI gives you the edge. If your team grows, reply to this email and we'll talk.</p>`)
+    : (greenline
+        ? `<p>Your snapshot was the quick version. The free <b>Full AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit, then your plan, walked through in person. I take on 2 a month. <a href="https://greenlineai.nz/next">See how it works and apply</a>, or just reply to this email.</p>`
+        : `<p>That was the 2-minute version. The free <b>Full AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit in Hawke's Bay, then your plan, walked through in person. Ryan only takes on 2 a month. <a href="https://www.ryanalexanderblack.com/ai-report">Apply on the site</a>, or just reply to this email.</p>`);
+  const signText = greenline ? "Ryan Alexander Black · Greenline AI · greenlineai.nz" : "Ryan Alexander Black · ryanalexanderblack.com";
+  const signHtml = greenline
+    ? `Ryan Alexander Black<br>Greenline AI · <a href="https://greenlineai.nz">greenlineai.nz</a>`
+    : `Ryan Alexander Black<br><a href="https://www.ryanalexanderblack.com">ryanalexanderblack.com</a>`;
   await send({
     to: email,
     replyTo: TO_RYAN,
     subject,
-    text: `${subject}\n\n${t.line}\n\n${ideasText(rep)}\n\n${BASIS}\n\nRyan Alexander Black · ryanalexanderblack.com`,
+    text: `${subject}\n\n${t.line}\n\n${ideasText(rep)}\n\n${BASIS}\n\n${signText}`,
     html: `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#0A0F0D;max-width:600px">
       <h2 style="margin:0 0 6px">${esc(subject)}</h2>
       <p style="margin:0 0 16px;color:#5C6B64">Built from your website and your answers. ✦ Written by AI.</p>
@@ -76,7 +89,7 @@ export async function sendReportEmails(ctx: {
       ${ideasHtml(rep)}
       <p style="font-size:12px;color:#5C6B64">${BASIS}</p>
       ${offer}
-      <p style="margin-top:20px">Ryan Alexander Black<br><a href="https://www.ryanalexanderblack.com">ryanalexanderblack.com</a></p>
+      <p style="margin-top:20px">${signHtml}</p>
     </div>`,
   });
 
@@ -84,10 +97,10 @@ export async function sendReportEmails(ctx: {
   await send({
     to: TO_RYAN,
     replyTo: email,
-    subject: `Mini-report: ${rep.business_name} (fit: ${fit})`,
+    subject: `Snapshot${greenline ? " (Greenline)" : ""}: ${rep.business_name} (fit: ${fit})`,
     text: `${email} · ${site}\nFit: ${fit}\nUTM: ${utmText(utm)}\nAI cost: ~US$${ctx.costUsd}\n\n${answersText(answers)}\n\n${t.line}\n\n${ideasText(rep)}`,
     html: `<div style="font-family:system-ui,sans-serif;font-size:14px;line-height:1.55;color:#111;max-width:640px">
-      <h2 style="margin:0 0 10px">Mini-report: ${esc(rep.business_name)} <span style="color:#047857">(fit: ${fit})</span></h2>
+      <h2 style="margin:0 0 10px">Snapshot: ${esc(rep.business_name)} <span style="color:#047857">(fit: ${fit})</span></h2>
       <p style="margin:0 0 4px"><b>Email:</b> ${esc(email)} · <b>Site:</b> ${esc(site)}</p>
       <p style="margin:0 0 4px"><b>Source:</b> ${esc(utmText(utm))}</p>
       <p style="margin:0 0 12px;color:#5C6B64">AI cost ~US$${ctx.costUsd}</p>
@@ -135,7 +148,7 @@ export async function sendApplication(ctx: {
   await send({
     to: TO_RYAN,
     replyTo: email,
-    subject: `AI Opportunity Report application: ${business} (${name})`,
+    subject: `Full AI Opportunity Report application: ${business} (${name})`,
     text: lines.join("\n"),
     html: `<div style="font-family:system-ui,sans-serif;font-size:14px;line-height:1.55;color:#111;max-width:640px">
       <h2 style="margin:0 0 10px">Application: ${esc(business)} <span style="color:#047857">(fit: ${fit})</span></h2>

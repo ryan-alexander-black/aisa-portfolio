@@ -1,7 +1,9 @@
 // The Greenline AI page frame (lockup, header, footer), shared by the sales page and its privacy +
 // terms pages. No hooks and no server-only imports, so server and client components can both use it.
 
-export const CTA = "Get my free AI Opportunity Report";
+export const CTA = "Get my free AI Profit Snapshot";
+/** The next step, on /next: the Full AI Opportunity Report (good fits only, by the report flow's fit rule). */
+export const APPLY = "Apply for your Full AI Opportunity Report";
 
 export function Mark({ size = 34 }: { size?: number }) {
   return (
@@ -26,13 +28,16 @@ export function Lockup() {
   );
 }
 
-/** `cta`: where the header button goes (none when null). `home`: make the lockup a link home. */
-export function Header({ cta = "#report", home = false }: { cta?: string | null; home?: boolean }) {
+/** `cta`: where the header button goes (none when null), `label` its words. `home`: make the lockup a link home. */
+export function Header({ cta = "#report", label = CTA, home = false }: { cta?: string | null; label?: string; home?: boolean }) {
   return (
     <header className="gl-header">
       <div className="gl-header-in">
+        {/* A full page load on purpose: on greenlineai.nz "/" is the proxy's rewrite to /greenline, and
+            client-side routing would resolve "/" to the portfolio's own home page. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         {home ? <a className="gl-home" href="/" aria-label="Greenline AI home"><Lockup /></a> : <Lockup />}
-        {cta && <a className="gl-btn gl-btn-sm button-sm" href={cta}>{CTA}</a>}
+        {cta && <a className="gl-btn gl-btn-sm button-sm" href={cta}>{label}</a>}
       </div>
     </header>
   );

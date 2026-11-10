@@ -9,7 +9,7 @@ export function ReportButton({ className = "" }: { className?: string }) {
       href="/ai-report"
       className={`inline-block rounded-md bg-accent-solid px-5 py-2.5 font-medium text-accent-contrast transition-opacity hover:opacity-90 ${className}`}
     >
-      Get Free AI Opportunity Report
+      Get my free AI Profit Snapshot
     </Link>
   );
 }

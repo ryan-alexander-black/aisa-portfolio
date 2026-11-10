@@ -1,10 +1,12 @@
 "use client";
 
-// The Greenline AI sales page (the short MVP: money-engine/greenline-page.md → "v1 to build").
-// One job: get the free AI Opportunity Report requested. Every value comes from the Greenline design
-// system (greenline-kit.css); every word from brand/STORY.md → "The brand: Greenline AI" and the
-// approved mockup (greenline-mini-v3). Both forms hand the email + website to the same report flow
-// as /ai-report, which then takes over the page.
+// The Greenline AI opt-in page (greenlineai.nz). One job: get the free AI Profit Snapshot requested.
+// The funnel (Ryan, 10 Nov; money-engine/greenline-page.md → "The funnel"): the ad sells the click,
+// this page sells the opt-in and nothing else, the snapshot is the thank-you, and only good fits are
+// shown /next, the page that sells the Full AI Opportunity Report. So nothing here talks about the
+// full report, the audit or "2 a month". Every value comes from the Greenline design system
+// (greenline-kit.css); every word from brand/STORY.md → "The brand: Greenline AI". Both forms hand
+// the email + website to the same report flow as /ai-report, which then takes over the page.
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
 import { MiniReportFlow, startError, type MiniReportStart } from "../../(site)/ai-report/mini-report-flow";
@@ -16,8 +18,31 @@ export type Proof = { company: string; industry: string; results: string[]; quot
 // Moving backgrounds: drop a short loop in /public/greenline and set its path here. Until then the
 // still shows (it is also the poster, and what reduced-motion visitors always see).
 const MOTION: { hero?: string; band?: string } = {};
+// Photos (Ryan, 10 Nov: the "dream" of a more profitable business). GPT Image 2.5, 10 Nov; sources in the KIE
+// asset store. An empty path shows a labelled placeholder locally and nothing on the live site.
+const IMAGES: { hero?: string } = { hero: "/greenline/hero-dream.jpg" };
 
-function Backdrop({ still, video, wash, first }: { still: string; video?: string; wash: string; first?: boolean }) {
+/** An image spot. With no `src` yet: a labelled placeholder while developing, nothing in production.
+ *  `focus`: the CSS object-position that keeps the subject in frame when the slot crops the photo. */
+export function ImageSlot({ src, alt, label, className = "", focus = "50% 50%" }: {
+  src?: string; alt: string; label: string; className?: string; focus?: string;
+}) {
+  if (src) {
+    return (
+      <div className={`gl-slot ${className}`}>
+        <Image src={src} alt={alt} fill sizes="(max-width: 760px) 100vw, 50vw" style={{ objectPosition: focus }} />
+      </div>
+    );
+  }
+  if (process.env.NODE_ENV === "production") return null;
+  return (
+    <div className={`gl-slot gl-slot-empty caption ${className}`} role="img" aria-label={`Image placeholder: ${label}`}>
+      <span><b>Image to come</b><br />{label}</span>
+    </div>
+  );
+}
+
+export function Backdrop({ still, video, wash, first }: { still: string; video?: string; wash: string; first?: boolean }) {
   return (
     <div className="gl-backdrop" aria-hidden="true">
       <Image src={still} alt="" fill sizes="100vw" className="gl-backdrop-still" loading={first ? "eager" : "lazy"} />
@@ -27,7 +52,7 @@ function Backdrop({ still, video, wash, first }: { still: string; video?: string
   );
 }
 
-function ReportForm({ where, full, onStart }: { where: string; full?: boolean; onStart: (s: MiniReportStart) => void }) {
+function SnapshotForm({ where, full, onStart }: { where: string; full?: boolean; onStart: (s: MiniReportStart) => void }) {
   const [email, setEmail] = useState("");
   const [site, setSite] = useState("");
   const [trap, setTrap] = useState("");
@@ -40,8 +65,15 @@ function ReportForm({ where, full, onStart }: { where: string; full?: boolean; o
   };
   return (
     <form className="gl-form" id={where === "hero" ? "report" : undefined} onSubmit={submit} noValidate>
-      <h3 className="gl-form-title display-sm">Get your free AI Opportunity Report</h3>
-      {full && <p className="gl-form-sub small">3 places AI could grow your profit, specific to your business. About 2 minutes.</p>}
+      <h3 className="gl-form-title display-sm">Get your free AI Profit Snapshot</h3>
+      {full && <p className="gl-form-sub small">3 places AI could grow your profit, specific to your business. About 90 seconds.</p>}
+      {full && (
+        <ul className="gl-form-ticks small">
+          <li>3 ideas built from your own website</li>
+          <li>The hours and dollars each could give back</li>
+          <li>On screen straight away, and in your inbox</li>
+        </ul>
+      )}
       <div className="gl-field">
         <label className="gl-label label" htmlFor={`gl-email-${where}`}>Your email</label>
         <input className="gl-input body-sm" id={`gl-email-${where}`} type="email" placeholder="you@yourbusiness.co.nz"
@@ -60,7 +92,7 @@ function ReportForm({ where, full, onStart }: { where: string; full?: boolean; o
       <button className="gl-btn gl-btn-block button" type="submit">{CTA}</button>
       {full && (
         <p className="gl-fine fine">
-          Your report by email, plus Signal over Noise: what&apos;s working for NZ businesses each week, and one AI idea to
+          Your snapshot by email, plus Signal over Noise: what&apos;s working for NZ businesses each week, and one AI idea to
           grow your profit. Unsubscribe any time. <a href="/privacy">Privacy</a>
         </p>
       )}
@@ -75,16 +107,17 @@ function Cta() {
 export function GreenlinePage({ proof }: { proof: Proof[] }) {
   const [started, setStarted] = useState<MiniReportStart | null>(null);
 
-  // Once a form is sent, the report flow takes over the page, exactly as it runs on /ai-report.
+  // Once a form is sent, the report flow takes over the page. Good fits finish on a button to /next.
   if (started) {
     return (
       <>
         <div className="gl-root"><Header cta={null} /></div>
-        <MiniReportFlow initial={started} onRestart={() => { setStarted(null); window.scrollTo(0, 0); }} />
+        <MiniReportFlow initial={started} next="/next" onRestart={() => { setStarted(null); window.scrollTo(0, 0); }} />
       </>
     );
   }
 
+  const voice = proof[0];
   return (
     <div className="gl-root">
       <Header />
@@ -93,120 +126,77 @@ export function GreenlinePage({ proof }: { proof: Proof[] }) {
         <section className="gl-hero gl-has-bg">
           <Backdrop first still="/greenline/bg-light-lines.jpg" video={MOTION.hero}
                     wash="linear-gradient(180deg, rgba(255,255,255,.25), rgba(245,248,246,.45))" />
-          <div>
-            <p className="gl-eyebrow eyebrow">For growing NZ businesses</p>
-            <h1 className="display-xl">Grow your business. Keep more of what it makes.</h1>
+          <div className="gl-hero-copy">
+            <p className="gl-eyebrow eyebrow">Free AI Profit Snapshot · for growing NZ businesses</p>
+            <h1 className="display-xl">See where AI could grow your profit.</h1>
             <p className="gl-lede lede">
-              Growing is only worth it if your profit grows too. I learn how your business runs, from the first enquiry to
-              the paid invoice. Then I build the AI tools that let you grow without your costs growing with you.
+              Pop in your website. In about 90 seconds you get 3 ideas specific to your business, with the hours each could
+              give back and roughly what that&apos;s worth a year.
             </p>
           </div>
-          <ReportForm where="hero" full onStart={setStarted} />
+          <SnapshotForm where="hero" full onStart={setStarted} />
+          <ImageSlot className="gl-hero-photo" src={IMAGES.hero} focus="22% 50%"
+                     alt="A business owner relaxing with a coffee on a sunny deck above vineyards and the sea"
+                     label="The dream: an owner with time back and the business running well (more profit, more life)" />
         </section>
 
         <div className="gl-stats">
-          <div className="gl-stat"><b className="display-sm">2 minutes</b><span className="caption">your email and website</span></div>
+          <div className="gl-stat"><b className="display-sm">Only 90 seconds</b><span className="caption">with your email and website</span></div>
           <div className="gl-stat"><b className="display-sm">3 ideas</b><span className="caption">specific to your business</span></div>
-          <div className="gl-stat"><b className="display-sm">Free</b><span className="caption">no call needed to see it</span></div>
-          <div className="gl-stat"><b className="display-sm">2 a month</b><span className="caption">full audits I take on</span></div>
+          <div className="gl-stat"><b className="display-sm">Free</b><span className="caption">nothing to pay</span></div>
+          <div className="gl-stat"><b className="display-sm">Delivered</b><span className="caption">on screen and in your inbox</span></div>
         </div>
 
         <section className="gl-section">
-          <p className="gl-eyebrow eyebrow">The Greenline way</p>
-          <h2 className="gl-heading display-lg">Two ways to grow. Only one grows your profit.</h2>
-          <div className="gl-compare gl-gap-top">
-            <div className="gl-compare-col gl-compare-usual">
-              <h3 className="display-sm">The usual way</h3>
-              <ul className="body">
-                <li>More sales means more staff</li>
-                <li>More jobs means more admin hours</li>
-                <li>Costs climb with every dollar of growth</li>
-                <li>Revenue goes up. Profit barely moves</li>
-              </ul>
+          <p className="gl-eyebrow eyebrow">What&apos;s in your snapshot</p>
+          <h2 className="gl-heading display-lg">Three ideas, built from your own business.</h2>
+          <div className="gl-steps gl-steps-3 gl-gap-top">
+            <div className="gl-step">
+              <p className="gl-step-tag tag">From your website</p>
+              <h3 className="display-sm">3 places AI could help</h3>
+              <p className="body">Each one names the work it would take off your plate, and how AI would handle it.</p>
             </div>
-            <div className="gl-compare-col gl-compare-green">
-              <h3 className="display-sm">The Greenline way</h3>
-              <ul className="body">
-                <li>AI handles the repeated work: quotes, follow-ups, invoices</li>
-                <li>The same team takes on more jobs</li>
-                <li>Costs stay steady as sales grow</li>
-                <li>Revenue goes up. Profit goes up with it</li>
-              </ul>
+            <div className="gl-step">
+              <p className="gl-step-tag tag">Time and money</p>
+              <h3 className="display-sm">What each could give back</h3>
+              <p className="body">The hours a week each idea could save, and roughly what that&apos;s worth a year.</p>
             </div>
-          </div>
-          <div className="gl-line">
-            <div>
-              <h3 className="display-md">The green line is profit.</h3>
-              <p className="gl-lede body gl-mt-2">That&apos;s the line Greenline AI is built to lift. Not just bigger, more profitable.</p>
-            </div>
-            <div>
-              <svg className="gl-profit" viewBox="0 0 400 170" role="img" aria-label="Illustration: revenue and profit rising together">
-                <line className="axis" x1="10" y1="160" x2="390" y2="160" strokeWidth="1.5" />
-                <polyline className="revenue" points="10,125 105,108 200,84 295,60 390,28" fill="none" strokeWidth="3" strokeDasharray="8 6" />
-                <polyline className="profit" points="10,152 105,142 200,124 295,100 390,72" fill="none" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-                <circle className="node" cx="390" cy="72" r="8" />
-              </svg>
-              <div className="gl-key small">
-                <span>- - - Revenue</span><span className="is-profit">&#9473; Profit</span><span className="fine">Illustration, not data</span>
-              </div>
+            <div className="gl-step">
+              <p className="gl-step-tag tag">Easy to check</p>
+              <h3 className="display-sm">Where each idea came from</h3>
+              <p className="body">Every idea shows what on your site or in your answers it&apos;s based on.</p>
             </div>
           </div>
           <Cta />
         </section>
 
-        <section className="gl-section gl-section-mist gl-has-bg">
-          <Backdrop still="/greenline/bg-workshop.jpg" wash="linear-gradient(rgba(245,248,246,.86), rgba(245,248,246,.9))" />
-          <p className="gl-eyebrow eyebrow">Real businesses, real results</p>
-          <h2 className="gl-heading display-lg">Already working for businesses like yours.</h2>
-          <div className="gl-proof gl-gap-top">
-            {proof.map((p) => (
-              <article className="gl-card" key={p.company}>
-                <h3 className="gl-card-who title">{p.company}</h3>
-                <p className="gl-card-meta caption">{p.industry}</p>
-                <ul className="body-sm">{p.results.map((r) => <li key={r}>{r}</li>)}</ul>
-                <blockquote className="gl-quote body-sm">
-                  &ldquo;{p.quote.text}&rdquo;
-                  <cite className="caption">{p.quote.name}, {p.quote.role}</cite>
+        {voice && (
+          <section className="gl-section gl-section-mist gl-has-bg">
+            {/* A light wash so the workshop photo shows; the words sit on their own frosted panel. */}
+            <Backdrop still="/greenline/bg-workshop.jpg" wash="linear-gradient(rgba(245,248,246,.04), rgba(245,248,246,.1))" />
+            <div className="gl-panel">
+              <p className="gl-eyebrow eyebrow">From Ryan Alexander Black</p>
+              <h2 className="gl-heading display-lg">Real results for businesses like yours.</h2>
+              <p className="gl-lede body gl-mt-2">{proof.map((p) => p.company).join(" · ")}</p>
+              <article className="gl-card gl-gap-top">
+                <blockquote className="gl-quote body">
+                  &ldquo;{voice.quote.text}&rdquo;
+                  <cite className="caption">{voice.quote.name}, {voice.quote.role} · {voice.company}</cite>
                 </blockquote>
               </article>
-            ))}
-          </div>
-          <Cta />
-        </section>
-
-        <section className="gl-section gl-has-bg">
-          <Backdrop still="/greenline/bg-light-lines.jpg" wash="linear-gradient(rgba(255,255,255,.7), rgba(255,255,255,.82))" />
-          <p className="gl-eyebrow eyebrow">How it works</p>
-          <h2 className="gl-heading display-lg">Start free. Go deeper if it fits.</h2>
-          <div className="gl-steps gl-gap-top">
-            <div className="gl-step">
-              <p className="gl-step-tag tag">Step 1 · Free · 2 minutes</p>
-              <h3 className="display-sm">Your free AI report</h3>
-              <p className="body">Pop in your email and website. You get 3 places AI could grow your profit, on screen and by email.</p>
             </div>
-            <div className="gl-step">
-              <p className="gl-step-tag tag">Step 2 · Free · 2 a month</p>
-              <h3 className="display-sm">The full AI Opportunity Report</h3>
-              <p className="body">If it&apos;s a fit: a quick call, a 45-minute audit of how your business runs, then your plan, walked through in person.</p>
-            </div>
-          </div>
-          <div className="gl-faq gl-faq-top">
-            <div className="gl-faq-item"><h3 className="title">Is it really free?</h3><p className="body-sm">Yes. The 2-minute report and the full AI Opportunity Report are both free. You only pay if you choose to have me build it.</p></div>
-            <div className="gl-faq-item"><h3 className="title">Do I need to be techy?</h3><p className="body-sm">No. I build it and set it up. You and your team just use it.</p></div>
-            <div className="gl-faq-item"><h3 className="title">What does a build cost?</h3><p className="body-sm">It depends on what&apos;s worth building. You get a clear quote after the audit, with the return it should bring.</p></div>
-            <div className="gl-faq-item"><h3 className="title">Why only 2 audits a month?</h3><p className="body-sm">Each one takes real time. I pick the businesses that will get the most out of it.</p></div>
-          </div>
-        </section>
+          </section>
+        )}
 
         <section className="gl-band gl-has-bg">
           <Backdrop still="/greenline/bg-dark-lines.jpg" video={MOTION.band}
                     wash="linear-gradient(rgba(10,15,13,.45), rgba(10,15,13,.6))" />
           <div>
-            <p className="gl-eyebrow eyebrow">Your free AI Opportunity Report</p>
-            <h2 className="gl-heading display-lg">See where AI can grow your profit.</h2>
-            <p className="gl-lede lede">Two minutes, your website, three ideas specific to your business. Free.</p>
+            <p className="gl-eyebrow eyebrow">Your free AI Profit Snapshot</p>
+            <h2 className="gl-heading display-lg">Three ideas for your business, in about 90 seconds.</h2>
+            <p className="gl-lede lede">Your email and website. Free, on screen and in your inbox.</p>
           </div>
-          <ReportForm where="band" onStart={setStarted} />
+          <SnapshotForm where="band" onStart={setStarted} />
         </section>
       </main>
 

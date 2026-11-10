@@ -1,7 +1,8 @@
 "use client";
 
-// The mini-report flow: email + website → questions while the AI reads the site → the report →
-// the application for the full AI Opportunity Report. A React port of the tested prototype
+// The mini-report flow (the free AI Profit Snapshot): email + website → questions while the AI reads
+// the site → the snapshot → for good fits, the next step: the Full AI Opportunity Report (inline on
+// /ai-report; a button to Greenline's /next page when `next` is set). A React port of the tested prototype
 // (Nexus money-engine/instant-win/mockup-flow.html v5, design in flow-design.md).
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { getUtm, track } from "@/lib/track";
@@ -91,9 +92,16 @@ export function startError(email: string, site: string): string {
 /** `initial`: another page already took the email + website, so the flow starts the read at once
  *  (skipping its own first screen). `onRestart`: where "start again" goes instead of screen 1. */
 export type MiniReportStart = { email: string; site: string; trap?: string };
-type FlowProps = { initial?: MiniReportStart; onRestart?: () => void };
+/** `next`: where good fits go for the Full AI Opportunity Report (Greenline's /next) instead of the
+ *  inline application. The snapshot's context rides along in sessionStorage under SNAPSHOT_KEY. */
+type FlowProps = { initial?: MiniReportStart; onRestart?: () => void; next?: string };
 
-export function MiniReportFlow({ initial, onRestart }: FlowProps = {}) {
+export const SNAPSHOT_KEY = "gl-snapshot";
+export type SnapshotContext = {
+  email: string; site: string; business: string; fit: Fit; ideas: string[]; answers: Record<string, unknown>;
+};
+
+export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
   const [screen, setScreen] = useState<1 | 2 | 3>(1);
   const [email, setEmail] = useState(initial?.email ?? "");
   const [site, setSite] = useState(initial?.site ?? "");
@@ -192,7 +200,7 @@ export function MiniReportFlow({ initial, onRestart }: FlowProps = {}) {
     meter3.to(60);
     try {
       const d = await (readP.current || Promise.reject(new Error("Please start again.")));
-      const r = await api<ReportResult>("/api/mini-report/report", { token: d.token, answers, utm: getUtm() });
+      const r = await api<ReportResult>("/api/mini-report/report", { token: d.token, answers, utm: getUtm(), brand: next ? "greenline" : undefined });
       meter3.finish(() => setTimeout(() => { setRep(r); track("report_viewed", { fit: r.fit }); window.scrollTo(0, 0); }, 400));
     } catch (err) {
       meter3.stop();
@@ -206,6 +214,16 @@ export function MiniReportFlow({ initial, onRestart }: FlowProps = {}) {
     setRead(null); setReadErr(""); setHeld(false); setReady(false); setRep(null); setRepErr(""); chosen.current = false;
     if (onRestart) { onRestart(); return; }
     go(1);
+  };
+
+  // Good fits on Greenline: carry the snapshot to /next so the application there needs only a name + mobile.
+  const toNext = () => {
+    const ctx: SnapshotContext = {
+      email, site, business: biz, fit: rep?.fit || "unknown",
+      ideas: (rep?.opportunities || []).map((o) => o.title), answers: collect(),
+    };
+    try { sessionStorage.setItem(SNAPSHOT_KEY, JSON.stringify(ctx)); } catch { /* /next asks for the email + website instead */ }
+    track("next_viewed", { fit: ctx.fit });
   };
 
   const apply = async () => {
@@ -252,8 +270,8 @@ export function MiniReportFlow({ initial, onRestart }: FlowProps = {}) {
               <input id="mr-cw" type="text" tabIndex={-1} autoComplete="off" value={trap} onChange={(e) => setTrap(e.target.value)} />
             </div>
             {err1 && <div className="err">{err1}</div>}
-            <button className="btn solid big" type="submit"><span>✦</span> Get my free AI report</button>
-            <div className="fine">You&apos;ll get your report by email as soon as it&apos;s ready, plus the weekly business pulse: what&apos;s moving for NZ business, and how AI gives you the edge. Unsubscribe any time. <a href="/privacy">Privacy</a></div>
+            <button className="btn solid big" type="submit"><span>✦</span> Get my free AI Profit Snapshot</button>
+            <div className="fine">You&apos;ll get your snapshot by email as soon as it&apos;s ready, plus the weekly business pulse: what&apos;s moving for NZ business, and how AI gives you the edge. Unsubscribe any time. <a href="/privacy">Privacy</a></div>
           </form>
         </section>
       )}
@@ -315,7 +333,7 @@ export function MiniReportFlow({ initial, onRestart }: FlowProps = {}) {
         <section className="card">
           {!rep ? (
             <div className="load3">
-              <div className="rhead"><div className="eyebrow" style={{ margin: 0 }}>Your AI report</div><span className="badge">✦ AI at work</span></div>
+              <div className="rhead"><div className="eyebrow" style={{ margin: 0 }}>Your AI Profit Snapshot</div><span className="badge">✦ AI at work</span></div>
               <h2>{repErr ? repErr : `Finalising ${poss(biz)} report`}</h2>
               {repErr ? (
                 !held && <button className="btn again" onClick={restart}>Start again</button>
@@ -334,7 +352,7 @@ export function MiniReportFlow({ initial, onRestart }: FlowProps = {}) {
             </div>
           ) : (
             <div>
-              <div className="rhead"><div className="eyebrow" style={{ margin: 0 }}>Your AI report</div><span className="badge">✦ written by AI</span></div>
+              <div className="rhead"><div className="eyebrow" style={{ margin: 0 }}>Your AI Profit Snapshot</div><span className="badge">✦ written by AI</span></div>
               <h2>3 places AI could save {biz} time</h2>
               <p className="lede">Built from your website and your answers.</p>
               <div className="total">
@@ -357,13 +375,20 @@ export function MiniReportFlow({ initial, onRestart }: FlowProps = {}) {
               <div className="basis">Money figures assume a $75,000 a year salary (about $36 an hour). Every figure is a rough estimate, not a promise. The time back goes to the work that grows the business.</div>
               <div className="sent">📬 A copy is on its way to your inbox.</div>
 
-              {rep.fit !== "low" ? (
+              {rep.fit !== "low" && next ? (
+                <div className="offer">
+                  <div className="slots">Free · 2 reports available each month</div>
+                  <h3>Want to go deeper?</h3>
+                  <p>Your snapshot came from your website and a few taps. The <b style={{ color: "var(--text)" }}>Full AI Opportunity Report</b> is built around how {biz} really runs: a quick call, a 45-minute audit, then your plan, walked through in person.</p>
+                  <a className="btn solid big" href={next} onClick={toNext}>See how the full report works</a>
+                </div>
+              ) : rep.fit !== "low" ? (
                 <div className="offer">
                   {!applied ? (
                     <div>
                       <div className="slots">Only 2 audits a month</div>
                       <h3>Free for the right Hawke&apos;s Bay businesses</h3>
-                      <p>That was the 2-minute version, from your website and a few taps. The free <b style={{ color: "var(--text)" }}>AI Opportunity Report</b> goes much deeper, built around how {biz} really runs. Here&apos;s how it works:</p>
+                      <p>Your snapshot was the 2-minute version, from your website and a few taps. The free <b style={{ color: "var(--text)" }}>Full AI Opportunity Report</b> goes much deeper, built around how {biz} really runs. Here&apos;s how it works:</p>
                       <ol className="steps4">
                         <li><span><b>A quick call.</b> Ryan rings to learn a little about the business and see if it&apos;s a fit. A few minutes, that&apos;s all.</span></li>
                         <li><span><b>The audit, about 45 minutes.</b> Ryan comes to you in Hawke&apos;s Bay and maps how your work really flows: quotes, jobs, admin, follow-ups. Video call if that&apos;s easier.</span></li>
@@ -385,7 +410,7 @@ export function MiniReportFlow({ initial, onRestart }: FlowProps = {}) {
                         </div>
                       </div>
                       {err3 && <div className="err">{err3}</div>}
-                      <button className="btn solid big" onClick={apply} disabled={applying}>{applying ? "Sending…" : "Apply for a free AI Opportunity Report"}</button>
+                      <button className="btn solid big" onClick={apply} disabled={applying}>{applying ? "Sending…" : "Apply for your free Full AI Opportunity Report"}</button>
                       <div className="fine">Ryan will call you within one business day to talk it through.</div>
                     </div>
                   ) : (

@@ -8,7 +8,9 @@ const CANONICAL = "greenlineai.nz";
 // What the page needs on its own domain besides itself: the report form's API.
 const PASS = /^\/api\/mini-report\//;
 // Greenline's own pages, at their short addresses.
-const PAGES: Record<string, string> = { "/": "/greenline", "/privacy": "/greenline/privacy", "/terms": "/greenline/terms" };
+const PAGES: Record<string, string> = {
+  "/": "/greenline", "/next": "/greenline/next", "/privacy": "/greenline/privacy", "/terms": "/greenline/terms",
+};
 
 export function proxy(req: NextRequest) {
   const host = (req.headers.get("host") || "").split(":")[0].toLowerCase();

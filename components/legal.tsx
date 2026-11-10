@@ -83,13 +83,13 @@ export function PrivacyBody({ brand: b }: { brand: Brand }) {
       </section>
 
       <section>
-        <h2>The free AI report</h2>
-        <p>If you ask for the free AI report on this site, here is what happens with your information:</p>
+        <h2>The free AI Profit Snapshot</h2>
+        <p>If you ask for the free AI Profit Snapshot on this site, here is what happens with your information:</p>
         <ul className="mt-3 list-disc space-y-2 pl-5">
           <li>
             <strong>What I collect:</strong> your email, your business website address, the answers you choose to give
             (role, team size, revenue band, tools and so on), the campaign link you arrived from, and, if you apply for
-            the full AI Opportunity Report, your name, mobile and best time to call.
+            the Full AI Opportunity Report, your name, mobile and best time to call.
           </li>
           <li>
             <strong>How the report is made:</strong>{" "}the public pages of your website are read by Firecrawl, and the
