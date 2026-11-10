@@ -18,6 +18,9 @@ export interface ClientCase {
   opportunity: string; // "what I found" — the before
   built: string; // "what I built" — one sentence
   results: string[]; // short chips — first is the headline
+  // Big numbers for the Greenline sales page (greenlineai.nz/next, Ryan 10 Nov: "sell this more").
+  // Each one is a claims-menu.md line; the "never on the site" list still applies.
+  proofStats?: { stat: string; label: string }[];
   quote: ClientQuote;
   featured?: boolean; // full-width card
   cardImage?: { src: string; alt: string }; // a real screen on the featured card
@@ -63,6 +66,11 @@ export const clients: ClientCase[] = [
       "Quotes priced on their own rate card",
       "Every live job on one screen",
       "Their 12-month vision, running early",
+    ],
+    proofStats: [
+      { stat: "Half a week", label: "Amanda spent at least that on quoting. Now each quote is one digital sheet, priced to the cent and straight into Xero." },
+      { stat: "~$18k a year", label: "In outsourced admin no longer needed, about two months in." },
+      { stat: "Their own Hub", label: "Every live job now runs on AV's own system. monday.com is no longer needed." },
     ],
     quote: {
       text: "The quote platform that's been designed is so quick… and accurate.",
@@ -212,6 +220,11 @@ export const clients: ClientCase[] = [
       "New ideas built in a day",
       "Clear on which marketing brings in members",
     ],
+    proofStats: [
+      { stat: "~$10k", label: "Of ad spend in under 3 months on lead forms that brought in no members. Tracing every lead found it; that spend is now cut right back." },
+      { stat: "8 systems", label: "Connected into one live view of the gym. The plan scoped 4." },
+      { stat: "3–4 hrs a week", label: "Dan spent writing procedures. Now he says one out loud and it's written in minutes." },
+    ],
     quote: {
       text: "It knows me, my culture, my values, it knows everything about Legends.",
       name: "Daniel",
@@ -315,6 +328,10 @@ export const clients: ClientCase[] = [
     built:
       "A tool that does the reconciliation automatically, applies the loan's real rules, flags anything that doesn't add up and produces a client-ready statement — run by Shelley herself.",
     results: ["~75% less time per statement", "~4 hrs/week recovered"],
+    proofStats: [
+      { stat: "~75%", label: "Less time on each loan statement." },
+      { stat: "~4 hrs a week", label: "Back in Shelley's week, on a tool she runs herself." },
+    ],
     quote: {
       text: "Ryan worked with me to identify exactly where AI could take that load off, then implemented practical, easy-to-use solutions that genuinely changed how I work.",
       name: "Shelley",

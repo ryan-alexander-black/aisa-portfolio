@@ -32,6 +32,21 @@ body { margin: 0; }
 .gl-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .gl-fine a { color: var(--accent); text-decoration: underline; }
 
+/* The stats bar under each hero is black (Ryan, 10 Nov): photo hero → black bar → white → photo → black band. */
+.gl-root .gl-stats { background: var(--band); border-color: transparent; }
+.gl-root .gl-stat b { color: var(--band-text); }
+.gl-root .gl-stat span { color: var(--band-muted); }
+
+/* /next proof cards: the big numbers (Ryan, 10 Nov: "sell this more"), then the quote at the foot. */
+.gl-proof-stats { display: grid; gap: var(--space-4); margin: var(--space-2) 0 var(--space-6); }
+.gl-proof-stat { border-top: 1px solid var(--border); padding-top: var(--space-3); }
+.gl-proof-stat dt { font-family: var(--font-display); color: var(--accent); }
+.gl-proof-stat dd { margin: 2px 0 0; color: var(--text-muted); }
+.gl-proof .gl-proof-stats + .gl-quote { margin-top: 0; }
+
+/* FAQs heading on /next. */
+.gl-faq-head { margin-top: var(--space-12); }
+
 /* The opt-in page's "what's in your snapshot": three across. */
 .gl-steps-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 

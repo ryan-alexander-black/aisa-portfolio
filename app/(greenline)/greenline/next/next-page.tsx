@@ -134,12 +134,12 @@ export function NextPage({ proof }: { proof: Proof[] }) {
           <Backdrop first still="/greenline/bg-light-lines.jpg"
                     wash="linear-gradient(180deg, rgba(255,255,255,.25), rgba(245,248,246,.45))" />
           <div className="gl-hero-copy">
-            <p className="gl-eyebrow eyebrow">The Full AI Opportunity Report · free</p>
-            <h1 className="display-xl">Your biggest profit wins, mapped and in order.</h1>
+            <p className="gl-eyebrow eyebrow">The Full AI Opportunity Report · completely free</p>
+            <h1 className="display-xl">Turn your snapshot into a full plan to grow your profit.</h1>
             <p className="gl-lede lede">
               Your snapshot came from your website. The full report comes from how your business really runs. We spend 45
-              minutes mapping the work from the first enquiry to the paid invoice, then I hand you a plan: where AI could
-              save the most time and money, and what to tackle first.
+              minutes mapping the work from enquiry to invoice, then I hand you a plan: where AI could save the most time
+              and money, and what to tackle first.
             </p>
           </div>
           <ApplyForm />
@@ -149,10 +149,10 @@ export function NextPage({ proof }: { proof: Proof[] }) {
         </section>
 
         <div className="gl-stats">
-          <div className="gl-stat"><b className="display-sm">Free</b><span className="caption">no cost, no obligation</span></div>
-          <div className="gl-stat"><b className="display-sm">45 minutes</b><span className="caption">the audit, in person or on video</span></div>
+          <div className="gl-stat"><b className="display-sm">Completely free</b><span className="caption">no cost, no obligation</span></div>
+          <div className="gl-stat"><b className="display-sm">45 minutes</b><span className="caption">the audit, in person or by video</span></div>
           <div className="gl-stat"><b className="display-sm">Your plan</b><span className="caption">walked through in person</span></div>
-          <div className="gl-stat"><b className="display-sm">2 reports</b><span className="caption">available each month</span></div>
+          <div className="gl-stat"><b className="display-sm">Limited</b><span className="caption">to 2 reports per month</span></div>
         </div>
 
         <section className="gl-section">
@@ -171,7 +171,7 @@ export function NextPage({ proof }: { proof: Proof[] }) {
             <div className="gl-compare-col gl-compare-green">
               <h3 className="display-sm">The Greenline way</h3>
               <ul className="body">
-                <li>AI handles the repeated work: quotes, follow-ups, invoices</li>
+                <li>AI handles the simple, repeatable work</li>
                 <li>The same team takes on more jobs</li>
                 <li>Costs stay steady as sales grow</li>
                 <li>Revenue goes up. Profit goes up with it</li>
@@ -223,7 +223,7 @@ export function NextPage({ proof }: { proof: Proof[] }) {
             <div className="gl-step">
               <p className="gl-step-tag tag">Step 4</p>
               <h3 className="display-sm">The walk-through</h3>
-              <p className="body">I sit down with you and take you through it. It&apos;s yours to keep, whatever you decide to do next.</p>
+              <p className="body">I sit down with you and talk you through it. It&apos;s yours to keep: run with it yourself, or we can talk about working together on the AI solutions.</p>
             </div>
           </div>
           <Cta />
@@ -237,7 +237,15 @@ export function NextPage({ proof }: { proof: Proof[] }) {
               <article className="gl-card" key={p.company}>
                 <h3 className="gl-card-who title">{p.company}</h3>
                 <p className="gl-card-meta caption">{p.industry}</p>
-                <ul className="body-sm">{p.results.map((r) => <li key={r}>{r}</li>)}</ul>
+                {p.stats.length > 0 ? (
+                  <dl className="gl-proof-stats">
+                    {p.stats.map((s) => (
+                      <div className="gl-proof-stat" key={s.stat}><dt className="display-md">{s.stat}</dt><dd className="body-sm">{s.label}</dd></div>
+                    ))}
+                  </dl>
+                ) : (
+                  <ul className="body-sm">{p.results.map((r) => <li key={r}>{r}</li>)}</ul>
+                )}
                 <blockquote className="gl-quote body-sm">
                   &ldquo;{p.quote.text}&rdquo;
                   <cite className="caption">{p.quote.name}, {p.quote.role}</cite>
@@ -245,10 +253,11 @@ export function NextPage({ proof }: { proof: Proof[] }) {
               </article>
             ))}
           </div>
+          <h2 className="gl-heading display-md gl-faq-head">FAQs</h2>
           <div className="gl-faq gl-faq-top">
-            <div className="gl-faq-item"><h3 className="title">Is it really free?</h3><p className="body-sm">Yes. The snapshot and the Full AI Opportunity Report are both free, with no obligation.</p></div>
-            <div className="gl-faq-item"><h3 className="title">Do I need to be techy?</h3><p className="body-sm">No. You tell me how your business runs; I work out where AI fits.</p></div>
-            <div className="gl-faq-item"><h3 className="title">Do I have to buy anything after?</h3><p className="body-sm">No. The report is yours to keep, whatever you decide to do next.</p></div>
+            <div className="gl-faq-item"><h3 className="title">Is it really free?</h3><p className="body-sm">Yes. The snapshot and the Full AI Opportunity Report are both completely free, with no obligation.</p></div>
+            <div className="gl-faq-item"><h3 className="title">Do I need to be techy?</h3><p className="body-sm">No. I guide you through how AI could fit your business.</p></div>
+            <div className="gl-faq-item"><h3 className="title">Do I have to buy anything after?</h3><p className="body-sm">No. The report is yours to keep. If you&apos;d like to work together on it afterwards, I&apos;d be glad to talk.</p></div>
             <div className="gl-faq-item"><h3 className="title">Why only 2 reports a month?</h3><p className="body-sm">Each one takes real time. I pick the businesses that will get the most out of it.</p></div>
           </div>
         </section>

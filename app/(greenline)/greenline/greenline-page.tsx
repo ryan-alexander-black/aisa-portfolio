@@ -13,7 +13,9 @@ import { MiniReportFlow, startError, type MiniReportStart } from "../../(site)/a
 import type { ClientQuote } from "@/lib/clients";
 import { CTA, Footer, Header } from "./chrome";
 
-export type Proof = { company: string; industry: string; results: string[]; quote: ClientQuote };
+export type Proof = {
+  company: string; industry: string; results: string[]; stats: { stat: string; label: string }[]; quote: ClientQuote;
+};
 
 // Moving backgrounds: drop a short loop in /public/greenline and set its path here. Until then the
 // still shows (it is also the poster, and what reduced-motion visitors always see).
@@ -143,8 +145,8 @@ export function GreenlinePage({ proof }: { proof: Proof[] }) {
         <div className="gl-stats">
           <div className="gl-stat"><b className="display-sm">Only 90 seconds</b><span className="caption">with your email and website</span></div>
           <div className="gl-stat"><b className="display-sm">3 ideas</b><span className="caption">specific to your business</span></div>
-          <div className="gl-stat"><b className="display-sm">Free</b><span className="caption">nothing to pay</span></div>
-          <div className="gl-stat"><b className="display-sm">Delivered</b><span className="caption">on screen and in your inbox</span></div>
+          <div className="gl-stat"><b className="display-sm">Completely free</b><span className="caption">nothing to pay</span></div>
+          <div className="gl-stat"><b className="display-sm">Instantly delivered</b><span className="caption">on screen and in your inbox</span></div>
         </div>
 
         <section className="gl-section">
@@ -194,7 +196,10 @@ export function GreenlinePage({ proof }: { proof: Proof[] }) {
           <div>
             <p className="gl-eyebrow eyebrow">Your free AI Profit Snapshot</p>
             <h2 className="gl-heading display-lg">Three ideas for your business, in about 90 seconds.</h2>
-            <p className="gl-lede lede">Your email and website. Free, on screen and in your inbox.</p>
+            <p className="gl-lede lede">
+              Simply enter your email and website, and you&apos;ll instantly receive your free AI Profit Snapshot on screen
+              and in your inbox.
+            </p>
           </div>
           <SnapshotForm where="band" onStart={setStarted} />
         </section>

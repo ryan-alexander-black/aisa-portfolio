@@ -10,7 +10,7 @@ import { NextPage } from "./next-page";
 export const metadata: Metadata = {
   title: "The Full AI Opportunity Report · Greenline AI",
   description:
-    "Your biggest profit wins, mapped and in order. A quick call, a 45-minute audit, then your plan, walked through in person. Free, with 2 reports available each month.",
+    "Turn your snapshot into a full plan to grow your profit. A quick call, a 45-minute audit, then your plan, walked through in person. Completely free, limited to 2 reports per month.",
   alternates: { canonical: "/next" },
   robots: { index: false },
 };
@@ -21,7 +21,7 @@ export default async function Page() {
   await greenlineHostOnly();
   const proof: Proof[] = PROOF_SLUGS.flatMap((slug) => {
     const c = clients.find((x) => x.slug === slug);
-    return c ? [{ company: c.company, industry: c.industry, results: c.results.slice(0, 3), quote: c.quote }] : [];
+    return c ? [{ company: c.company, industry: c.industry, results: c.results.slice(0, 3), stats: c.proofStats ?? [], quote: c.quote }] : [];
   });
   return <NextPage proof={proof} />;
 }
