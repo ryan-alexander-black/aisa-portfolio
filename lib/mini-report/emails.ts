@@ -6,7 +6,7 @@
 // With no RESEND_API_KEY (local dev) nothing is sent; each email is logged instead.
 import { Resend } from "resend";
 import { answersText } from "./prompts";
-import { yearlyDollars, type Answers, type Fit, type Report } from "./shared";
+import { BASIS_LINE, GAIN_LINE, yearlyDollars, type Answers, type Fit, type Report } from "./shared";
 
 const TO_RYAN = process.env.OPERATOR_FORM_TO || "ryanalexanderblack@gmail.com";
 const FROM = process.env.MAIL_FROM || "Ryan Alexander Black <hello@ryanalexanderblack.com>";
@@ -37,25 +37,26 @@ function ideasHtml(rep: Report): string {
       <div style="font-weight:700;font-size:16px;margin:0 0 8px">${i + 1}. ${esc(o.title)}</div>
       <p style="margin:0 0 6px"><b>Today:</b> ${esc(o.today)}</p>
       <p style="margin:0 0 6px"><b>With AI:</b> ${esc(o.with_ai)}</p>
+      ${o.profit ? `<p style="margin:0 0 6px"><b>Profit:</b> ${esc(o.profit)}</p>` : ""}
       <p style="margin:0 0 6px;color:#5C6B64;font-style:italic">Based on: ${esc(o.evidence)}</p>
-      <p style="margin:0;color:#047857;font-weight:600">~${o.hours_low}–${o.hours_high} hrs a week back · ≈ ${yearlyDollars(o.hours_low)}–${yearlyDollars(o.hours_high)} a year in admin time</p>
+      <p style="margin:0;color:#047857;font-weight:600">~${o.hours_low}–${o.hours_high} hrs a week back · ≈ ${yearlyDollars(o.hours_low)}–${yearlyDollars(o.hours_high)} a year in your pocket</p>
     </div>`).join("");
 }
 
 function ideasText(rep: Report): string {
   return rep.opportunities.map((o, i) =>
-    `${i + 1}. ${o.title}\nToday: ${o.today}\nWith AI: ${o.with_ai}\nBased on: ${o.evidence}\n` +
-    `~${o.hours_low}–${o.hours_high} hrs a week back · ≈ ${yearlyDollars(o.hours_low)}–${yearlyDollars(o.hours_high)} a year`,
+    `${i + 1}. ${o.title}\nToday: ${o.today}\nWith AI: ${o.with_ai}\n${o.profit ? `Profit: ${o.profit}\n` : ""}Based on: ${o.evidence}\n` +
+    `~${o.hours_low}–${o.hours_high} hrs a week back · ≈ ${yearlyDollars(o.hours_low)}–${yearlyDollars(o.hours_high)} a year in your pocket`,
   ).join("\n\n");
 }
 
 function totals(rep: Report) {
   const lo = rep.opportunities.reduce((s, o) => s + o.hours_low, 0);
   const hi = rep.opportunities.reduce((s, o) => s + o.hours_high, 0);
-  return { lo, hi, line: `~${lo}–${hi} hrs a week back, ≈ ${yearlyDollars(lo)}–${yearlyDollars(hi)} a year in admin time` };
+  return { lo, hi, line: `~${lo}–${hi} hrs a week back for your team, ≈ ${yearlyDollars(lo)}–${yearlyDollars(hi)} a year back in your pocket` };
 }
 
-const BASIS = "Money figures assume a $75,000 a year salary (about $36 an hour). Every figure is a rough estimate, not a promise.";
+const BASIS = BASIS_LINE;
 
 // The Greenline AI snapshot email (Ryan, 11 Nov): the Greenline look, email-safe (tables + inline styles,
 // no web fonts, no images), with the Full AI Opportunity Report sold to good fits by a big green button.
@@ -73,9 +74,10 @@ function glIdeasHtml(rep: Report): string {
           <div style="font-size:18px;font-weight:700;line-height:1.3;color:${GL.ink};margin:0 0 12px">${esc(o.title)}</div>
           <p style="margin:0 0 8px;color:${GL.ink}"><b>Today:</b> ${esc(o.today)}</p>
           <p style="margin:0 0 8px;color:${GL.ink}"><b>With AI:</b> ${esc(o.with_ai)}</p>
+          ${o.profit ? `<p style="margin:0 0 8px;color:${GL.ink}"><b>Profit:</b> ${esc(o.profit)}</p>` : ""}
           <p style="margin:0 0 14px;color:${GL.muted};font-size:13px;font-style:italic">Based on: ${esc(o.evidence)}</p>
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="background:${GL.tint};border-radius:10px;padding:10px 14px;color:${GL.deep};font-weight:700;font-size:14px">
-            ~${o.hours_low}–${o.hours_high} hrs a week back · ≈ ${yearlyDollars(o.hours_low)}–${yearlyDollars(o.hours_high)} a year
+            ~${o.hours_low}–${o.hours_high} hrs a week back · ≈ ${yearlyDollars(o.hours_low)}–${yearlyDollars(o.hours_high)} a year in your pocket
           </td></tr></table>
         </td></tr>
       </table>
@@ -137,6 +139,7 @@ function greenlineSnapshotHtml(rep: Report, fit: Fit, t: { line: string }): stri
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${GL.tint};border-left:4px solid ${GL.brand};border-radius:12px">
             <tr><td style="padding:16px 18px;color:${GL.deep};font-size:17px;font-weight:800">${esc(t.line)}</td></tr>
           </table>
+          <p style="margin:12px 0 0;color:${GL.ink};font-size:14px">${GAIN_LINE}</p>
         </td></tr>
         <tr><td style="padding:0 28px">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${glIdeasHtml(rep)}</table>
@@ -169,7 +172,7 @@ export async function sendReportEmails(ctx: {
   const t = totals(rep);
   const subject = greenline
     ? `Your AI Profit Snapshot: 3 places AI could grow ${rep.business_name}'s profit`
-    : `Your AI Profit Snapshot: 3 places AI could save ${rep.business_name} time`;
+    : `Your AI Profit Snapshot: 3 places AI could grow ${rep.business_name}'s profit`;
 
   // 1. The visitor's copy. Replies come straight to Ryan.
   const offer = fit === "low"
@@ -188,11 +191,12 @@ export async function sendReportEmails(ctx: {
     from: greenline ? FROM_GREENLINE : undefined,
     replyTo: greenline ? "ryan@greenlineai.nz" : TO_RYAN,
     subject,
-    text: `${subject}\n\n${t.line}\n\n${ideasText(rep)}\n\n${BASIS}\n\n${signText}`,
+    text: `${subject}\n\n${t.line}\n${GAIN_LINE}\n\n${ideasText(rep)}\n\n${BASIS}\n\n${signText}`,
     html: greenline ? greenlineSnapshotHtml(rep, fit, t) : `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#0A0F0D;max-width:600px">
       <h2 style="margin:0 0 6px">${esc(subject)}</h2>
       <p style="margin:0 0 16px;color:#5C6B64">Built from your website and your answers. ✦ Written by AI.</p>
-      <p style="margin:0 0 16px;font-weight:600">${esc(t.line)}</p>
+      <p style="margin:0 0 6px;font-weight:600">${esc(t.line)}</p>
+      <p style="margin:0 0 16px">${GAIN_LINE}</p>
       ${ideasHtml(rep)}
       <p style="font-size:12px;color:#5C6B64">${BASIS}</p>
       ${offer}

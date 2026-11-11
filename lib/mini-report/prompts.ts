@@ -32,10 +32,11 @@ export const REPORT_SCHEMA = {
           today: { type: "string", description: "The time-sink as this owner would describe it. Max 25 words." },
           with_ai: { type: "string", description: "What actually happens with AI, naming their own tools where known. Max 45 words." },
           evidence: { type: "string", description: "Why this idea, said to the owner in max 12 words, e.g. 'Your site promises certificates the same day' or 'You said scheduling eats your week'." },
+          profit: { type: "string", description: "How this idea grows their profit, said to the owner in max 18 words: the money it brings in or wins back, or what the freed hours go to instead." },
           hours_low: { type: "integer", description: "Hours saved per week, low end. Conservative." },
           hours_high: { type: "integer", description: "Hours saved per week, high end." },
         },
-        required: ["title", "category", "today", "with_ai", "evidence", "hours_low", "hours_high"],
+        required: ["title", "category", "today", "with_ai", "evidence", "profit", "hours_low", "hours_high"],
         additionalProperties: false,
       },
     },
@@ -44,7 +45,9 @@ export const REPORT_SCHEMA = {
   additionalProperties: false,
 };
 
-export const REPORT_SYSTEM = `You write a short, free "3 places AI could save your business time" report for a small business owner in Hawke's Bay, New Zealand. It is the first thing they see from Ryan Alexander Black, who builds AI automations for local businesses. Its job: make the owner think "that's exactly us", so they want the full, in-person AI Opportunity Report.
+export const REPORT_SYSTEM = `You write a short, free "3 places AI could grow your profit" report (the AI Profit Snapshot) for a small business owner in New Zealand. It is the first thing they see from Ryan Alexander Black of Greenline AI, who builds AI automations for local businesses. Its job: make the owner think "that's exactly us", so they want the full, in-person AI Opportunity Report.
+
+The idea behind it: growing revenue isn't the same as growing profit. AI grows profit two ways: it brings in or wins back money that is slipping away today, and it takes repeatable work off the team so those hours go to the work with the biggest effect on the business (winning work, looking after customers, doing the paid work itself).
 
 What makes it good:
 - Specific to THIS business. Every idea must hang off something concrete on their website (a service, a booking page, a form, certificates they issue, how they quote, areas they cover) or in their answers. Put that in "evidence".
@@ -62,7 +65,9 @@ What to avoid:
 - Never give a named person a job or role the site doesn't state. A name on a team list is not their role. If the site doesn't say who does a task, write "the office" or "you".
 - Don't state guesses about how they run as fact. You don't know whether they chase quotes, how fast they reply, or what slips. Write those as "if" ("If quotes go out and the workshop gets busy, some go quiet"), never as a finding ("nobody chases them", "quotes rarely get chased").
 
-Length (strict): this is a 2-minute report read on a phone. "today" max 25 words, "with_ai" max 45 words, "evidence" max 12 words. Cut every word that isn't doing work; no scene-setting, no repeating the title.
+The "profit" line is shown to the owner as "Profit: ...". Say how THIS idea grows their profit in their world, plainly: the money it brings in or keeps (a patient who finishes their plan, a quote that doesn't go cold, a re-test that gets booked), or what the freed hours go to instead (more billable work, faster replies to new enquiries). No dollar figures (the page works those out), no guarantees, and no repeating "with_ai". If it's mostly a time saving, say what the time goes to.
+
+Length (strict): this is a 2-minute report read on a phone. "today" max 25 words, "with_ai" max 45 words, "evidence" max 12 words, "profit" max 18 words. Cut every word that isn't doing work; no scene-setting, no repeating the title.
 
 The "evidence" line is shown to the owner as "Based on: ...". Write it to them in plain words and say the actual thing ("Your site promises certificates the same day", "You said CoC write-ups eat your time", "You offer test and tag for landlords"). Never a note about them ("scheduling named as time-sink") and never vague ("You named it"). Only say "You said" for what they typed (their most admin-heavy task, or an "Other" answer). For a button they tapped, say "You picked" ("You picked scheduling jobs as where your week goes").
 

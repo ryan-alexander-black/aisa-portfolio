@@ -6,7 +6,7 @@
 // (Nexus money-engine/instant-win/mockup-flow.html v5, design in flow-design.md).
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { getUtm, track } from "@/lib/track";
-import { yearlyDollars, type Fit, type Opportunity } from "@/lib/mini-report/shared";
+import { BASIS_LINE, GAIN_LINE, yearlyDollars, type Fit, type Opportunity } from "@/lib/mini-report/shared";
 
 // ---------------------------------------------------------------- a live % meter
 // Eases toward a target, creeps while waiting so the number keeps moving, and only reaches 100
@@ -353,12 +353,13 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
           ) : (
             <div>
               <div className="rhead"><div className="eyebrow" style={{ margin: 0 }}>Your AI Profit Snapshot</div><span className="badge">✦ written by AI</span></div>
-              <h2>3 places AI could save {biz} time</h2>
+              <h2>3 places AI could grow {poss(biz)} profit</h2>
               <p className="lede">Built from your website and your answers.</p>
               <div className="total">
-                <div><b>~{lo}–{hi} hrs</b><span>a week back, all three together</span></div>
-                <div><b>{yearlyDollars(lo)}–{yearlyDollars(hi)}</b><span>a year in admin time</span></div>
+                <div><b>~{lo}–{hi} hrs</b><span>a week back for your team, all three together</span></div>
+                <div><b>{yearlyDollars(lo)}–{yearlyDollars(hi)}</b><span>a year back in your pocket</span></div>
               </div>
+              <p className="gain">{GAIN_LINE}</p>
               {rep.opportunities.map((d, i) => (
                 <div className="opp" key={i}>
                   <div className="num">{i + 1}</div>
@@ -366,13 +367,14 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
                     <h3>{d.title}</h3>
                     <p className="ln"><b>Today:</b> {d.today}</p>
                     <p className="ln"><b>With AI:</b> {d.with_ai}</p>
+                    {d.profit && <p className="ln"><b>Profit:</b> {d.profit}</p>}
                     {d.evidence && <div className="ev">Based on: {d.evidence}</div>}
-                    <div className="val"><span>~{d.hours_low}–{d.hours_high} hrs a week back</span><em>≈ {yearlyDollars(d.hours_low)}–{yearlyDollars(d.hours_high)} a year in admin time</em></div>
+                    <div className="val"><span>~{d.hours_low}–{d.hours_high} hrs a week back</span><em>≈ {yearlyDollars(d.hours_low)}–{yearlyDollars(d.hours_high)} a year in your pocket</em></div>
                   </div>
                   <Viz cat={d.category} />
                 </div>
               ))}
-              <div className="basis">Money figures assume a $75,000 a year salary (about $36 an hour). Every figure is a rough estimate, not a promise. The time back goes to the work that grows the business.</div>
+              <div className="basis">{BASIS_LINE}</div>
               <div className="sent">📬 A copy is on its way to your inbox.</div>
 
               {rep.fit !== "low" && next ? (

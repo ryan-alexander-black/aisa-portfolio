@@ -18,6 +18,8 @@ export type Answers = {
 
 export type Opportunity = {
   title: string; category: Category; today: string; with_ai: string; evidence: string;
+  /** How this idea grows profit, said to the owner (added 12 Nov; absent on older reports). */
+  profit?: string;
   hours_low: number; hours_high: number;
 };
 export type Report = { business_name: string; opportunities: Opportunity[] };
@@ -40,3 +42,10 @@ export const HOURLY_RATE = 75000 / 52 / 40;
 export function yearlyDollars(hoursPerWeek: number): string {
   return "$" + (Math.round((hoursPerWeek * HOURLY_RATE * 52) / 100) * 100).toLocaleString("en-NZ");
 }
+
+// The snapshot's money wording, shared by the screen and the email (Ryan, 12 Nov: time back is profit
+// in your pocket, or a team freed for the work with the biggest effect on the business).
+export const GAIN_LINE =
+  "Every hour AI takes off your team is money you keep, or an hour they put into the work that moves the business most: winning work, looking after customers, growing.";
+export const BASIS_LINE =
+  "Money figures value the time at a $75,000 a year salary (about $36 an hour). Every figure is a rough estimate, not a promise.";
