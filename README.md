@@ -100,6 +100,13 @@ correctly, sent from `hello@ryanalexanderblack.com`.
 | `OPERATOR_FORM_TO` | inbox that receives submissions | `ryanalexanderblack@gmail.com` |
 | `MAIL_FROM` | override the send-from identity | `Ryan Alexander Black — Operator Intake <hello@ryanalexanderblack.com>` |
 
+> **Two Resend accounts (11 Nov 2026):** ① the original, holding `ryanalexanderblack.com` + `RESEND_API_KEY` — its login is
+> unknown (the `hello@thefitnessstall.com` Resend account turned out empty), so treat it as legacy · ② **`greenlineai`**, signed up
+> as `ryan@greenlineai.nz`, holding **`greenlineai.nz`** (region Tokyo, DNS in Vercel: `resend._domainkey`, `send` + `rsend` CNAMEs,
+> `_dmarc`) + **`RESEND_API_KEY_GREENLINE`** (Sending access, all domains). Greenline mail (snapshot + /next alert) sends as
+> `ryan@greenlineai.nz` through ②. Plan: move `ryanalexanderblack.com` into ② too (re-verify at Namecheap first, then swap
+> `RESEND_API_KEY` to the new key), so there is one account Ryan can open.
+>
 > Vercel env vars apply to deploys built **after** they're saved. The Resend account is currently
 > registered under `hello@thefitnessstall.com`, but with the domain verified that no longer limits
 > recipients — it can send straight to the Gmail.
