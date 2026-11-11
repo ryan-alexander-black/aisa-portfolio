@@ -18,7 +18,7 @@ const EVIDENCE = [
     source: "MBIE, Business Health and Wellbeing, May 2026" },
   { stat: "28%", label: "of NZ small businesses say AI has already helped them hold their margins.",
     source: "MYOB Business Monitor, 2026" },
-  { stat: "12% more work, 25% faster", label: "what staff got done using AI on the tasks it suits.",
+  { stat: "12% more, 25% faster", label: "work done by staff using AI, on the tasks it suits.",
     source: "Harvard Business School and BCG trial, 758 consultants" },
 ];
 // Photos (see IMAGES in greenline-page.tsx): the business running well. GPT Image 2.5, 10 Nov.
