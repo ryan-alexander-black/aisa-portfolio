@@ -423,8 +423,17 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
                 </div>
               ) : (
                 <div className="soft">
-                  <h3>You&apos;re on the list for the weekly business pulse</h3>
-                  <p>What&apos;s moving for NZ business, and how AI gives you the edge, once a week. If your team grows, reply to any email and we&apos;ll talk.</p>
+                  {next ? (
+                    <>
+                      <h3>You&apos;re on the list for Signal over Noise</h3>
+                      <p>What&apos;s working for NZ businesses each week, and one AI idea to grow your profit. If your team grows, reply to any email and we&apos;ll talk.</p>
+                    </>
+                  ) : (
+                    <>
+                      <h3>You&apos;re on the list for the weekly business pulse</h3>
+                      <p>What&apos;s moving for NZ business, and how AI gives you the edge, once a week. If your team grows, reply to any email and we&apos;ll talk.</p>
+                    </>
+                  )}
                 </div>
               )}
             </div>
