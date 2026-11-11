@@ -100,12 +100,12 @@ correctly, sent from `hello@ryanalexanderblack.com`.
 | `OPERATOR_FORM_TO` | inbox that receives submissions | `ryanalexanderblack@gmail.com` |
 | `MAIL_FROM` | override the send-from identity | `Ryan Alexander Black — Operator Intake <hello@ryanalexanderblack.com>` |
 
-> **Two Resend accounts (11 Nov 2026):** ① the original, holding `ryanalexanderblack.com` + `RESEND_API_KEY` — its login is
-> unknown (the `hello@thefitnessstall.com` Resend account turned out empty), so treat it as legacy · ② **`greenlineai`**, signed up
-> as `ryan@greenlineai.nz`, holding **`greenlineai.nz`** (region Tokyo, DNS in Vercel: `resend._domainkey`, `send` + `rsend` CNAMEs,
-> `_dmarc`) + **`RESEND_API_KEY_GREENLINE`** (Sending access, all domains). Greenline mail (snapshot + /next alert) sends as
-> `ryan@greenlineai.nz` through ②. Plan: move `ryanalexanderblack.com` into ② too (re-verify at Namecheap first, then swap
-> `RESEND_API_KEY` to the new key), so there is one account Ryan can open.
+> **One Resend account (11 Nov 2026): `greenlineai`, signed up as `ryan@greenlineai.nz`.** It holds **both** domains:
+> `greenlineai.nz` (DNS in Vercel) and `ryanalexanderblack.com` (claimed from the old account, whose login was lost;
+> DNS at Namecheap: `resend._domainkey` TXT, `send` + `rsend` CNAMEs to `*.forge.rmta.net`, the claim TXT on @). Region Tokyo.
+> `RESEND_API_KEY` and `RESEND_API_KEY_GREENLINE` hold the same key (Sending access, all domains). Every alert
+> (`OPERATOR_FORM_TO`, Greenline's `ryan@greenlineai.nz`) lands in Ryan's Greenline inbox. The DNS lines below are the
+> June originals, now replaced.
 >
 > Vercel env vars apply to deploys built **after** they're saved. The Resend account is currently
 > registered under `hello@thefitnessstall.com`, but with the domain verified that no longer limits
