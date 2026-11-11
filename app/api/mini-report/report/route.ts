@@ -5,6 +5,7 @@ import {
 } from "@/lib/mini-report/server";
 import { fitOf } from "@/lib/mini-report/shared";
 import { sendReportEmails, sendServiceAlert } from "@/lib/mini-report/emails";
+import { addToList } from "@/lib/mini-report/mailerlite";
 
 // Step 2 of the mini-report: write the three-idea report from the signed site read + the answers.
 // The emails (the visitor's copy, Ryan's lead alert) go out after the response, so the report
@@ -19,6 +20,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Invalid request." }, { status: 400 });
   }
   let lead: SiteRead | null = null;
+  const brand = body.brand === "greenline" ? "greenline" : "site";
   try {
     const read = verifyRead(String(body.token || ""));
     lead = read;
@@ -33,10 +35,13 @@ export async function POST(request: Request) {
     after(() =>
       sendReportEmails({
         email: read.email, site: read.site, rep, answers, fit, utm, costUsd: rep.meta.cost_usd,
-        brand: body.brand === "greenline" ? "greenline" : "site",
+        brand,
       })
         .catch((e) => console.error("[mini-report] report emails failed", e)),
     );
+    after(() => addToList({
+      email: read.email, group: "Snapshot", brand, site: read.site, business: rep.business_name, answers, fit, utm,
+    }));
     console.log(`[mini-report] report for ${read.business_name}: ${rep.meta.seconds.toFixed(1)}s, ~US$${rep.meta.cost_usd}, fit ${fit}`);
     return Response.json({ business_name: rep.business_name, opportunities: rep.opportunities, fit });
   } catch (e) {
@@ -48,6 +53,8 @@ export async function POST(request: Request) {
       const detail = (e as Error).message || "unknown error";
       after(() => sendServiceAlert({ step: "report", email, site, detail })
         .catch((err) => console.error("[mini-report] service alert failed", err)));
+      // Held, but still a lead: onto the list now; the report follows from Ryan.
+      after(() => addToList({ email, group: "Snapshot", brand, site, business: lead?.business_name }));
     }
     return Response.json({ error: HELD_MESSAGE, held: true }, { status: 503 });
   }

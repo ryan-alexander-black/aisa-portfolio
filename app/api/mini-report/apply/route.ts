@@ -2,7 +2,9 @@ import {
   EMAIL_RE, cleanAnswers, cleanStr, cleanUtm, clientIp, rateLimited,
 } from "@/lib/mini-report/server";
 import { fitOf } from "@/lib/mini-report/shared";
+import { after } from "next/server";
 import { sendApplication } from "@/lib/mini-report/emails";
+import { addToList } from "@/lib/mini-report/mailerlite";
 
 // Step 3 (good fit or unknown): the application for the full, free AI Opportunity Report.
 // Sends Ryan an alert to call within one business day.
@@ -27,6 +29,14 @@ export async function POST(request: Request) {
   }
 
   const answers = cleanAnswers(body.answers);
+  const brand = body.brand === "greenline" ? "greenline" : "site";
+  const utm = cleanUtm(body.utm);
+  const site = cleanStr(body.site, 300);
+  const business = cleanStr(body.business, 120);
+  after(() => addToList({
+    email, group: "Applied", brand, site, business: business || undefined, name, phone: mobile,
+    answers, fit: fitOf(answers), utm,
+  }));
   await sendApplication({
     name, mobile, email,
     when: cleanStr(body.when, 20),
