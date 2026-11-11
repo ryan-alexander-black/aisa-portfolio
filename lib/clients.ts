@@ -68,7 +68,7 @@ export const clients: ClientCase[] = [
       "Their 12-month vision, running early",
     ],
     proofStats: [
-      { stat: "Half a week", label: "Amanda spent at least that on quoting. Now each quote is one digital sheet, priced to the cent and straight into Xero." },
+      { stat: "Half a week", label: "Amanda spent at least that on handwritten quote sheets. Now each quote is one AI-supported digital sheet, priced to the cent on AV's own rates and suppliers' material prices, and sent straight to Xero automatically for an instant quote to the client." },
       { stat: "~$18k a year", label: "In outsourced admin no longer needed, about two months in." },
       { stat: "Their own Hub", label: "Every live job now runs on AV's own system. monday.com is no longer needed." },
     ],
@@ -221,7 +221,7 @@ export const clients: ClientCase[] = [
       "Clear on which marketing brings in members",
     ],
     proofStats: [
-      { stat: "~$10k", label: "Of ad spend in under 3 months on lead forms that brought in no members. Tracing every lead found it; that spend is now cut right back." },
+      { stat: "~$10k", label: "Of ad spend in under 3 months on lead forms. We used AI to match every lead against the gym's member records: 174 leads, 0 members. That spend is being cut back and redirected to other gym projects and better-performing marketing channels." },
       { stat: "8 systems", label: "Connected into one live view of the gym. The plan scoped 4." },
       { stat: "3–4 hrs a week", label: "Dan spent writing procedures. Now he says one out loud and it's written in minutes." },
     ],
