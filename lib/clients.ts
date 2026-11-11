@@ -222,8 +222,8 @@ export const clients: ClientCase[] = [
     ],
     proofStats: [
       { stat: "~$10k", label: "Of ad spend in under 3 months on lead forms. We used AI to match every lead against the gym's member records: 174 leads, 0 members. That spend is being cut back and redirected to other gym projects and better-performing marketing channels." },
-      { stat: "8 systems", label: "Connected into one live view of the gym. The plan scoped 4." },
-      { stat: "3–4 hrs a week", label: "Dan spent writing procedures. Now he says one out loud and it's written in minutes." },
+      { stat: "8 systems", label: "Bookings, accounts, ads, tasks and team chat, joined into one live view and an AI that knows the gym. It replaced the report the team hand-built every fortnight from about five exports, and Dan can ask his AI how the gym is tracking." },
+      { stat: "3–4 hrs a week", label: "Dan spent writing and brainstorming gym procedures to hand to his team and lighten his load. Now he talks the process through to AI and has a branded procedure in minutes, ready for the team." },
     ],
     quote: {
       text: "It knows me, my culture, my values, it knows everything about Legends.",
