@@ -12,6 +12,8 @@ const TO_RYAN = process.env.OPERATOR_FORM_TO || "ryanalexanderblack@gmail.com";
 const FROM = process.env.MAIL_FROM || "Ryan Alexander Black <hello@ryanalexanderblack.com>";
 // Greenline emails go out as Ryan at greenlineai.nz (verified in Resend 11 Nov). Replies come straight to him.
 const FROM_GREENLINE = process.env.MAIL_FROM_GREENLINE || "Ryan Alexander Black <ryan@greenlineai.nz>";
+// Greenline lead alerts land in Ryan's Greenline inbox (Ryan, 11 Nov), the portfolio's in his Gmail.
+const TO_GREENLINE = process.env.OPERATOR_TO_GREENLINE || "ryan@greenlineai.nz";
 
 export type Utm = Partial<Record<"utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "gclid" | "fbclid" | "landing", string>>;
 
@@ -200,7 +202,8 @@ export async function sendReportEmails(ctx: {
 
   // 2. Ryan's lead alert.
   await send({
-    to: TO_RYAN,
+    to: greenline ? TO_GREENLINE : TO_RYAN,
+    from: greenline ? FROM_GREENLINE : undefined,
     replyTo: email,
     subject: `Snapshot${greenline ? " (Greenline)" : ""}: ${rep.business_name} (fit: ${fit})`,
     text: `${email} · ${site}\nFit: ${fit}\nUTM: ${utmText(utm)}\nAI cost: ~US$${ctx.costUsd}\n\n${answersText(answers)}\n\n${t.line}\n\n${ideasText(rep)}`,
@@ -251,7 +254,7 @@ export async function sendApplication(ctx: {
     "", answersText(answers), "", "Their 3 ideas:", ...ideas.map((t, i) => `${i + 1}. ${t}`),
   ];
   await send({
-    to: TO_RYAN,
+    to: ctx.brand === "greenline" ? TO_GREENLINE : TO_RYAN,
     from: ctx.brand === "greenline" ? FROM_GREENLINE : undefined,
     replyTo: email,
     subject: `Full AI Opportunity Report application: ${business} (${name})`,
