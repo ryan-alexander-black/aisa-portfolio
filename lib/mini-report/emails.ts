@@ -10,19 +10,22 @@ import { yearlyDollars, type Answers, type Fit, type Report } from "./shared";
 
 const TO_RYAN = process.env.OPERATOR_FORM_TO || "ryanalexanderblack@gmail.com";
 const FROM = process.env.MAIL_FROM || "Ryan Alexander Black <hello@ryanalexanderblack.com>";
+// Greenline emails go out as Ryan at greenlineai.nz (verified in Resend 11 Nov). Replies come straight to him.
+const FROM_GREENLINE = process.env.MAIL_FROM_GREENLINE || "Ryan Alexander Black <ryan@greenlineai.nz>";
 
 export type Utm = Partial<Record<"utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "gclid" | "fbclid" | "landing", string>>;
 
 const esc = (s: string) =>
   String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
-async function send(msg: { to: string; subject: string; html: string; text: string; replyTo?: string }) {
-  const key = process.env.RESEND_API_KEY;
+// Greenline mail goes through the greenlineai Resend account (Ryan, 11 Nov), the rest through the original one.
+async function send(msg: { to: string; subject: string; html: string; text: string; replyTo?: string; from?: string }) {
+  const key = (msg.from === FROM_GREENLINE && process.env.RESEND_API_KEY_GREENLINE) || process.env.RESEND_API_KEY;
   if (!key) {
     console.log(`[mini-report] email not sent (no RESEND_API_KEY): to=${msg.to} subject="${msg.subject}"`);
     return;
   }
-  const { error } = await new Resend(key).emails.send({ from: FROM, ...msg });
+  const { error } = await new Resend(key).emails.send({ ...msg, from: msg.from ?? FROM });
   if (error) console.error("[mini-report] resend error", error);
 }
 
@@ -180,7 +183,8 @@ export async function sendReportEmails(ctx: {
     : `Ryan Alexander Black<br><a href="https://www.ryanalexanderblack.com">ryanalexanderblack.com</a>`;
   await send({
     to: email,
-    replyTo: TO_RYAN,
+    from: greenline ? FROM_GREENLINE : undefined,
+    replyTo: greenline ? "ryan@greenlineai.nz" : TO_RYAN,
     subject,
     text: `${subject}\n\n${t.line}\n\n${ideasText(rep)}\n\n${BASIS}\n\n${signText}`,
     html: greenline ? greenlineSnapshotHtml(rep, fit, t) : `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#0A0F0D;max-width:600px">
@@ -238,7 +242,7 @@ export async function sendServiceAlert(ctx: { step: "read" | "report"; email: st
 
 export async function sendApplication(ctx: {
   name: string; mobile: string; when: string; email: string; site: string; business: string;
-  fit: Fit; answers: Answers; ideas: string[]; utm: Utm;
+  fit: Fit; answers: Answers; ideas: string[]; utm: Utm; brand?: Brand;
 }) {
   const { name, mobile, when, email, site, business, fit, answers, ideas, utm } = ctx;
   const lines = [
@@ -248,6 +252,7 @@ export async function sendApplication(ctx: {
   ];
   await send({
     to: TO_RYAN,
+    from: ctx.brand === "greenline" ? FROM_GREENLINE : undefined,
     replyTo: email,
     subject: `Full AI Opportunity Report application: ${business} (${name})`,
     text: lines.join("\n"),

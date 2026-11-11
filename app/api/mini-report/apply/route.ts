@@ -36,6 +36,7 @@ export async function POST(request: Request) {
     answers,
     ideas: Array.isArray(body.ideas) ? body.ideas.slice(0, 3).map((t) => cleanStr(t, 120)) : [],
     utm: cleanUtm(body.utm),
+    brand: body.brand === "greenline" ? "greenline" : "site",
   });
   return Response.json({ ok: true });
 }

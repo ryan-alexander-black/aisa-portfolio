@@ -52,7 +52,7 @@ function ApplyForm() {
         body: JSON.stringify({
           name: name.trim(), mobile: mobile.trim(), when, email: em, site: st,
           business: ctx?.business || "", answers: ctx?.answers || {}, ideas: ctx?.ideas || [],
-          utm: getUtm(), company_website: trap,
+          utm: getUtm(), company_website: trap, brand: "greenline",
         }),
       });
       const j = await r.json().catch(() => ({}));
