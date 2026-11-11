@@ -11,6 +11,16 @@ import { APPLY, Footer, Header } from "../chrome";
 import { Backdrop, ImageSlot, type Proof } from "../greenline-page";
 
 const WHEN = ["Morning", "Afternoon", "Evening"];
+
+// The Greenline way's evidence (Ryan, 12 Nov). Verified on each publisher's own page; see the comment at the strip.
+const EVIDENCE = [
+  { stat: "58%", label: "of NZ businesses saw their profit fall last year, while 80% saw running costs rise.",
+    source: "MBIE, Business Health and Wellbeing, May 2026" },
+  { stat: "28%", label: "of NZ small businesses say AI has already helped them hold their margins.",
+    source: "MYOB Business Monitor, 2026" },
+  { stat: "12% more work, 25% faster", label: "what staff got done using AI on the tasks it suits.",
+    source: "Harvard Business School and BCG trial, 758 consultants" },
+];
 // Photos (see IMAGES in greenline-page.tsx): the business running well. GPT Image 2.5, 10 Nov.
 const IMAGES: { hero?: string } = { hero: "/greenline/hero-presenting.jpg" };
 
@@ -158,6 +168,10 @@ export function NextPage({ proof }: { proof: Proof[] }) {
         <section className="gl-section">
           <p className="gl-eyebrow eyebrow">The Greenline way</p>
           <h2 className="gl-heading display-lg">Two ways to grow. Only one grows your profit.</h2>
+          <p className="gl-lede body gl-mt-2">
+            MBIE&apos;s 2026 survey of 2,508 NZ businesses found firms with 6+ staff were more likely to grow their
+            revenue, but it didn&apos;t reach their profit: their costs and admin time grew with it.
+          </p>
           <div className="gl-compare gl-gap-top">
             <div className="gl-compare-col gl-compare-usual">
               <h3 className="display-sm">The usual way</h3>
@@ -178,6 +192,17 @@ export function NextPage({ proof }: { proof: Proof[] }) {
               </ul>
             </div>
           </div>
+          {/* Every figure is read on its publisher's own page; sources + limits in Nexus
+              research/marketing-angle-gain-vs-pain-2026-11.md → "NZ stats for Two ways to grow". No links out (sealed page). */}
+          <dl className="gl-evidence">
+            {EVIDENCE.map((e) => (
+              <div className="gl-evidence-item" key={e.stat}>
+                <dt className="display-md">{e.stat}</dt>
+                <dd className="body-sm">{e.label}</dd>
+                <dd className="caption gl-evidence-src">{e.source}</dd>
+              </div>
+            ))}
+          </dl>
           <div className="gl-line">
             <div>
               <h3 className="display-md">The green line is profit.</h3>

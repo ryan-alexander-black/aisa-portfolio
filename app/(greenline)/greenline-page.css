@@ -100,6 +100,13 @@ body { margin: 0; }
 .gl-legal-body ul { padding-left: 20px; display: grid; gap: var(--space-2); }
 .gl-legal-body a { color: var(--accent); }
 
+/* /next, the Greenline way's evidence strip (Ryan, 12 Nov): three sourced numbers under the compare. */
+.gl-evidence { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin: 36px 0 0; }
+.gl-evidence-item { margin: 0; padding-top: var(--space-4); border-top: 3px solid var(--mark); }
+.gl-evidence-item dt { color: var(--accent); }
+.gl-evidence-item dd { margin: var(--space-2) 0 0; color: var(--text); }
+.gl-evidence-item .gl-evidence-src { color: var(--text-muted); }
+
 /* The report flow, once it takes over the page */
 .gl-root + .mr { padding-top: var(--space-8, 32px); }
 /* The portfolio gives the flow border-box sizing through Tailwind's reset, which this layout doesn't load;
@@ -114,6 +121,7 @@ html { scrollbar-gutter: stable; }
   .gl-proof-card { grid-template-columns: 1fr; gap: 28px; padding: 26px; }
   .gl-proof-card .gl-proof-stat { grid-template-columns: 1fr; gap: 4px; padding: 18px 0; }
   .gl-line { grid-template-columns: 1fr; gap: var(--space-6); }
+  .gl-evidence { grid-template-columns: 1fr; gap: var(--space-6); }
 }
 @media (max-width: 760px) {
   .gl-root { --gutter: 16px; }
