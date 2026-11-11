@@ -102,6 +102,11 @@ body { margin: 0; }
 
 /* The report flow, once it takes over the page */
 .gl-root + .mr { padding-top: var(--space-8, 32px); }
+/* The portfolio gives the flow border-box sizing through Tailwind's reset, which this layout doesn't load;
+   without it the job box and the button panel overflow their cards (seen live 12 Nov). */
+:where(.mr) *, :where(.mr) *::before, :where(.mr) *::after { box-sizing: border-box; }
+/* Keep the page from jumping sideways when the flow's short loading screen drops the scrollbar. */
+html { scrollbar-gutter: stable; }
 
 @media (max-width: 900px) {
   .gl-proof, .gl-steps-3 { grid-template-columns: 1fr; }
