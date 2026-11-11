@@ -1,7 +1,8 @@
 import { after } from "next/server";
 import {
-  EMAIL_RE, HELD_MESSAGE, VisibleError, clientIp, normaliseSite, rateLimited, readSite, signRead, cleanStr,
+  EMAIL_RE, HELD_MESSAGE, VisibleError, clientIp, normaliseSite, rateLimited, readSite, signRead, cleanStr, cleanUtm,
 } from "@/lib/mini-report/server";
+import { addToList } from "@/lib/mini-report/mailerlite";
 import { sendServiceAlert } from "@/lib/mini-report/emails";
 
 // Step 1 of the mini-report: read the website and name the business. Starts the moment the visitor
@@ -43,6 +44,12 @@ export async function POST(request: Request) {
     const detail = (e as Error).message || "unknown error";
     after(() => sendServiceAlert({ step: "read", email, site, detail })
       .catch((err) => console.error("[mini-report] service alert failed", err)));
+    // Held, but still a lead: onto the list now; the report follows from Ryan.
+    if (EMAIL_RE.test(email)) {
+      after(() => addToList({
+        email, group: "Snapshot", brand: body.brand === "greenline" ? "greenline" : "site", site, utm: cleanUtm(body.utm),
+      }));
+    }
     return Response.json({ error: HELD_MESSAGE, held: true }, { status: 503 });
   }
 }

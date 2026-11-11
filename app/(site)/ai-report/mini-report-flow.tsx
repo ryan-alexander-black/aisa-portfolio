@@ -163,7 +163,7 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
   const begin = (em: string, st: string, tr: string) => {
     setErr1(""); setReadErr(""); setHeld(false); setRead(null); setReady(false); chosen.current = false;
     track("report_requested");
-    const p = api<ReadResult>("/api/mini-report/read", { email: em, site: st, company_website: tr });
+    const p = api<ReadResult>("/api/mini-report/read", { email: em, site: st, company_website: tr, utm: getUtm(), brand: next ? "greenline" : undefined });
     readP.current = p;
     p.then((d) => {
       setRead(d);
