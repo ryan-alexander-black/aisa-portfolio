@@ -70,7 +70,7 @@ export const clients: ClientCase[] = [
     proofStats: [
       { stat: "Half a week", label: "Amanda spent at least that on handwritten quote sheets. Now each quote is one AI-supported digital sheet, priced to the cent on AV's own rates and suppliers' material prices, and sent straight to Xero automatically for an instant quote to the client." },
       { stat: "~$18k a year", label: "In outsourced admin no longer needed, about two months in. The offshore retyping of quotes and jobs into Xero and monday.com stopped: each quote and job is now entered once and flows where it needs to go." },
-      { stat: "One screen", label: "Xero, the job boards, email, the file server and AI, joined in one place. One press updates them all, and the old monday.com board is no longer needed." },
+      { stat: "One screen", label: "Xero, the job boards, email, the file server and AI, joined in one place. One press updates them all." },
       { stat: "Their own Hub", label: "Every live job now runs on AV's own system. monday.com is no longer needed." },
     ],
     quote: {
