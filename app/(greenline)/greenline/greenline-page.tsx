@@ -23,8 +23,8 @@ export type Proof = {
 const MOTION: { hero?: string; band?: string } = {};
 // Photos (Ryan, 10 Nov: the "dream" of a more profitable business). GPT Image 2.5, 10 Nov; sources in the KIE
 // asset store. An empty path shows a labelled placeholder locally and nothing on the live site.
-// 11 Nov (Ryan): Ryan himself on the deck (GPT Image 2.5 edit of hero-dream.jpg with his profile photo).
-const IMAGES: { hero?: string } = { hero: "/greenline/hero-ryan-deck.jpg" };
+// 11 Nov: a Ryan-on-the-deck version was tried and reverted (Ryan preferred this one); kept as hero-ryan-deck.jpg.
+const IMAGES: { hero?: string } = { hero: "/greenline/hero-dream.jpg" };
 
 /** An image spot. With no `src` yet: a labelled placeholder while developing, nothing in production.
  *  `focus`: the CSS object-position that keeps the subject in frame when the slot crops the photo. */
