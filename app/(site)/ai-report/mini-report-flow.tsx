@@ -6,7 +6,7 @@
 // (Nexus money-engine/instant-win/mockup-flow.html v5, design in flow-design.md).
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { getUtm, track } from "@/lib/track";
-import { BASIS_LINE, GAIN_LINE, yearlyDollars, type Fit, type Opportunity } from "@/lib/mini-report/shared";
+import { BASIS_LINE, GAIN_LINE, poss, yearlyDollars, type Fit, type Opportunity } from "@/lib/mini-report/shared";
 
 // ---------------------------------------------------------------- a live % meter
 // Eases toward a target, creeps while waiting so the number keeps moving, and only reaches 100
@@ -69,7 +69,6 @@ const GROUPS: Group[] = [
     options: ["Xero", "MYOB", "Spreadsheets", "A job or booking system", "Google Workspace", "Microsoft 365", "Paper & whiteboard", "Other"] },
 ];
 
-const poss = (n: string) => (/s$/i.test(n) ? `${n}’` : `${n}’s`);
 
 async function api<T>(path: string, body: unknown): Promise<T> {
   const r = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });

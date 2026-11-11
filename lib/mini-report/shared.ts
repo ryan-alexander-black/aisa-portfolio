@@ -43,6 +43,9 @@ export function yearlyDollars(hoursPerWeek: number): string {
   return "$" + (Math.round((hoursPerWeek * HOURLY_RATE * 52) / 100) * 100).toLocaleString("en-NZ");
 }
 
+/** A name's possessive: "Oldershaw Accountants’", "Habit Health’s". */
+export const poss = (n: string) => (/s$/i.test(n) ? `${n}’` : `${n}’s`);
+
 // The snapshot's money wording, shared by the screen and the email (Ryan, 12 Nov: time back is profit
 // in your pocket, or a team freed for the work with the biggest effect on the business).
 export const GAIN_LINE =

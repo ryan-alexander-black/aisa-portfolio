@@ -6,7 +6,7 @@
 // With no RESEND_API_KEY (local dev) nothing is sent; each email is logged instead.
 import { Resend } from "resend";
 import { answersText } from "./prompts";
-import { BASIS_LINE, GAIN_LINE, yearlyDollars, type Answers, type Fit, type Report } from "./shared";
+import { BASIS_LINE, GAIN_LINE, poss, yearlyDollars, type Answers, type Fit, type Report } from "./shared";
 
 const TO_RYAN = process.env.OPERATOR_FORM_TO || "ryanalexanderblack@gmail.com";
 const FROM = process.env.MAIL_FROM || "Ryan Alexander Black <hello@ryanalexanderblack.com>";
@@ -132,7 +132,7 @@ function greenlineSnapshotHtml(rep: Report, fit: Fit, t: { line: string }): stri
         </td></tr>
         <tr><td style="padding:28px 28px 6px">
           <div style="font-family:${GL_MONO};font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:${GL.deep};margin:0 0 8px">Your AI Profit Snapshot</div>
-          <div style="font-size:26px;font-weight:800;line-height:1.2;margin:0 0 8px">3 places AI could grow ${esc(rep.business_name)}'s profit</div>
+          <div style="font-size:26px;font-weight:800;line-height:1.2;margin:0 0 8px">3 places AI could grow ${esc(poss(rep.business_name))} profit</div>
           <p style="margin:0;color:${GL.muted};font-size:14px">Built from your website and your answers. ✦ Written by AI.</p>
         </td></tr>
         <tr><td style="padding:18px 28px">
@@ -170,9 +170,7 @@ export async function sendReportEmails(ctx: {
   const { email, site, rep, answers, fit, utm } = ctx;
   const greenline = ctx.brand === "greenline";
   const t = totals(rep);
-  const subject = greenline
-    ? `Your AI Profit Snapshot: 3 places AI could grow ${rep.business_name}'s profit`
-    : `Your AI Profit Snapshot: 3 places AI could grow ${rep.business_name}'s profit`;
+  const subject = `Your AI Profit Snapshot: 3 places AI could grow ${poss(rep.business_name)} profit`;
 
   // 1. The visitor's copy. Replies come straight to Ryan.
   const offer = fit === "low"
