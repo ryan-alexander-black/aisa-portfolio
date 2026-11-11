@@ -15,6 +15,7 @@ import { CTA, Footer, Header } from "./chrome";
 
 export type Proof = {
   company: string; industry: string; results: string[]; stats: { stat: string; label: string }[]; quote: ClientQuote;
+  logo?: string; logoBg?: "light" | "dark";
 };
 
 // Moving backgrounds: drop a short loop in /public/greenline and set its path here. Until then the

@@ -69,7 +69,8 @@ export const clients: ClientCase[] = [
     ],
     proofStats: [
       { stat: "Half a week", label: "Amanda spent at least that on handwritten quote sheets. Now each quote is one AI-supported digital sheet, priced to the cent on AV's own rates and suppliers' material prices, and sent straight to Xero automatically for an instant quote to the client." },
-      { stat: "~$18k a year", label: "In outsourced admin no longer needed, about two months in." },
+      { stat: "~$18k a year", label: "In outsourced admin no longer needed, about two months in. The offshore retyping of quotes and jobs into Xero and monday.com stopped: each quote and job is now entered once and flows where it needs to go." },
+      { stat: "One screen", label: "Xero, the job boards, email, the file server and AI, joined in one place. One press updates them all, and the old monday.com board is no longer needed." },
       { stat: "Their own Hub", label: "Every live job now runs on AV's own system. monday.com is no longer needed." },
     ],
     quote: {
@@ -329,8 +330,9 @@ export const clients: ClientCase[] = [
       "A tool that does the reconciliation automatically, applies the loan's real rules, flags anything that doesn't add up and produces a client-ready statement — run by Shelley herself.",
     results: ["~75% less time per statement", "~4 hrs/week recovered"],
     proofStats: [
-      { stat: "~75%", label: "Less time on each loan statement." },
-      { stat: "~4 hrs a week", label: "Back in Shelley's week, on a tool she runs herself." },
+      { stat: "~75%", label: "Less time on each loan statement. Shelley used to pull two reports, cross-check them and rebuild every statement by hand, about an hour a day. Now an AI skill reconciles them to the cent on the loan's real rules and produces a client-ready PDF." },
+      { stat: "~4 hrs a week", label: "Back in the week of Cash Direct's Head of Risk and Complaints, on a tool she runs and improves herself, with no developer needed." },
+      { stat: "Errors caught", label: "It flagged missing payments the manual process had missed: a payment holiday with no paperwork on file. For a regulated lender, every statement has to hold up." },
     ],
     quote: {
       text: "Ryan worked with me to identify exactly where AI could take that load off, then implemented practical, easy-to-use solutions that genuinely changed how I work.",

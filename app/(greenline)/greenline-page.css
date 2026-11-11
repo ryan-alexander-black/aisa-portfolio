@@ -26,7 +26,7 @@ body { margin: 0; }
 .gl-gap-top { margin-top: 36px; }
 .gl-mt-2 { margin-top: var(--space-2); }
 .gl-line { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-12); align-items: center; margin-top: 40px; }
-.gl-proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.gl-proof { display: grid; grid-template-columns: 1fr; gap: 40px; }
 .gl-faq-top { margin-top: 28px; }
 .gl-hero .gl-form { width: 100%; }
 .gl-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
@@ -42,7 +42,17 @@ body { margin: 0; }
 .gl-proof-stat { border-top: 1px solid var(--border); padding-top: var(--space-3); }
 .gl-proof-stat dt { font-family: var(--font-display); color: var(--accent); }
 .gl-proof-stat dd { margin: 2px 0 0; color: var(--text-muted); }
-.gl-proof .gl-proof-stats + .gl-quote { margin-top: 0; }
+/* 11 Nov (Ryan): one client per row with more air, so the proof reads as authority. */
+.gl-proof-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 56px; padding: 44px; }
+.gl-proof-side { display: flex; flex-direction: column; }
+.gl-proof-side .gl-quote { margin-top: var(--space-6); }
+.gl-proof-logo { align-self: flex-start; height: 56px; width: auto; max-width: 200px; object-fit: contain; padding: 10px 14px; border-radius: 12px; margin-bottom: 18px; }
+.gl-proof-logo-dark { background: var(--band); }
+.gl-proof-logo-light { background: #fff; border: 1px solid var(--border); }
+.gl-proof-card .gl-proof-stats { margin: 0; gap: 0; }
+.gl-proof-card .gl-proof-stat { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 28px; align-items: baseline; padding: 22px 0; }
+.gl-proof-card .gl-proof-stat:first-child { border-top: 0; padding-top: 0; }
+.gl-proof-card .gl-proof-stat dd { margin: 0; font-size: 1rem; line-height: 1.6; }
 
 /* FAQs heading on /next. */
 .gl-faq-head { margin-top: var(--space-12); }
@@ -95,6 +105,9 @@ body { margin: 0; }
 
 @media (max-width: 900px) {
   .gl-proof, .gl-steps-3 { grid-template-columns: 1fr; }
+  .gl-proof { gap: 28px; }
+  .gl-proof-card { grid-template-columns: 1fr; gap: 28px; padding: 26px; }
+  .gl-proof-card .gl-proof-stat { grid-template-columns: 1fr; gap: 4px; padding: 18px 0; }
   .gl-line { grid-template-columns: 1fr; gap: var(--space-6); }
 }
 @media (max-width: 760px) {

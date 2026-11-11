@@ -32,7 +32,7 @@ export default async function Page() {
 
   const proof: Proof[] = PROOF_SLUGS.flatMap((slug) => {
     const c = clients.find((x) => x.slug === slug);
-    return c ? [{ company: c.company, industry: c.industry.split(" · ")[0], results: c.results.slice(0, 3), stats: c.proofStats ?? [], quote: c.quote }] : [];
+    return c ? [{ company: c.company, industry: c.industry.split(" · ")[0], results: c.results.slice(0, 3), stats: c.proofStats ?? [], quote: c.quote, logo: c.logo, logoBg: c.logoBg }] : [];
   });
   return <GreenlinePage proof={proof} />;
 }

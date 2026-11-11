@@ -12,7 +12,7 @@ import { Backdrop, ImageSlot, type Proof } from "../greenline-page";
 
 const WHEN = ["Morning", "Afternoon", "Evening"];
 // Photos (see IMAGES in greenline-page.tsx): the business running well. GPT Image 2.5, 10 Nov.
-const IMAGES: { hero?: string } = { hero: "/greenline/hero-team.jpg" };
+const IMAGES: { hero?: string } = { hero: "/greenline/hero-presenting.jpg" };
 
 function ApplyForm() {
   const [ctx, setCtx] = useState<SnapshotContext | null>(null);
@@ -234,9 +234,19 @@ export function NextPage({ proof }: { proof: Proof[] }) {
           <h2 className="gl-heading display-lg">Real results for businesses like yours.</h2>
           <div className="gl-proof gl-gap-top">
             {proof.map((p) => (
-              <article className="gl-card" key={p.company}>
-                <h3 className="gl-card-who title">{p.company}</h3>
-                <p className="gl-card-meta caption">{p.industry}</p>
+              <article className="gl-card gl-proof-card" key={p.company}>
+                <div className="gl-proof-side">
+                  {p.logo ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img className={`gl-proof-logo gl-proof-logo-${p.logoBg ?? "light"}`} src={p.logo} alt={`${p.company} logo`} />
+                  ) : null}
+                  <h3 className="gl-card-who title">{p.company}</h3>
+                  <p className="gl-card-meta caption">{p.industry}</p>
+                  <blockquote className="gl-quote body-sm">
+                    &ldquo;{p.quote.text}&rdquo;
+                    <cite className="caption">{p.quote.name}, {p.quote.role}</cite>
+                  </blockquote>
+                </div>
                 {p.stats.length > 0 ? (
                   <dl className="gl-proof-stats">
                     {p.stats.map((s) => (
@@ -246,10 +256,6 @@ export function NextPage({ proof }: { proof: Proof[] }) {
                 ) : (
                   <ul className="body-sm">{p.results.map((r) => <li key={r}>{r}</li>)}</ul>
                 )}
-                <blockquote className="gl-quote body-sm">
-                  &ldquo;{p.quote.text}&rdquo;
-                  <cite className="caption">{p.quote.name}, {p.quote.role}</cite>
-                </blockquote>
               </article>
             ))}
           </div>
