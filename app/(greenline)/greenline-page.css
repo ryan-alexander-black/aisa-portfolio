@@ -112,6 +112,8 @@ body { margin: 0; }
 /* The portfolio gives the flow border-box sizing through Tailwind's reset, which this layout doesn't load;
    without it the job box and the button panel overflow their cards (seen live 12 Nov). */
 :where(.mr) *, :where(.mr) *::before, :where(.mr) *::after { box-sizing: border-box; }
+/* Same missing reset: the offer's link button showed underlined and touching the text above it (seen live 12 Nov). */
+:where(.mr) a.btn { display: inline-block; text-decoration: none; margin-top: var(--space-3); }
 /* Keep the page from jumping sideways when the flow's short loading screen drops the scrollbar. */
 html { scrollbar-gutter: stable; }
 
