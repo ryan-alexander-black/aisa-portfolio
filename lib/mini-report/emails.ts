@@ -6,7 +6,7 @@
 // With no RESEND_API_KEY (local dev) nothing is sent; each email is logged instead.
 import { Resend } from "resend";
 import { answersText } from "./prompts";
-import { BASIS_LINE, GAIN_LINE, poss, yearlyDollars, type Answers, type Fit, type Report } from "./shared";
+import { BASIS_LINE, GAIN_LINE, INPUT_NOTE, INPUT_NOTE_TITLE, poss, yearlyDollars, type Answers, type Fit, type Report } from "./shared";
 
 const TO_RYAN = process.env.OPERATOR_FORM_TO || "ryanalexanderblack@gmail.com";
 const FROM = process.env.MAIL_FROM || "Ryan Alexander Black <hello@ryanalexanderblack.com>";
@@ -103,7 +103,7 @@ function greenlineSnapshotHtml(rep: Report, fit: Fit, t: { line: string }): stri
           <tr><td style="padding:26px 24px 8px">
             <div style="font-family:${GL_MONO};font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:${GL.bright};margin:0 0 8px">The next step · free</div>
             <div style="font-size:24px;font-weight:800;line-height:1.25;color:#FFFFFF;margin:0 0 10px">Turn your snapshot into a full plan to grow your profit.</div>
-            <p style="margin:0 0 18px;color:${GL.bandMuted};font-size:15px">Your snapshot came from your website and a few quick answers. The <b style="color:#FFFFFF">Full AI Opportunity Report</b> goes much deeper, in four steps:</p>
+            <p style="margin:0 0 18px;color:${GL.bandMuted};font-size:15px">That's what the <b style="color:#FFFFFF">Full AI Opportunity Report</b> is for. It goes much deeper, in four steps:</p>
           </td></tr>
           <tr><td style="padding:0 24px">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
@@ -144,6 +144,9 @@ function greenlineSnapshotHtml(rep: Report, fit: Fit, t: { line: string }): stri
         <tr><td style="padding:0 28px">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${glIdeasHtml(rep)}</table>
           <p style="margin:0 0 16px;font-size:12px;color:${GL.muted}">${BASIS}</p>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 18px;background:${GL.surface};border-left:4px solid ${GL.brand};border-radius:10px">
+            <tr><td style="padding:14px 16px;color:${GL.ink};font-size:14px"><b>${INPUT_NOTE_TITLE}</b><br>${INPUT_NOTE}</td></tr>
+          </table>
         </td></tr>
         ${offer}
         <tr><td style="padding:22px 28px 26px;border-top:1px solid ${GL.line}">
@@ -189,7 +192,7 @@ export async function sendReportEmails(ctx: {
     from: greenline ? FROM_GREENLINE : undefined,
     replyTo: greenline ? "ryan@greenlineai.nz" : TO_RYAN,
     subject,
-    text: `${subject}\n\n${t.line}\n${GAIN_LINE}\n\n${ideasText(rep)}\n\n${BASIS}\n\n${signText}`,
+    text: `${subject}\n\n${t.line}\n${GAIN_LINE}\n\n${ideasText(rep)}\n\n${BASIS}\n\n${INPUT_NOTE_TITLE}: ${INPUT_NOTE}\n\n${signText}`,
     html: greenline ? greenlineSnapshotHtml(rep, fit, t) : `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#0A0F0D;max-width:600px">
       <h2 style="margin:0 0 6px">${esc(subject)}</h2>
       <p style="margin:0 0 16px;color:#5C6B64">Built from your website and your answers. ✦ Written by AI.</p>
@@ -197,6 +200,7 @@ export async function sendReportEmails(ctx: {
       <p style="margin:0 0 16px">${GAIN_LINE}</p>
       ${ideasHtml(rep)}
       <p style="font-size:12px;color:#5C6B64">${BASIS}</p>
+      <p style="margin:0 0 16px;padding:12px 14px;background:#F5F8F6;border-left:4px solid #11D38B;border-radius:8px"><b>${INPUT_NOTE_TITLE}</b><br>${INPUT_NOTE}</p>
       ${offer}
       <p style="margin-top:20px">${signHtml}</p>
     </div>`,

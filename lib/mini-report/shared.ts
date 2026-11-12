@@ -52,3 +52,9 @@ export const GAIN_LINE =
   "Every hour AI takes off your team is money you keep, or an hour they put into the work that moves the business most: winning work, looking after customers, growing.";
 export const BASIS_LINE =
   "Money figures value the time at a $75,000 a year salary (about $36 an hour). Every figure is a rough estimate, not a promise.";
+
+// How the snapshot was made (Ryan, 12 Nov): AI is only as good as its input. The snapshot is a best guess from a
+// 90-second read of the website + a few answers; the Full AI Opportunity Report is where the real picture comes from.
+export const INPUT_NOTE_TITLE = "How this was made";
+export const INPUT_NOTE =
+  "AI is only as good as what it's given. This snapshot came from your website and a few quick answers, in about 90 seconds, so treat these ideas as best guesses, not a plan. The real picture comes from how your business actually runs, day to day.";

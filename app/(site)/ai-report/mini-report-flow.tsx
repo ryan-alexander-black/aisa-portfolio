@@ -6,7 +6,7 @@
 // (Nexus money-engine/instant-win/mockup-flow.html v5, design in flow-design.md).
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { getUtm, track } from "@/lib/track";
-import { BASIS_LINE, GAIN_LINE, poss, yearlyDollars, type Fit, type Opportunity } from "@/lib/mini-report/shared";
+import { BASIS_LINE, GAIN_LINE, INPUT_NOTE, INPUT_NOTE_TITLE, poss, yearlyDollars, type Fit, type Opportunity } from "@/lib/mini-report/shared";
 
 // ---------------------------------------------------------------- a live % meter
 // Eases toward a target, creeps while waiting so the number keeps moving, and only reaches 100
@@ -375,12 +375,13 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
               ))}
               <div className="basis">{BASIS_LINE}</div>
               <div className="sent">📬 A copy is on its way to your inbox.</div>
+              <div className="inputnote"><b>{INPUT_NOTE_TITLE}</b><p>{INPUT_NOTE}</p></div>
 
               {rep.fit !== "low" && next ? (
                 <div className="offer">
                   <div className="slots">Free · 2 reports available each month</div>
                   <h3>Want to go deeper?</h3>
-                  <p>Your snapshot came from your website and a few taps. The <b style={{ color: "var(--text)" }}>Full AI Opportunity Report</b> is built around how {biz} really runs: a quick call, a 45-minute audit, then your plan, walked through in person.</p>
+                  <p>That&apos;s what the <b style={{ color: "var(--text)" }}>Full AI Opportunity Report</b> is for. It&apos;s built around how {biz} really runs: a quick call, a 45-minute audit, then your plan, walked through in person.</p>
                   <a className="btn solid big" href={next} onClick={toNext}>See how the full report works</a>
                 </div>
               ) : rep.fit !== "low" ? (
