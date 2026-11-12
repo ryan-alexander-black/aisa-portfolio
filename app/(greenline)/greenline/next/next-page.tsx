@@ -148,7 +148,7 @@ export function NextPage({ proof }: { proof: Proof[] }) {
             <h1 className="display-xl">Turn your snapshot into a full plan to grow your profit.</h1>
             <p className="gl-lede lede">
               Your snapshot came from your website. The full report comes from how your business really runs. We spend 45
-              minutes mapping the work from enquiry to invoice, then I hand you a plan: where AI could save the most time
+              minutes mapping the work from first enquiry to getting paid, then I hand you a plan: where AI could save the most time
               and money, and what to tackle first.
             </p>
           </div>
@@ -161,7 +161,7 @@ export function NextPage({ proof }: { proof: Proof[] }) {
         <div className="gl-stats">
           <div className="gl-stat"><b className="display-sm">Completely free</b><span className="caption">no cost, no obligation</span></div>
           <div className="gl-stat"><b className="display-sm">45 minutes</b><span className="caption">the audit, in person or by video</span></div>
-          <div className="gl-stat"><b className="display-sm">Your plan</b><span className="caption">walked through in person</span></div>
+          <div className="gl-stat"><b className="display-sm">Your plan</b><span className="caption">walked through with you</span></div>
           <div className="gl-stat"><b className="display-sm">Limited</b><span className="caption">to 2 reports per month</span></div>
         </div>
 
@@ -177,7 +177,7 @@ export function NextPage({ proof }: { proof: Proof[] }) {
               <h3 className="display-sm">The usual way</h3>
               <ul className="body">
                 <li>More sales means more staff</li>
-                <li>More jobs means more admin hours</li>
+                <li>More work means more admin hours</li>
                 <li>Costs climb with every dollar of growth</li>
                 <li>Revenue goes up. Profit barely moves</li>
               </ul>
@@ -186,7 +186,7 @@ export function NextPage({ proof }: { proof: Proof[] }) {
               <h3 className="display-sm">The Greenline way</h3>
               <ul className="body">
                 <li>AI handles the simple, repeatable work</li>
-                <li>The same team takes on more jobs</li>
+                <li>The same team takes on more work</li>
                 <li>Costs stay steady as sales grow</li>
                 <li>Revenue goes up. Profit goes up with it</li>
               </ul>
@@ -238,7 +238,7 @@ export function NextPage({ proof }: { proof: Proof[] }) {
             <div className="gl-step">
               <p className="gl-step-tag tag">Step 2 · about 45 minutes</p>
               <h3 className="display-sm">The audit</h3>
-              <p className="body">I come to you in Hawke&apos;s Bay and map how the work really flows: enquiries, quotes, jobs, admin, follow-ups. Video call if that&apos;s easier.</p>
+              <p className="body">I map how the work really flows: enquiries, sales, the day-to-day work, admin, follow-ups. In person if you&apos;re in Hawke&apos;s Bay, or by video call anywhere in NZ.</p>
             </div>
             <div className="gl-step">
               <p className="gl-step-tag tag">Step 3</p>
@@ -248,7 +248,7 @@ export function NextPage({ proof }: { proof: Proof[] }) {
             <div className="gl-step">
               <p className="gl-step-tag tag">Step 4</p>
               <h3 className="display-sm">The walk-through</h3>
-              <p className="body">I sit down with you and talk you through it. It&apos;s yours to keep: run with it yourself, or we can talk about working together on the AI solutions.</p>
+              <p className="body">I talk you through it, in person or by video call. It&apos;s yours to keep: run with it yourself, or we can talk about working together on the AI solutions.</p>
             </div>
           </div>
           <Cta />

@@ -108,9 +108,9 @@ function greenlineSnapshotHtml(rep: Report, fit: Fit, t: { line: string }): stri
           <tr><td style="padding:0 24px">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
               ${glStep(1, "A quick call", "I ring to learn a little about your business and check it's a fit.")}
-              ${glStep(2, "The audit, about 45 minutes", "I come to you in Hawke's Bay and map how the work really flows. Video call if that's easier.")}
+              ${glStep(2, "The audit, about 45 minutes", "I map how the work really flows. In person if you're in Hawke's Bay, or by video call anywhere in NZ.")}
               ${glStep(3, "Your report", "Your biggest AI opportunities, in the order to tackle them.")}
-              ${glStep(4, "The walk-through", "I sit down with you and talk you through it. It's yours to keep.")}
+              ${glStep(4, "The walk-through", "I talk you through it, in person or by video call. It's yours to keep.")}
             </table>
           </td></tr>
           <tr><td style="padding:10px 24px 26px">
@@ -181,7 +181,7 @@ export async function sendReportEmails(ctx: {
         ? `<p>You're on the list for Signal over Noise: what's working for NZ businesses each week, and one AI idea to grow your profit. If your team grows, reply to this email and we'll talk.</p>`
         : `<p>The weekly business pulse is on its way: what's moving for NZ business, and how AI gives you the edge. If your team grows, reply to this email and we'll talk.</p>`)
     : (greenline
-        ? `<p>Your snapshot was the quick version. The free <b>Full AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit, then your plan, walked through in person. I take on 2 a month. <a href="https://greenlineai.nz/next">See how it works and apply</a>, or just reply to this email.</p>`
+        ? `<p>Your snapshot was the quick version. The free <b>Full AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit, then your plan, walked through with you. I take on 2 a month. <a href="https://greenlineai.nz/next">See how it works and apply</a>, or just reply to this email.</p>`
         : `<p>That was the 2-minute version. The free <b>Full AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit in Hawke's Bay, then your plan, walked through in person. Ryan only takes on 2 a month. <a href="https://www.ryanalexanderblack.com/ai-report">Apply on the site</a>, or just reply to this email.</p>`);
   const signText = greenline ? "Ryan Alexander Black · Greenline AI · greenlineai.nz" : "Ryan Alexander Black · ryanalexanderblack.com";
   const signHtml = greenline

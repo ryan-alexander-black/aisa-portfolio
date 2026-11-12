@@ -10,7 +10,7 @@ import { NextPage } from "./next-page";
 export const metadata: Metadata = {
   title: "The Full AI Opportunity Report · Greenline AI",
   description:
-    "Turn your snapshot into a full plan to grow your profit. A quick call, a 45-minute audit, then your plan, walked through in person. Completely free, limited to 2 reports per month.",
+    "Turn your snapshot into a full plan to grow your profit. A quick call, a 45-minute audit, then your plan, walked through with you. Completely free, limited to 2 reports per month.",
   alternates: { canonical: "/next" },
   robots: { index: false },
 };

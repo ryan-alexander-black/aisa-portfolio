@@ -62,11 +62,11 @@ const GROUPS: Group[] = [
   { q: "team", label: "Team size, including you", options: ["Just me", "2–5", "6–15", "16–50", "50+"], single: true },
   { q: "rev", label: "Roughly, yearly revenue", options: ["Under $250k", "$250k–$1M", "$1M–$5M", "$5M+", "Prefer not to say"], single: true },
   { q: "sinks", label: "Where does the week go?", hint: "pick up to 2", max: 2, other: "What else eats the week?",
-    options: ["Quotes & admin", "Chasing leads", "Scheduling jobs", "Reporting & numbers", "Customer messages", "Marketing", "Other"] },
+    options: ["Admin & paperwork", "Quotes & proposals", "Chasing leads", "Scheduling & bookings", "Reporting & numbers", "Customer messages", "Marketing", "Other"] },
   { q: "enq", label: "How do new enquiries come in?", hint: "pick any", other: "Where else do enquiries come from?",
     options: ["Phone", "Email", "Website form", "Facebook / Instagram", "Walk-ins", "Referrals", "Other"] },
   { q: "tools", label: "What do you run the business on?", hint: "pick any", other: "What else do you use?",
-    options: ["Xero", "MYOB", "Spreadsheets", "A job or booking system", "Google Workspace", "Microsoft 365", "Paper & whiteboard", "Other"] },
+    options: ["Xero", "MYOB", "Spreadsheets", "A booking, job or CRM system", "An online store", "Google Workspace", "Microsoft 365", "Paper & whiteboard", "Other"] },
 ];
 
 
@@ -299,8 +299,8 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
           <div className="q lead">
             <div className="ql">The one job you&apos;d hand to AI tomorrow <small>optional</small></div>
             <div className="why">This one makes the biggest difference. A few words in your own terms is plenty.</div>
-            <textarea rows={2} placeholder="The admin job that eats your week" value={task} onChange={(e) => setTask(e.target.value)} maxLength={300} />
-            <ul className="ex"><li>pricing quotes after a site visit</li><li>chasing insurers for approval</li><li>turning job notes into invoices</li></ul>
+            <textarea rows={2} placeholder="The admin task that eats your week" value={task} onChange={(e) => setTask(e.target.value)} maxLength={300} />
+            <ul className="ex"><li>writing proposals after a client meeting</li><li>answering the same customer questions</li><li>pulling the month&apos;s numbers together</li></ul>
           </div>
 
           {GROUPS.map((g) => (
@@ -381,7 +381,7 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
                 <div className="offer">
                   <div className="slots">Free · 2 reports available each month</div>
                   <h3>Want to go deeper?</h3>
-                  <p>That&apos;s what the <b style={{ color: "var(--text)" }}>Full AI Opportunity Report</b> is for. It&apos;s built around how {biz} really runs: a quick call, a 45-minute audit, then your plan, walked through in person.</p>
+                  <p>That&apos;s what the <b style={{ color: "var(--text)" }}>Full AI Opportunity Report</b> is for. It&apos;s built around how {biz} really runs: a quick call, a 45-minute audit, then your plan, walked through with you.</p>
                   <a className="btn solid big" href={next} onClick={toNext}>See how the full report works</a>
                 </div>
               ) : rep.fit !== "low" ? (
