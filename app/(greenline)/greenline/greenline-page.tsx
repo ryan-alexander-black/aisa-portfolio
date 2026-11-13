@@ -131,7 +131,7 @@ export function GreenlinePage({ proof }: { proof: Proof[] }) {
           <Backdrop first still="/greenline/bg-light-lines.jpg" video={MOTION.hero}
                     wash="linear-gradient(180deg, rgba(255,255,255,.25), rgba(245,248,246,.45))" />
           <div className="gl-hero-copy">
-            <p className="gl-eyebrow eyebrow">Free AI Profit Snapshot · for growing NZ businesses</p>
+            <p className="gl-eyebrow eyebrow">Free AI Profit Snapshot · for busy NZ businesses</p>
             <h1 className="display-xl">See where AI could grow your profit.</h1>
             <p className="gl-lede lede">
               Pop in your website. In about 90 seconds you get 3 ideas specific to your business, with the hours each could
