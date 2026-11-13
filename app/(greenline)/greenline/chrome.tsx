@@ -9,7 +9,8 @@ export function Mark({ size = 34 }: { size?: number }) {
   return (
     <svg className="gl-mark" width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
       <polyline points="2,18 8,14 13,16 21,5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="2.5" cy="18" r="1.8" fill="currentColor" />
+      <circle cx="2" cy="18" r="1.8" fill="currentColor" />
+      <circle cx="8" cy="14" r="1.8" fill="currentColor" />
       <circle cx="13" cy="16" r="1.8" fill="currentColor" />
       <circle cx="21" cy="5" r="2.2" fill="currentColor" />
     </svg>
