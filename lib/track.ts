@@ -13,8 +13,9 @@ const ADS_LABELS: Record<string, string | undefined> = {
   report_requested: process.env.NEXT_PUBLIC_GOOGLE_ADS_LABEL_REPORT,
   audit_applied: process.env.NEXT_PUBLIC_GOOGLE_ADS_LABEL_APPLY,
 };
-// Meta: the application is the standard "Lead"; the rest are custom events.
-const META_STANDARD: Record<string, string> = { audit_applied: "Lead" };
+// Meta standard events (13 Nov, the Meta set-up plan): a snapshot request is the "Lead" (the opt-in the ads
+// optimise for), an application on /next is "SubmitApplication"; the rest are custom events.
+const META_STANDARD: Record<string, string> = { report_requested: "Lead", audit_applied: "SubmitApplication" };
 
 // next_viewed: a good fit opened Greenline's /next (the Full AI Opportunity Report page) from their snapshot.
 export type TrackEvent = "report_requested" | "report_viewed" | "next_viewed" | "audit_applied";
