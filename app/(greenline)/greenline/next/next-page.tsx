@@ -9,6 +9,7 @@ import { SNAPSHOT_KEY, type SnapshotContext } from "../../../(site)/ai-report/mi
 import { getUtm, track } from "@/lib/track";
 import { APPLY, Footer, Header } from "../chrome";
 import { Backdrop, ImageSlot, type Proof } from "../greenline-page";
+import { GreenLineChart, UsualWayChart } from "../profit-charts";
 
 const WHEN = ["Morning", "Afternoon", "Evening"];
 
@@ -172,26 +173,19 @@ export function NextPage({ proof }: { proof: Proof[] }) {
             MBIE&apos;s 2026 survey of 2,508 NZ businesses found firms with 6+ staff were more likely to grow their
             revenue, but it didn&apos;t reach their profit: their costs and admin time grew with it.
           </p>
-          <div className="gl-compare gl-gap-top">
-            <div className="gl-compare-col gl-compare-usual">
+          <div className="gl-compare-charts gl-gap-top">
+            <div className="gl-chart gl-chart-light">
               <h3 className="display-sm">The usual way</h3>
-              <ul className="body">
-                <li>More sales means more staff</li>
-                <li>More work means more admin hours</li>
-                <li>Costs climb with every dollar of growth</li>
-                <li>Revenue goes up. Profit barely moves</li>
-              </ul>
+              <p className="small">More work, more staff, more admin</p>
+              <UsualWayChart />
             </div>
-            <div className="gl-compare-col gl-compare-green">
+            <div className="gl-chart gl-chart-dark">
               <h3 className="display-sm">The Greenline way</h3>
-              <ul className="body">
-                <li>AI handles the simple, repeatable work</li>
-                <li>The same team takes on more work</li>
-                <li>Costs stay steady as sales grow</li>
-                <li>Revenue goes up. Profit goes up with it</li>
-              </ul>
+              <p className="small">AI takes the repeat work, the team takes on more</p>
+              <GreenLineChart id="gl-compare" />
             </div>
           </div>
+          <p className="fine gl-chart-note">Illustration, not data</p>
           {/* Every figure is read on its publisher's own page; sources + limits in Nexus
               research/marketing-angle-gain-vs-pain-2026-11.md → "NZ stats for Two ways to grow". No links out (sealed page). */}
           <dl className="gl-evidence">
@@ -209,15 +203,10 @@ export function NextPage({ proof }: { proof: Proof[] }) {
               <p className="gl-lede body gl-mt-2">Your report shows where AI could lift it in your business, and what to do first.</p>
             </div>
             <div>
-              <svg className="gl-profit" viewBox="0 0 400 170" role="img" aria-label="Illustration: revenue and profit rising together">
-                <line className="axis" x1="10" y1="160" x2="390" y2="160" strokeWidth="1.5" />
-                <polyline className="revenue" points="10,125 105,108 200,84 295,60 390,28" fill="none" strokeWidth="3" strokeDasharray="8 6" />
-                <polyline className="profit" points="10,152 105,142 200,124 295,100 390,72" fill="none" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-                <circle className="node" cx="390" cy="72" r="8" />
-              </svg>
-              <div className="gl-key small">
-                <span>- - - Revenue</span><span className="is-profit">&#9473; Profit</span><span className="fine">Illustration, not data</span>
+              <div className="gl-chart gl-chart-dark">
+                <GreenLineChart id="gl-primary" />
               </div>
+              <p className="fine gl-chart-note">Illustration, not data</p>
             </div>
           </div>
         </section>
