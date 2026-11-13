@@ -51,7 +51,7 @@ export const poss = (n: string) => (/s$/i.test(n) ? `${n}’` : `${n}’s`);
 export const GAIN_LINE =
   "Every hour AI takes off your team is money you keep, or an hour they put into the work that moves the business most: winning work, looking after customers, growing.";
 export const BASIS_LINE =
-  "Money figures value the time at a $75,000 a year salary (about $36 an hour). Every figure is a rough estimate, not a promise.";
+  "Money figures only count the admin time saved, valued at one person's $75,000 a year salary (about $36 an hour). They don't count the extra work these ideas could win back, which can be the bigger gain. Every figure is a rough estimate, not a promise.";
 
 // How the snapshot was made (Ryan, 12 Nov): AI is only as good as its input. The snapshot is a best guess from a
 // 90-second read of the website + a few answers; the Full AI Opportunity Report is where the real picture comes from.
