@@ -22,7 +22,7 @@ export default function GreenlineLayout({ children }: Readonly<{ children: React
       </head>
       <body>
         {children}
-        <Analytics metaPixel />
+        <Analytics greenline />
       </body>
     </html>
   );
