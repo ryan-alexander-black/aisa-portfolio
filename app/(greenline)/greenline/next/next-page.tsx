@@ -6,7 +6,7 @@
 // name, mobile and best time (Ryan, 10 Nov). Anyone else (an email link, a new device) fills all of it.
 import { useEffect, useState, type FormEvent } from "react";
 import { SNAPSHOT_KEY, type SnapshotContext } from "../../../(site)/ai-report/mini-report-flow";
-import { getUtm, track } from "@/lib/track";
+import { getUtm, shareEmailForMatching, track } from "@/lib/track";
 import { APPLY, Footer, Header } from "../chrome";
 import { Backdrop, ImageSlot, type Proof } from "../greenline-page";
 import { GreenLineChart, UsualWayChart } from "../profit-charts";
@@ -68,6 +68,7 @@ function ApplyForm() {
       });
       const j = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(j.error || `Something went wrong (${r.status}).`);
+      shareEmailForMatching(em);
       track("audit_applied", { fit: ctx?.fit || "unknown" });
       setDone(true);
     } catch (e2) {

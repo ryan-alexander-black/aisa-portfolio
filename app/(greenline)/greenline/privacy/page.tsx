@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 // Effective date is maintained by hand: bump it whenever the substance changes (wording shared with
 // the portfolio's /privacy in components/legal.tsx).
-const EFFECTIVE = "10 November 2026";
+const EFFECTIVE = "16 November 2026";
 
 export default async function Page() {
   await greenlineHostOnly();

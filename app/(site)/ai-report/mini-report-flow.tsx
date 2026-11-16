@@ -5,7 +5,7 @@
 // /ai-report; a button to Greenline's /next page when `next` is set). A React port of the tested prototype
 // (Nexus money-engine/instant-win/mockup-flow.html v5, design in flow-design.md).
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
-import { getUtm, track } from "@/lib/track";
+import { getUtm, shareEmailForMatching, track } from "@/lib/track";
 import { BASIS_LINE, GAIN_LINE, INPUT_NOTE, INPUT_NOTE_TITLE, poss, yearlyDollars, type Fit, type Opportunity } from "@/lib/mini-report/shared";
 
 // ---------------------------------------------------------------- a live % meter
@@ -161,6 +161,7 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
   // ---- Screen 1 → 2. The site read starts at once; the questions fill the wait.
   const begin = (em: string, st: string, tr: string) => {
     setErr1(""); setReadErr(""); setHeld(false); setRead(null); setReady(false); chosen.current = false;
+    shareEmailForMatching(em);
     track("report_requested");
     const p = api<ReadResult>("/api/mini-report/read", { email: em, site: st, company_website: tr, utm: getUtm(), brand: next ? "greenline" : undefined });
     readP.current = p;

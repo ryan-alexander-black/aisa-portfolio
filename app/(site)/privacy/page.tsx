@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 // Effective date is maintained by hand — bump it whenever the policy's substance changes.
-const EFFECTIVE = "5 November 2026";
+const EFFECTIVE = "16 November 2026";
 
 export default function PrivacyPage() {
   return (

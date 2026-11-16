@@ -32,6 +32,19 @@ export function track(event: TrackEvent, params: Record<string, string | number>
   }
 }
 
+/** Enhanced conversions (Google Ads, 16 Nov): hand the visitor's email to the Google tag just before a conversion, so a
+ *  lead can be matched to the ad click even when the click and the form happen on different devices. The tag hashes
+ *  it (SHA-256) before anything leaves the browser; Google uses it only to match and count the conversion. Covered on
+ *  the privacy page. Meta's version (automatic advanced matching) is switched on in Events Manager, not here. */
+export function shareEmailForMatching(email: string) {
+  try {
+    const e = email.trim().toLowerCase();
+    if (e.includes("@")) window.gtag?.("set", "user_data", { email: e });
+  } catch {
+    /* tracking must never break the page */
+  }
+}
+
 // ---- Where the visitor came from (first touch this visit), saved with each lead.
 const UTM_KEY = "rab-utm";
 const UTM_FIELDS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "fbclid"];

@@ -64,7 +64,10 @@ export function PrivacyBody({ brand: b }: { brand: Brand }) {
           <li>
             <strong>Analytics and ad measurement.</strong> To see which pages and ads bring people here, the site may use
             Google Analytics, Google Ads conversion tracking and the Meta (Facebook/Instagram) Pixel. These set cookies
-            and send those companies details such as the pages you visit and whether you asked for a report. Your
+            and send those companies details such as the pages you visit and whether you asked for a report. When you
+            ask for a report, the email you enter is also shared with Google and Meta in a scrambled (hashed) form, so
+            they can match your request to the ad you came from. They use it only to measure their ads, not to show it
+            to anyone. Your
             browser also stores{b.themeToggle ? " your light/dark theme preference and" : ""}, for the current visit
             only, the campaign link you arrived from.
           </li>
