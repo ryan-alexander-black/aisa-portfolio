@@ -6,7 +6,7 @@
 // (Nexus money-engine/instant-win/mockup-flow.html v5, design in flow-design.md).
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { getUtm, shareEmailForMatching, track } from "@/lib/track";
-import { BASIS_LINE, GAIN_LINE, INPUT_NOTE, INPUT_NOTE_TITLE, poss, yearlyDollars, type Fit, type Opportunity } from "@/lib/mini-report/shared";
+import { BASIS_LINE, GAIN_LINE, INPUT_NOTE, INPUT_NOTE_TITLE, SON_POINTS, poss, yearlyDollars, type Fit, type Opportunity } from "@/lib/mini-report/shared";
 
 // ---------------------------------------------------------------- a live % meter
 // Eases toward a target, creeps while waiting so the number keeps moving, and only reaches 100
@@ -430,7 +430,10 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
                   {next ? (
                     <>
                       <h3>You&apos;re on the list for Signal over Noise</h3>
-                      <p>What&apos;s working for NZ businesses each week, and one AI idea to grow your profit. If your team grows, reply to any email and we&apos;ll talk.</p>
+                      <p>Every Monday at 10am, a few minutes&apos; read:</p>
+                      <ul className="ticks">
+                        {SON_POINTS.map((p) => <li key={p}>{p}</li>)}
+                      </ul>
                     </>
                   ) : (
                     <>

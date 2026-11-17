@@ -6,7 +6,7 @@
 // With no RESEND_API_KEY (local dev) nothing is sent; each email is logged instead.
 import { Resend } from "resend";
 import { answersText } from "./prompts";
-import { BASIS_LINE, GAIN_LINE, INPUT_NOTE, INPUT_NOTE_TITLE, poss, yearlyDollars, type Answers, type Fit, type Report } from "./shared";
+import { BASIS_LINE, GAIN_LINE, INPUT_NOTE, INPUT_NOTE_TITLE, SON_POINTS, poss, yearlyDollars, type Answers, type Fit, type Report } from "./shared";
 
 const TO_RYAN = process.env.OPERATOR_FORM_TO || "ryanalexanderblack@gmail.com";
 const FROM = process.env.MAIL_FROM || "Ryan Alexander Black <hello@ryanalexanderblack.com>";
@@ -96,7 +96,8 @@ function glStep(n: number, title: string, body: string): string {
 function greenlineSnapshotHtml(rep: Report, fit: Fit, t: { line: string }, nextUrl = NEXT_URL): string {
   const offer = fit === "low"
     ? `<tr><td style="padding:8px 28px 4px;color:${GL.ink}">
-        <p style="margin:0">You're on the list for <b>Signal over Noise</b>: what's working for NZ businesses each week, and one AI idea to grow your profit. If your team grows, reply to this email and we'll talk.</p>
+        <p style="margin:0 0 8px">You're on the list for <b>Signal over Noise</b>. Every Monday at 10am, a few minutes' read:</p>
+        ${SON_POINTS.map((p) => `<p style="margin:0 0 4px"><span style="color:${GL.deep};font-weight:700">&#10003;</span>&nbsp; ${esc(p)}</p>`).join("")}
       </td></tr>`
     : `<tr><td style="padding:8px 20px 4px">
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${GL.ink};border-radius:16px">
@@ -182,7 +183,7 @@ export async function sendReportEmails(ctx: {
   // 1. The visitor's copy. Replies come straight to Ryan.
   const offer = fit === "low"
     ? (greenline
-        ? `<p>You're on the list for Signal over Noise: what's working for NZ businesses each week, and one AI idea to grow your profit. If your team grows, reply to this email and we'll talk.</p>`
+        ? `<p>You're on the list for Signal over Noise. Every Monday at 10am, a few minutes' read:</p><p>${SON_POINTS.map((p) => `&#10003; ${esc(p)}`).join("<br>")}</p>`
         : `<p>The weekly business pulse is on its way: what's moving for NZ business, and how AI gives you the edge. If your team grows, reply to this email and we'll talk.</p>`)
     : (greenline
         ? `<p>Your snapshot was the quick version. The free <b>Full AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit, then your plan, walked through with you. I take on 2 a month. <a href="${esc(ctx.nextUrl || NEXT_URL)}">See how it works and apply</a>, or just reply to this email.</p>`

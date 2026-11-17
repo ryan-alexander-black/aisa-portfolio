@@ -110,6 +110,9 @@
 .mr .soft { margin-top:22px; border:1px solid var(--line); border-radius:18px; padding:20px; }
 .mr .soft h3 { font-size:17px; margin-bottom:6px; }
 .mr .soft p { margin:0; color:var(--muted); }
+.mr .soft .ticks { list-style:none; margin:12px 0 0; padding:0; display:grid; gap:8px; color:var(--text); }
+.mr .soft .ticks li { position:relative; padding-left:26px; }
+.mr .soft .ticks li::before { content:""; position:absolute; left:3px; top:7px; width:11px; height:6px; border-left:2px solid var(--accent); border-bottom:2px solid var(--accent); transform:rotate(-45deg); }
 .mr .err { color:var(--red); font-size:13px; margin-top:8px; }
 .mr .again { margin-top:12px; }
 

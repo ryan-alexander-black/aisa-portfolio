@@ -24,17 +24,22 @@ export type Opportunity = {
 };
 export type Report = { business_name: string; opportunities: Opportunity[] };
 
-// Fit (Ryan, 15 Oct): owner/manager AND (team 2+ OR revenue $250k+).
-// Skipped the questions = unknown = still shown the offer; Ryan qualifies on the call.
+// Fit (Ryan, 18 Nov; was owner/manager AND (team 2+ OR $250k+) from 15 Oct): the only "no" is a one-person
+// business under $250k. Every role is in (owners, managers, executives, other stakeholders): revenue decides,
+// and Ryan's first call is the real qualification. Skipped the questions = unknown = still shown the offer.
 export type Fit = "good" | "low" | "unknown";
+
+/** What a Signal over Noise reader gets, shown to snapshots that aren't offered the full report (Ryan, 18 Nov). */
+export const SON_POINTS = [
+  "What's working for NZ businesses this week, and what isn't",
+  "The business landscape in plain words",
+  "One AI idea to grow your profit",
+];
 export function fitOf(a: Answers): Fit {
   const { role, team, revenue: rev } = a;
-  const bigRev = rev === "$250k–$1M" || rev === "$1M–$5M" || rev === "$5M+";
-  const hasTeam = !!team && team !== "Just me";
   if (!role && !team && !rev) return "unknown";
-  if (role === "Other") return "low";
-  if (hasTeam || bigRev || (!team && !rev)) return "good";
-  return "low";
+  if (team === "Just me" && rev === "Under $250k") return "low";
+  return "good";
 }
 
 // Money maths (deterministic, never the AI's): a $75k salary is about $36 an hour.
