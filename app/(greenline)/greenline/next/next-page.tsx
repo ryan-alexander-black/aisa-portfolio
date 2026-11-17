@@ -38,15 +38,25 @@ function ApplyForm() {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
+    const fill = (c: SnapshotContext) => { setCtx(c); setEmail(c.email || ""); setSite(c.site || ""); };
+    // 1. Straight from the snapshot on screen: the same tab's sessionStorage.
     try {
       const raw = sessionStorage.getItem(SNAPSHOT_KEY);
-      if (!raw) return;
-      const c = JSON.parse(raw) as SnapshotContext;
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- read once from the browser after mount
-      setCtx(c);
-      setEmail(c.email || "");
-      setSite(c.site || "");
-    } catch { /* no storage: they fill in the email + website themselves */ }
+      if (raw) { fill(JSON.parse(raw) as SnapshotContext); return; }
+    } catch { /* no storage: try the email link next */ }
+    // 2. From the snapshot email's button: greenlineai.nz/next?s=<sealed context>, any device (18 Nov).
+    const s = new URLSearchParams(window.location.search).get("s");
+    if (!s) return;
+    fetch("/api/mini-report/context", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ s }),
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((c: SnapshotContext | null) => {
+        if (!c) return;
+        fill(c);
+        try { sessionStorage.setItem(SNAPSHOT_KEY, JSON.stringify(c)); } catch { /* fine */ }
+      })
+      .catch(() => { /* they fill in the email + website themselves */ });
   }, []);
 
   const submit = async (e: FormEvent) => {

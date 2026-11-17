@@ -1,6 +1,6 @@
 import { after } from "next/server";
 import {
-  HELD_MESSAGE, VisibleError, cleanAnswers, cleanUtm, clientIp, rateLimited, verifyRead, writeReport,
+  HELD_MESSAGE, VisibleError, cleanAnswers, cleanUtm, clientIp, rateLimited, sealContext, verifyRead, writeReport,
   type SiteRead,
 } from "@/lib/mini-report/server";
 import { fitOf } from "@/lib/mini-report/shared";
@@ -31,11 +31,18 @@ export async function POST(request: Request) {
     const utm = cleanUtm(body.utm);
     const rep = await writeReport(read, answers);
     const fit = fitOf(answers);
+    // Greenline good fits: the email's Apply button pre-fills /next on any device (sealed, not readable in the URL).
+    const nextUrl = brand === "greenline" && fit !== "low"
+      ? `https://greenlineai.nz/next?s=${sealContext({
+          email: read.email, site: read.site, business: rep.business_name, fit,
+          ideas: rep.opportunities.map((o) => o.title), answers: answers as Record<string, unknown>,
+        })}`
+      : undefined;
 
     after(() =>
       sendReportEmails({
         email: read.email, site: read.site, rep, answers, fit, utm, costUsd: rep.meta.cost_usd,
-        brand,
+        brand, nextUrl,
       })
         .catch((e) => console.error("[mini-report] report emails failed", e)),
     );

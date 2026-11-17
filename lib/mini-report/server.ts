@@ -1,7 +1,7 @@
 // Server-side engine for the mini-report: reads a business's website with Firecrawl, names it,
 // and writes the three-idea report with Claude. Ported from the tested Nexus prototype
 // (money-engine/instant-win/prototype/server.py). Runs only in route handlers (Node runtime).
-import { createHmac, timingSafeEqual } from "node:crypto";
+import { createCipheriv, createDecipheriv, createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import Anthropic from "@anthropic-ai/sdk";
 import { NAME_SCHEMA, NAME_SYSTEM, REPORT_SCHEMA, REPORT_SYSTEM, answersText } from "./prompts";
 import type { Answers, Report } from "./shared";
@@ -198,6 +198,40 @@ export function verifyRead(token: string): SiteRead {
   const read = JSON.parse(Buffer.from(body, "base64url").toString("utf8")) as SiteRead;
   if (Date.now() - read.iat > TOKEN_TTL_MS) throw new VisibleError("That took a while, so please start again.");
   return read;
+}
+
+// ------------------------------------------------------------------ the snapshot email's /next link
+// The snapshot email's "Apply" button carries the snapshot's context so /next can pre-fill the email +
+// website on any device (sessionStorage only covers the same tab). Sealed with AES-256-GCM, not just
+// signed: the link lands in GA4's page URL, and an email address must never be readable there (18 Nov).
+export type SealedContext = {
+  email: string; site: string; business: string; fit: string; ideas: string[]; answers: Record<string, unknown>;
+};
+const CONTEXT_TTL_MS = 60 * 24 * 60 * 60 * 1000; // the email link keeps pre-filling for 60 days
+
+const contextKey = () => createHash("sha256").update(`${secret()}|snapshot-context`).digest();
+
+export function sealContext(ctx: SealedContext): string {
+  const iv = randomBytes(12);
+  const c = createCipheriv("aes-256-gcm", contextKey(), iv);
+  const body = Buffer.concat([c.update(JSON.stringify({ ...ctx, iat: Date.now() }), "utf8"), c.final()]);
+  return Buffer.concat([iv, c.getAuthTag(), body]).toString("base64url");
+}
+
+/** The context behind an email link, or null if it's altered, garbled or past 60 days. */
+export function openContext(token: string): SealedContext | null {
+  try {
+    const raw = Buffer.from(String(token || ""), "base64url");
+    if (raw.length < 29 || raw.length > 6000) return null;
+    const d = createDecipheriv("aes-256-gcm", contextKey(), raw.subarray(0, 12));
+    d.setAuthTag(raw.subarray(12, 28));
+    const out = JSON.parse(Buffer.concat([d.update(raw.subarray(28)), d.final()]).toString("utf8"));
+    if (!out.iat || Date.now() - out.iat > CONTEXT_TTL_MS) return null;
+    const { email, site, business, fit, ideas, answers } = out;
+    return { email, site, business, fit, ideas, answers };
+  } catch {
+    return null;
+  }
 }
 
 // ------------------------------------------------------------------ guards

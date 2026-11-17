@@ -189,11 +189,12 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
   }, []);
 
   // ---- Screen 2 → 3: a finalising screen while the report is written.
-  const finish = async () => {
+  // `justSite`: the second button sends the report from the website alone, whatever was tapped (Ryan, 18 Nov).
+  const finish = async (justSite = false) => {
     if (chosen.current) return;
     chosen.current = true;
     meter2.stop();
-    const answers = collect();
+    const answers = justSite ? {} : collect();
     go(3);
     setRepErr("");
     meter3.start();
@@ -322,8 +323,8 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
           ))}
 
           <div className="row2">
-            <button className="btn solid" onClick={finish} disabled={!!readErr}>✦ Add these to my report</button>
-            <button className="btn outline" onClick={finish} disabled={!!readErr}>Send with what I&apos;ve given</button>
+            <button className="btn solid" onClick={() => finish()} disabled={!!readErr}>✦ Add these to my report</button>
+            <button className="btn outline" onClick={() => finish(true)} disabled={!!readErr}>Skip, just use my website</button>
           </div>
           <div className="hint2">Every answer sharpens the report, but none are required. &quot;Send with what I&apos;ve given&quot; builds it from your website and whatever you&apos;ve answered so far.</div>
         </section>
@@ -382,7 +383,8 @@ export function MiniReportFlow({ initial, onRestart, next }: FlowProps = {}) {
                 <div className="offer">
                   <div className="slots">Free · 2 reports available each month</div>
                   <h3>Want to go deeper?</h3>
-                  <p>That&apos;s what the <b style={{ color: "var(--text)" }}>Full AI Opportunity Report</b> is for. It&apos;s built around how {biz} really runs: a quick call, a 45-minute audit, then your plan, walked through with you.</p>
+                  <p>That&apos;s what the <b style={{ color: "var(--text)" }}>Full AI Opportunity Report</b> is for. It&apos;s built around how {biz} really runs.</p>
+                  <p><b style={{ color: "var(--text)" }}>What&apos;s involved?</b> A quick call to make sure it&apos;s right for you, a 45-minute audit, then your plan, walked through with you.</p>
                   <a className="btn solid big" href={next} onClick={toNext}>See how the full report works</a>
                 </div>
               ) : rep.fit !== "low" ? (

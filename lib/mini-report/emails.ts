@@ -93,7 +93,7 @@ function glStep(n: number, title: string, body: string): string {
   </td></tr>`;
 }
 
-function greenlineSnapshotHtml(rep: Report, fit: Fit, t: { line: string }): string {
+function greenlineSnapshotHtml(rep: Report, fit: Fit, t: { line: string }, nextUrl = NEXT_URL): string {
   const offer = fit === "low"
     ? `<tr><td style="padding:8px 28px 4px;color:${GL.ink}">
         <p style="margin:0">You're on the list for <b>Signal over Noise</b>: what's working for NZ businesses each week, and one AI idea to grow your profit. If your team grows, reply to this email and we'll talk.</p>
@@ -115,7 +115,7 @@ function greenlineSnapshotHtml(rep: Report, fit: Fit, t: { line: string }): stri
           </td></tr>
           <tr><td style="padding:10px 24px 26px">
             <table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="background:${GL.brand};border-radius:10px">
-              <a href="https://greenlineai.nz/next" style="display:inline-block;padding:14px 22px;color:${GL.ink};font-weight:700;font-size:16px;text-decoration:none">Apply for your Full AI Opportunity Report →</a>
+              <a href="${esc(nextUrl)}" style="display:inline-block;padding:14px 22px;color:${GL.ink};font-weight:700;font-size:16px;text-decoration:none">Apply for your Full AI Opportunity Report →</a>
             </td></tr></table>
             <p style="margin:12px 0 0;color:${GL.bandMuted};font-size:13px">Limited to 2 reports a month. Or just reply to this email.</p>
           </td></tr>
@@ -158,6 +158,8 @@ function greenlineSnapshotHtml(rep: Report, fit: Fit, t: { line: string }): stri
   </table></body></html>`;
 }
 
+const NEXT_URL = "https://greenlineai.nz/next";
+
 // For a local preview only (scripts render this with a sample report).
 export const greenlineSnapshotPreview = (rep: Report, fit: Fit) => greenlineSnapshotHtml(rep, fit, totals(rep));
 
@@ -169,6 +171,8 @@ export type Brand = "greenline" | "site";
 
 export async function sendReportEmails(ctx: {
   email: string; site: string; rep: Report; answers: Answers; fit: Fit; utm: Utm; costUsd: number; brand?: Brand;
+  /** greenlineai.nz/next with the sealed snapshot context, so the application pre-fills from the email too. */
+  nextUrl?: string;
 }) {
   const { email, site, rep, answers, fit, utm } = ctx;
   const greenline = ctx.brand === "greenline";
@@ -181,7 +185,7 @@ export async function sendReportEmails(ctx: {
         ? `<p>You're on the list for Signal over Noise: what's working for NZ businesses each week, and one AI idea to grow your profit. If your team grows, reply to this email and we'll talk.</p>`
         : `<p>The weekly business pulse is on its way: what's moving for NZ business, and how AI gives you the edge. If your team grows, reply to this email and we'll talk.</p>`)
     : (greenline
-        ? `<p>Your snapshot was the quick version. The free <b>Full AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit, then your plan, walked through with you. I take on 2 a month. <a href="https://greenlineai.nz/next">See how it works and apply</a>, or just reply to this email.</p>`
+        ? `<p>Your snapshot was the quick version. The free <b>Full AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit, then your plan, walked through with you. I take on 2 a month. <a href="${esc(ctx.nextUrl || NEXT_URL)}">See how it works and apply</a>, or just reply to this email.</p>`
         : `<p>That was the 2-minute version. The free <b>Full AI Opportunity Report</b> goes much deeper: a quick call, a 45-minute audit in Hawke's Bay, then your plan, walked through in person. Ryan only takes on 2 a month. <a href="https://www.ryanalexanderblack.com/ai-report">Apply on the site</a>, or just reply to this email.</p>`);
   const signText = greenline ? "Ryan Alexander Black · Greenline AI · greenlineai.nz" : "Ryan Alexander Black · ryanalexanderblack.com";
   const signHtml = greenline
@@ -193,7 +197,7 @@ export async function sendReportEmails(ctx: {
     replyTo: greenline ? "ryan@greenlineai.nz" : TO_RYAN,
     subject,
     text: `${subject}\n\n${t.line}\n${GAIN_LINE}\n\n${ideasText(rep)}\n\n${BASIS}\n\n${INPUT_NOTE_TITLE}: ${INPUT_NOTE}\n\n${signText}`,
-    html: greenline ? greenlineSnapshotHtml(rep, fit, t) : `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#0A0F0D;max-width:600px">
+    html: greenline ? greenlineSnapshotHtml(rep, fit, t, ctx.nextUrl) : `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#0A0F0D;max-width:600px">
       <h2 style="margin:0 0 6px">${esc(subject)}</h2>
       <p style="margin:0 0 16px;color:#5C6B64">Built from your website and your answers. ✦ Written by AI.</p>
       <p style="margin:0 0 6px;font-weight:600">${esc(t.line)}</p>
