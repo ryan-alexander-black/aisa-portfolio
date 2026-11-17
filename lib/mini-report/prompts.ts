@@ -11,7 +11,9 @@ export const NAME_SCHEMA = {
   type: "object",
   properties: {
     business_name: { type: "string", description: "The trading name as the business writes it, short (no 'Ltd' unless that's how they're known)." },
-    what_they_do: { type: "string", description: "What they do and where, max 10 words, e.g. 'electricians for homes and businesses in Napier' or 'mortgage advice for first-home buyers in Auckland'." },
+    // "Where" once read Perth off ryanalexanderblack.com, which never says where Ryan is based but names Perth clients
+    // (18 Nov 2026). So: the business's own base only, and no place at all when the site doesn't state one.
+    what_they_do: { type: "string", description: "What they do and where they're based, max 10 words, e.g. 'electricians for homes and businesses in Napier' or 'mortgage advice for first-home buyers in Auckland'. 'Where' is the business's own base as the site states it (an address, a contact page, 'based in', the area it serves). Never take it from a client, project, case study or past employer the site mentions. If the site doesn't say where the business is based, leave the place out, e.g. 'AI systems and automations for small businesses'." },
   },
   required: ["business_name", "what_they_do"],
   additionalProperties: false,

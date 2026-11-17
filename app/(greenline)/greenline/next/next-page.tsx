@@ -80,9 +80,22 @@ function ApplyForm() {
 
   if (done) {
     return (
-      <div className="gl-form" role="status">
-        <h3 className="gl-form-title display-sm">✓ Application received</h3>
-        <p className="gl-form-sub small">I&apos;ll call you within one business day to talk it through.</p>
+      // The hero stretches this box to the full height of the copy + photo, so the confirmation carries
+      // the next steps (the same words as "Four steps, all free" below) instead of two lines in a big empty panel.
+      <div className="gl-form gl-form-done" role="status">
+        <span className="gl-done-tick" aria-hidden="true">✓</span>
+        <h3 className="gl-form-title display-sm">Application received</h3>
+        <p className="gl-form-sub body">
+          Thanks{name.trim() ? `, ${name.trim().split(/\s+/)[0]}` : ""}. I&apos;ll call you within one business day
+          {when ? `, in the ${when.toLowerCase()},` : ""} to talk it through.
+        </p>
+        <p className="gl-eyebrow eyebrow">What happens next</p>
+        <ol className="gl-done-steps">
+          <li><b>A quick call.</b> I learn a little about your business and check it&apos;s a fit.</li>
+          <li><b>The audit, about 45 minutes.</b> In person if you&apos;re in Hawke&apos;s Bay, or by video call anywhere in NZ.</li>
+          <li><b>Your report.</b> Your biggest AI opportunities, in the order to tackle them.</li>
+          <li><b>The walk-through.</b> I talk you through it. It&apos;s yours to keep.</li>
+        </ol>
       </div>
     );
   }
