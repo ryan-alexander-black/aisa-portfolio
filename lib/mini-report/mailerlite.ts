@@ -50,6 +50,39 @@ async function ensureGroup(name: string): Promise<string> {
   return id;
 }
 
+/** What the list already holds for this email: the snapshot's answers, site, business and fit (18 Nov).
+ *  Used when an application arrives without the snapshot's context (an ad, a new device, typed by hand),
+ *  so Ryan's alert still shows who they are. Email is the key; null when they're not on the list. */
+export type ListRecord = { site?: string; business?: string; fit?: Fit; answers: Answers };
+
+export async function findOnList(email: string): Promise<ListRecord | null> {
+  if (!token()) return null;
+  try {
+    const keys = await ensureFields();
+    const r = await ml<{ data: { fields: Record<string, string | null> } }>(`/subscribers/${encodeURIComponent(email)}`);
+    const f = r.data?.fields ?? {};
+    const get = (n: FieldName) => { const k = keys[n]; const v = k ? f[k] : null; return v ? String(v) : undefined; };
+    const role = get("Role");
+    const sinks = get("Time sinks");
+    const fit = get("Fit");
+    const otherRole = !!role && role !== "Owner" && role !== "Manager";
+    return {
+      site: get("Website"),
+      business: f.company ? String(f.company) : undefined,
+      fit: fit === "good" || fit === "low" || fit === "unknown" ? fit : undefined,
+      answers: {
+        role: otherRole ? "Other" : role,
+        role_other: otherRole ? role : undefined,
+        team: get("Team size"), revenue: get("Revenue"),
+        week_goes: sinks ? sinks.split(", ").filter(Boolean) : [],
+      },
+    };
+  } catch (e) {
+    if (!String(e).includes("\u2192 404") && !String(e).includes("404")) console.error("[mini-report] MailerLite lookup failed", e);
+    return null;
+  }
+}
+
 export async function addToList(ctx: {
   email: string; group: "Snapshot" | "Applied"; brand: "greenline" | "site";
   site?: string; business?: string; name?: string; phone?: string;

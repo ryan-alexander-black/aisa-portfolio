@@ -4,7 +4,7 @@ import {
 import { fitOf } from "@/lib/mini-report/shared";
 import { after } from "next/server";
 import { sendApplication } from "@/lib/mini-report/emails";
-import { addToList } from "@/lib/mini-report/mailerlite";
+import { addToList, findOnList } from "@/lib/mini-report/mailerlite";
 
 // Step 3 (good fit or unknown): the application for the full, free AI Opportunity Report.
 // Sends Ryan an alert to call within one business day.
@@ -28,25 +28,34 @@ export async function POST(request: Request) {
     return Response.json({ error: "Please try again later." }, { status: 429 });
   }
 
-  const answers = cleanAnswers(body.answers);
+  let answers = cleanAnswers(body.answers);
   const brand = body.brand === "greenline" ? "greenline" : "site";
   const utm = cleanUtm(body.utm);
-  const site = cleanStr(body.site, 300);
-  const business = cleanStr(body.business, 120);
+  let site = cleanStr(body.site, 300);
+  let business = cleanStr(body.business, 120);
+  // No snapshot context (an ad, a new device, typed by hand): match them to their snapshot by email on the
+  // list, so the alert still shows their answers and their fit isn't overwritten (18 Nov).
+  const hasAnswers = Object.values(answers).some((v) => (Array.isArray(v) ? v.length > 0 : !!v));
+  const onList = !hasAnswers || !business ? await findOnList(email) : null;
+  if (onList && !hasAnswers) answers = onList.answers;
+  if (onList && !business) business = onList.business || "";
+  if (onList && !site) site = onList.site || "";
+  const fit = hasAnswers ? fitOf(answers) : onList?.fit || fitOf(answers);
   after(() => addToList({
     email, group: "Applied", brand, site, business: business || undefined, name, phone: mobile,
-    answers, fit: fitOf(answers), utm,
+    answers: hasAnswers ? answers : undefined, fit, utm,
   }));
   await sendApplication({
     name, mobile, email,
     when: cleanStr(body.when, 20),
-    site: cleanStr(body.site, 300),
-    business: cleanStr(body.business, 120) || "(unknown business)",
-    fit: fitOf(answers),
+    site,
+    business: business || "(unknown business)",
+    fit,
     answers,
     ideas: Array.isArray(body.ideas) ? body.ideas.slice(0, 3).map((t) => cleanStr(t, 120)) : [],
-    utm: cleanUtm(body.utm),
-    brand: body.brand === "greenline" ? "greenline" : "site",
+    utm,
+    brand,
+    matched: !hasAnswers ? (onList ? "matched" : "none") : "snapshot",
   });
   return Response.json({ ok: true });
 }

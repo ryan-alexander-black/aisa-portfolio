@@ -1,7 +1,7 @@
 // Emails for the mini-report, sent with Resend (the site's existing sender):
 //   1. the visitor's copy of their AI Profit Snapshot ("A copy is on its way to your inbox")
 //   2. an alert to Ryan for every snapshot (every snapshot is a lead)
-//   3. an alert to Ryan for every application for the Full AI Opportunity Report
+//   3. an alert to Ryan for every application for the Full AI Opportunity Report, + the applicant's confirmation
 //   4. an alert to Ryan when the report engine fails on our side (the visitor is still a lead)
 // With no RESEND_API_KEY (local dev) nothing is sent; each email is logged instead.
 import { Resend } from "resend";
@@ -257,11 +257,16 @@ export async function sendServiceAlert(ctx: { step: "read" | "report"; email: st
 export async function sendApplication(ctx: {
   name: string; mobile: string; when: string; email: string; site: string; business: string;
   fit: Fit; answers: Answers; ideas: string[]; utm: Utm; brand?: Brand;
+  /** Where the snapshot details came from: carried from the snapshot, matched on the list by email, or none. */
+  matched?: "snapshot" | "matched" | "none";
 }) {
   const { name, mobile, when, email, site, business, fit, answers, ideas, utm } = ctx;
+  const matchLine = ctx.matched === "matched" ? "Snapshot details: matched to their snapshot by email (MailerLite)"
+    : ctx.matched === "none" ? "Snapshot details: none found for this email (no snapshot, or a different email)"
+    : "Snapshot details: carried from their snapshot";
   const lines = [
     `Name: ${name}`, `Mobile: ${mobile}`, `Best time to call: ${when || "(not given)"}`,
-    `Email: ${email}`, `Business: ${business} · ${site}`, `Fit: ${fit}`, `Source: ${utmText(utm)}`,
+    `Email: ${email}`, `Business: ${business} · ${site}`, `Fit: ${fit}`, `Source: ${utmText(utm)}`, matchLine,
     "", answersText(answers), "", "Their 3 ideas:", ...ideas.map((t, i) => `${i + 1}. ${t}`),
   ];
   await send({
@@ -276,4 +281,34 @@ export async function sendApplication(ctx: {
       <pre style="white-space:pre-wrap;font:inherit;background:#F5F8F6;padding:10px 12px;border-radius:8px">${esc(lines.join("\n"))}</pre>
     </div>`,
   });
+
+  // The applicant's confirmation (Ryan, 18 Nov): short and personal, it opens the conversation and gives them
+  // an easy way to move the call. Replies come straight to Ryan.
+  const greenline = ctx.brand === "greenline";
+  const first = name.trim().split(/\s+/)[0] || "there";
+  const callLine = when
+    ? `I'll call you on ${mobile} in the ${when.toLowerCase()}, within one business day.`
+    : `I'll give you a call on ${mobile} within one business day.`;
+  const paras = [
+    `Hi ${first},`,
+    "Thanks for applying for your Full AI Opportunity Report. I'm looking forward to talking with you.",
+    callLine,
+    "If that time no longer suits, just reply to this email and let me know a better one.",
+  ];
+  await send({
+    to: email,
+    from: greenline ? FROM_GREENLINE : undefined,
+    replyTo: greenline ? "ryan@greenlineai.nz" : TO_RYAN,
+    subject: `Got it, ${first}. Talk soon`,
+    text: [...paras, "Talk soon,\nRyan"].join("\n\n") + "\n\n" +
+      (greenline ? "Ryan Alexander Black · Greenline AI · 029 043 09605 · greenlineai.nz" : "Ryan Alexander Black · ryanalexanderblack.com"),
+    html: `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#0A0F0D;max-width:600px">
+      ${paras.map((p) => `<p style="margin:0 0 14px">${esc(p)}</p>`).join("")}
+      <p style="margin:0 0 14px">Talk soon,<br>Ryan</p>
+      ${greenline ? GL_SIGNATURE : `<p style="margin:18px 0 0;color:#5C6B64">Ryan Alexander Black · <a href="https://www.ryanalexanderblack.com">ryanalexanderblack.com</a></p>`}
+    </div>`,
+  });
 }
+
+// Ryan's Gmail signature (presence/email-signature/greenline-signature.html), for the personal-feeling emails.
+const GL_SIGNATURE = `<table cellpadding="0" cellspacing="0" border="0" style="margin-top:18px;font-family:Arial,Helvetica,sans-serif;color:#0A0F0D"><tr><td style="padding:0 14px 0 0;vertical-align:middle"><a href="https://greenlineai.nz"><img src="https://greenlineai.nz/greenline/greenline-mark-144.png" width="44" height="44" alt="Greenline AI" style="display:block;border:0"></a></td><td style="border-left:2px solid #11D38B;padding:2px 0 2px 14px;vertical-align:middle;font-size:12px;line-height:1.55"><div style="font-size:16px;font-weight:bold;color:#0A0F0D">Ryan Alexander Black</div><div style="font-size:11px;font-weight:bold;letter-spacing:1.5px;color:#047857">GREENLINE AI &middot; AI FOR NZ BUSINESSES</div><div style="color:#5C6B64">Grow your profit, not just your revenue.</div><div><a href="tel:+642904309605" style="color:#0A0F0D;text-decoration:none">029 043 09605</a><span style="color:#9FB0A8"> &middot; </span><a href="https://greenlineai.nz" style="color:#047857;text-decoration:none;font-weight:bold">greenlineai.nz</a><span style="color:#9FB0A8"> &middot; </span><a href="mailto:ryan@greenlineai.nz" style="color:#047857;text-decoration:none">ryan@greenlineai.nz</a></div></td></tr></table>`;
