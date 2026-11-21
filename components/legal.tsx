@@ -1,6 +1,7 @@
-// Privacy and terms wording, shared by the portfolio (ryanalexanderblack.com) and Greenline AI
-// (greenlineai.nz), so the two policies can't drift apart. Each site passes its own Brand; the
-// markup is plain sections, styled by the page that renders it.
+// Privacy and terms wording for the portfolio (ryanalexanderblack.com) and Greenline AI (greenlineai.nz).
+// The terms are shared (each site passes its own Brand). The privacy policies split on 21 Nov 2026: the
+// portfolio keeps PrivacyBody, Greenline has its own short GreenlinePrivacyBody. The markup is plain
+// sections, styled by the page that renders it.
 import type { ReactNode } from "react";
 
 export type Brand = {
@@ -49,6 +50,74 @@ export const GREENLINE: Brand = {
 };
 
 const Mail = ({ to }: { to: string }) => <a className="underline" href={`mailto:${to}`}>{to}</a>;
+
+// Greenline's own, deliberately short policy (Ryan, 21 Nov 2026: "just the minimum viable — how their information is
+// used, not what our process is"). It covers what NZ Privacy Act IPP 3 asks a collector to tell people (the fact of
+// collection, purpose, recipients, who holds it + address, voluntary or not, and access/correction rights —
+// privacy.org.nz/privacy-principles/3/, read 21 Nov). The portfolio keeps the long PrivacyBody: its Google API
+// (Limited Use) section is what the AISA Google Ads API verification points at.
+export const GREENLINE_HOLDER = "Alexander The Great Coaching Ltd, 191 Guppy Road, Taradale, Napier 4112";
+
+export function GreenlinePrivacyBody() {
+  const c = GREENLINE.contact;
+  return (
+    <>
+      <section>
+        <h2>Who we are</h2>
+        <p>
+          Greenline AI is a trading name of {GREENLINE_HOLDER}, New Zealand. We collect and hold the information
+          described here. Questions or requests: <Mail to={c} />.
+        </p>
+      </section>
+
+      <section>
+        <h2>What we collect</h2>
+        <ul className="mt-3 list-disc space-y-2 pl-5">
+          <li>When you ask for the free AI Profit Snapshot: your email, your business website and any answers you choose to give.</li>
+          <li>If you apply for the Full AI Opportunity Report: your name and mobile.</li>
+          <li>When you visit the site: the pages you view and the ad or link you came from (through cookies, below).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>How we use it</h2>
+        <ul className="mt-3 list-disc space-y-2 pl-5">
+          <li>To create and email your snapshot, and to follow up on your request.</li>
+          <li>To send you Signal over Noise, our weekly email. Every email has an unsubscribe link.</li>
+          <li>To see which ads and pages work.</li>
+        </ul>
+        <p>We don&apos;t sell your information or use it for anything else.</p>
+      </section>
+
+      <section>
+        <h2>Who it&apos;s shared with</h2>
+        <p>
+          Only the services that run this for us: Firecrawl (reads your website&apos;s public pages), Anthropic (the AI
+          that writes your snapshot), Resend and MailerLite (send our emails), Vercel (hosts the site), and Google
+          Analytics, Google Ads and Meta (measure visits and ads). When you ask for a snapshot, Google and Meta receive
+          your email in a scrambled (hashed) form, only to match it to the ad you came from. Some of these services
+          store data outside New Zealand.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cookies</h2>
+        <p>
+          The site uses Google and Meta cookies for the measurement above. You can block them in your browser and the
+          site still works.
+        </p>
+      </section>
+
+      <section>
+        <h2>Your choices</h2>
+        <p>
+          Giving us your details is up to you, but we need your email and website to make your snapshot. You can ask to
+          see or correct your information, or have it deleted, at any time: <Mail to={c} />.
+        </p>
+      </section>
+    </>
+  );
+}
 
 export function PrivacyBody({ brand: b }: { brand: Brand }) {
   return (
@@ -201,12 +270,16 @@ export function TermsBody({ brand: b }: { brand: Brand }) {
         <h2>Connected services</h2>
         <p>
           Client services may connect to third-party platforms (for example Google, Meta, Xero) under those
-          platforms&apos; own terms. Access is authorised by the client and can be revoked by the client at any time. Use
-          of data from Google APIs is described in the{" "}
-          <a className="underline" href="/privacy">
-            Privacy Policy
-          </a>
-          .
+          platforms&apos; own terms. Access is authorised by the client and can be revoked by the client at any time.
+          {b.site === PORTFOLIO.site && (
+            <>
+              {" "}Use of data from Google APIs is described in the{" "}
+              <a className="underline" href="/privacy">
+                Privacy Policy
+              </a>
+              .
+            </>
+          )}
         </p>
       </section>
 

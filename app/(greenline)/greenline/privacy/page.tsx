@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { GREENLINE, PrivacyBody } from "@/components/legal";
+import { GreenlinePrivacyBody } from "@/components/legal";
 import { Footer, Header } from "../chrome";
 import { greenlineHostOnly } from "../host";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Greenline AI",
-  description: "How Greenline AI handles your details when you ask for the free AI Profit Snapshot, and the data in client work.",
+  description: "What Greenline AI collects when you ask for the free AI Profit Snapshot, how it's used and who it's shared with.",
   alternates: { canonical: "/privacy" },
 };
 
-// Effective date is maintained by hand: bump it whenever the substance changes (wording shared with
-// the portfolio's /privacy in components/legal.tsx).
-const EFFECTIVE = "16 November 2026";
+// Effective date is maintained by hand: bump it whenever the substance changes (wording in
+// components/legal.tsx → GreenlinePrivacyBody).
+const EFFECTIVE = "21 November 2026";
 
 export default async function Page() {
   await greenlineHostOnly();
@@ -23,7 +23,7 @@ export default async function Page() {
         <h1 className="display-lg">Privacy Policy</h1>
         <p className="gl-legal-date caption">Effective {EFFECTIVE}</p>
         <div className="gl-legal-body body">
-          <PrivacyBody brand={GREENLINE} />
+          <GreenlinePrivacyBody />
         </div>
       </main>
       <Footer />

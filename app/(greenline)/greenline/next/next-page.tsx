@@ -150,7 +150,7 @@ function ApplyForm() {
       </div>
       {err && <p className="gl-field-error caption" role="alert">{err}</p>}
       <button className="gl-btn gl-btn-block button" type="submit" disabled={sending}>{sending ? "Sending…" : APPLY}</button>
-      <p className="gl-fine fine">No obligation. <a href="/privacy">Privacy</a></p>
+      <p className="gl-fine fine">No obligation.</p>
     </form>
   );
 }

@@ -97,7 +97,7 @@ function SnapshotForm({ where, full, onStart }: { where: string; full?: boolean;
       {full && (
         <p className="gl-fine fine">
           Your snapshot by email, plus Signal over Noise: what&apos;s working for NZ businesses each week, and one AI idea to
-          grow your profit. Unsubscribe any time. <a href="/privacy">Privacy</a>
+          grow your profit. Unsubscribe any time.
         </p>
       )}
     </form>
