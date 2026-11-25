@@ -5,11 +5,12 @@ import { NextResponse, type NextRequest } from "next/server";
 // localhost) passes straight through.
 const GREENLINE = /^(www\.)?greenlineai\.(nz|co\.nz)$/;
 const CANONICAL = "greenlineai.nz";
-// What the page needs on its own domain besides itself: the report form's API.
-const PASS = /^\/api\/mini-report\//;
+// What the pages need on their own domain besides themselves: the report form's API and Greenline's own forms.
+const PASS = /^\/api\/(mini-report|greenline)\//;
 // Greenline's own pages, at their short addresses.
 const PAGES: Record<string, string> = {
   "/": "/greenline", "/next": "/greenline/next", "/privacy": "/greenline/privacy", "/terms": "/greenline/terms",
+  "/owner-form": "/greenline/owner-form",
 };
 
 export function proxy(req: NextRequest) {

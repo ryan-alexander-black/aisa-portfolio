@@ -107,6 +107,17 @@ body { margin: 0; }
 .gl-legal-body ul { padding-left: 20px; display: grid; gap: var(--space-2); }
 .gl-legal-body a { color: var(--accent); }
 
+/* /owner-form: the questions before a warm lead's audit (26 Nov). */
+.gl-of { max-width: 752px; margin: 0 auto; padding: var(--space-16) 16px; }
+.gl-of h1 { margin-top: var(--space-2); }
+.gl-of-lede { margin-top: var(--space-4); color: var(--text-muted); }
+.gl-of-form { margin-top: var(--space-8); }
+.gl-of-form .gl-of-field + .gl-of-field { margin-top: var(--space-6); }
+.gl-of-text { display: block; resize: vertical; min-height: 96px; }
+.gl-of-opt { color: var(--text-muted); font-weight: 400; }
+.gl-of-bad .gl-chip { border-color: var(--error); }
+@media (max-width: 640px) { .gl-of { padding-top: var(--space-8); } .gl-of-form { padding: var(--space-6); } }
+
 /* /next, the Greenline way's evidence strip (Ryan, 12 Nov): three sourced numbers under the compare. */
 .gl-evidence { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin: 36px 0 0; }
 .gl-evidence-item { margin: 0; padding-top: var(--space-4); border-top: 3px solid var(--mark); }

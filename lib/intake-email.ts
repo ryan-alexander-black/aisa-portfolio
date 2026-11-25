@@ -14,9 +14,17 @@ const TO = process.env.OPERATOR_FORM_TO || "ryanalexanderblack@gmail.com";
 // (This is a sending identity, not a mailbox; replies go to the submitter below.)
 const FROM = process.env.MAIL_FROM || "Ryan Alexander Black <hello@ryanalexanderblack.com>";
 
+// Greenline AI's forms send from its own Resend account and land in ryan@greenlineai.nz (the same settings
+// as the snapshot emails, lib/mini-report/emails.ts).
+const GREENLINE = {
+  from: process.env.MAIL_FROM_GREENLINE || "Ryan Alexander Black <ryan@greenlineai.nz>",
+  to: process.env.OPERATOR_TO_GREENLINE || "ryan@greenlineai.nz",
+  key: () => process.env.RESEND_API_KEY_GREENLINE || process.env.RESEND_API_KEY,
+};
+
 export async function handleIntake(
   request: NextRequest,
-  { labels, kind }: { labels: Record<string, string>; kind: string },
+  { labels, kind, greenline = false }: { labels: Record<string, string>; kind: string; greenline?: boolean },
 ): Promise<Response> {
   let data: Record<string, string>;
   try {
@@ -37,7 +45,7 @@ export async function handleIntake(
     );
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = greenline ? GREENLINE.key() : process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.error("intake: RESEND_API_KEY is not set");
     return Response.json(
@@ -54,6 +62,7 @@ export async function handleIntake(
   const subject = `New ${kind} — ${data.name.trim()}`;
   const text = rows.map((r) => `${r.label}:\n${r.value}`).join("\n\n");
   const html = `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#111">
+    ${greenline ? `<p style="margin:0 0 6px;font-weight:700;color:#047857">Greenline AI</p>` : ""}
     <h2 style="margin:0 0 16px">${escapeHtml(subject)}</h2>
     ${rows
       .map(
@@ -68,8 +77,8 @@ export async function handleIntake(
   try {
     const resend = new Resend(apiKey);
     const { error } = await resend.emails.send({
-      from: FROM,
-      to: TO,
+      from: greenline ? GREENLINE.from : FROM,
+      to: greenline ? GREENLINE.to : TO,
       replyTo: data.email.trim(),
       subject,
       text,
