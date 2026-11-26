@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { clients, type ClientCase, type ClientQuote } from "@/lib/clients";
-import { CTA, Footer, Header } from "./chrome";
+import { CTA, Footer, Header, NEW_TAB, RyanBand } from "./chrome";
 import { Backdrop } from "./greenline-page";
 import { greenlineHostOnly } from "./host";
 import { NewsletterBand } from "./newsletter/newsletter";
@@ -64,7 +64,7 @@ export default async function Page() {
 
   return (
     <div className="gl-root">
-      <Header cta={SNAPSHOT} />
+      <Header cta={SNAPSHOT} newTab />
       <main>
         <section className="gl-hm-hero gl-has-bg">
           <Backdrop first still="/greenline/bg-light-lines.jpg"
@@ -77,7 +77,7 @@ export default async function Page() {
               AI does the legwork. Your people make the calls.
             </p>
             <div className="gl-hm-actions">
-              <a className="gl-btn button" href={SNAPSHOT}>{CTA}</a>
+              <a className="gl-btn button" href={SNAPSHOT} {...NEW_TAB}>{CTA}</a>
             </div>
           </div>
           <div className="gl-slot gl-hm-photo">
@@ -87,22 +87,7 @@ export default async function Page() {
           </div>
         </section>
 
-        <section className="gl-section gl-on-band gl-nl-who-band">
-          <div className="gl-nl-who">
-            <div className="gl-nl-who-photo">
-              <Image src="/ryan-headshot.png" alt="Ryan Alexander Black" fill sizes="180px" />
-            </div>
-            <div>
-              <p className="gl-eyebrow eyebrow">Who&apos;s behind it</p>
-              <h2 className="gl-heading display-lg">Hey, I&apos;m Ryan.</h2>
-              <p className="body gl-mt-2">
-                I&apos;m based in Napier, New Zealand. I&apos;ve spent the last 7+ years building and running small
-                businesses, and one thing always came back: profit is what matters most. So I started Greenline AI, to help
-                NZ businesses grow without their costs growing with them.
-              </p>
-            </div>
-          </div>
-        </section>
+        <RyanBand />
 
         <section className="gl-section">
           <p className="gl-eyebrow eyebrow">Start here, free</p>
@@ -115,7 +100,7 @@ export default async function Page() {
                 Pop in your website and get a short report: 3 places AI could grow your profit, specific to your business,
                 with the hours each could give back. On screen straight away, and in your inbox.
               </p>
-              <a className="gl-btn button" href={SNAPSHOT}>{CTA}</a>
+              <a className="gl-btn button" href={SNAPSHOT} {...NEW_TAB}>{CTA}</a>
             </div>
             <div className="gl-step gl-hm-way">
               <p className="gl-step-tag tag">A free weekly email · every Monday</p>
@@ -124,7 +109,7 @@ export default async function Page() {
                 A short email newsletter every Monday morning: what happened in NZ business the week just gone, and one
                 practical AI idea to grow your profit. A few minutes to read.
               </p>
-              <a className="gl-btn gl-hm-ghost button" href="/newsletter">Get Signal over Noise</a>
+              <a className="gl-btn gl-hm-ghost button" href="/newsletter" {...NEW_TAB}>Get Signal over Noise</a>
             </div>
           </div>
         </section>

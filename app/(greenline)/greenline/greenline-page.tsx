@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useState, type FormEvent } from "react";
 import { MiniReportFlow, startError, type MiniReportStart } from "../../(site)/ai-report/mini-report-flow";
 import type { ClientQuote } from "@/lib/clients";
-import { CTA, Footer, Header } from "./chrome";
+import { CTA, Footer, Header, RyanBand } from "./chrome";
 
 export type Proof = {
   company: string; industry: string; results: string[]; stats: { stat: string; label: string }[]; quote: ClientQuote;
@@ -144,12 +144,8 @@ export function GreenlinePage({ proof }: { proof: Proof[] }) {
                      label="The dream: an owner with time back and the business running well (more profit, more life)" />
         </section>
 
-        <div className="gl-stats">
-          <div className="gl-stat"><b className="display-sm">Only 90 seconds</b><span className="caption">with your email and website</span></div>
-          <div className="gl-stat"><b className="display-sm">3 ideas</b><span className="caption">specific to your business</span></div>
-          <div className="gl-stat"><b className="display-sm">Completely free</b><span className="caption">nothing to pay</span></div>
-          <div className="gl-stat"><b className="display-sm">Instantly delivered</b><span className="caption">on screen and in your inbox</span></div>
-        </div>
+        {/* 26 Nov (Ryan): the "Hey, I'm Ryan" band replaces the 4-stat band, for a personal touch. */}
+        <RyanBand />
 
         <section className="gl-section">
           <p className="gl-eyebrow eyebrow">What&apos;s in your snapshot</p>
