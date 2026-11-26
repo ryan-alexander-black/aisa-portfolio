@@ -140,45 +140,7 @@ export function NewsletterPage() {
           </figure>
         </section>
 
-        <div className="gl-stats">
-          <div className="gl-stat"><b className="display-sm">Every Monday</b><span className="caption">to start your week</span></div>
-          <div className="gl-stat"><b className="display-sm">A few minutes</b><span className="caption">to read</span></div>
-          <div className="gl-stat"><b className="display-sm">One AI idea</b><span className="caption">in every issue</span></div>
-          <div className="gl-stat"><b className="display-sm">Completely free</b><span className="caption">unsubscribe any time</span></div>
-        </div>
-
-        <section className="gl-section">
-          <p className="gl-eyebrow eyebrow">What&apos;s inside</p>
-          <h2 className="gl-heading display-lg">The week that was, and what to do about it.</h2>
-          <p className="gl-lede body gl-mt-2">
-            You can&apos;t control the economy. You can control how well your business runs. Each issue gives you both
-            sides, in four short parts.
-          </p>
-          <div className="gl-steps gl-nl-parts gl-gap-top">
-            <div className="gl-step">
-              <p className="gl-step-tag tag">01</p>
-              <h3 className="display-sm">This week in NZ business, and beyond</h3>
-              <p className="body">The week just gone in New Zealand, plus how things are looking globally. Everything verified from reliable sources.</p>
-            </div>
-            <div className="gl-step">
-              <p className="gl-step-tag tag">02</p>
-              <h3 className="display-sm">In the green, in the red</h3>
-              <p className="body">Where NZ businesses are making money this week, and where it&apos;s costing them.</p>
-            </div>
-            <div className="gl-step">
-              <p className="gl-step-tag tag">03</p>
-              <h3 className="display-sm">By the numbers</h3>
-              <p className="body">One chart that shows the week at a glance.</p>
-            </div>
-            <div className="gl-step">
-              <p className="gl-step-tag tag">04</p>
-              <h3 className="display-sm">This week&apos;s AI idea</h3>
-              <p className="body">One practical AI idea to grow your profit, and a takeaway you can try before Friday.</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="gl-section gl-section-mist">
+        <section className="gl-section gl-on-band gl-nl-who-band">
           <div className="gl-nl-who">
             <div className="gl-nl-who-photo">
               <Image src="/ryan-headshot.png" alt="Ryan Alexander Black" fill sizes="180px" />
@@ -191,6 +153,37 @@ export function NewsletterPage() {
                 and real business knowledge. Signal over Noise is a completely free email every week. If you find it
                 helpful, pop your details in to get it every Monday.
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="gl-section">
+          <p className="gl-eyebrow eyebrow">What&apos;s inside</p>
+          <h2 className="gl-heading display-lg">The week that was, and what to do about it.</h2>
+          <p className="gl-lede body gl-mt-2">
+            You can&apos;t control the economy. You can control how well your business runs. Each issue gives you both
+            sides, in four short parts.
+          </p>
+          <div className="gl-steps gl-nl-parts gl-gap-top">
+            <div className="gl-step">
+              <p className="gl-step-tag tag">01</p>
+              <h3 className="display-sm">This week in NZ business, and beyond</h3>
+              <p className="small">The week just gone, verified from reliable sources.</p>
+            </div>
+            <div className="gl-step">
+              <p className="gl-step-tag tag">02</p>
+              <h3 className="display-sm">In the green, in the red</h3>
+              <p className="small">Where businesses are making money, and where it&apos;s costing them.</p>
+            </div>
+            <div className="gl-step">
+              <p className="gl-step-tag tag">03</p>
+              <h3 className="display-sm">By the numbers</h3>
+              <p className="small">One chart: the week at a glance.</p>
+            </div>
+            <div className="gl-step">
+              <p className="gl-step-tag tag">04</p>
+              <h3 className="display-sm">This week&apos;s AI idea</h3>
+              <p className="small">One practical idea to grow your profit, to try before Friday.</p>
             </div>
           </div>
         </section>

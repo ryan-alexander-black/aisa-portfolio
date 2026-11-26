@@ -184,6 +184,12 @@ html { scrollbar-gutter: stable; }
 .gl-root .gl-nl-hero > .gl-form { align-self: center; }
 .gl-nl-peek figcaption { margin-top: var(--space-2); color: var(--text-muted); }
 .gl-nl-parts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+/* "Hey, I'm Ryan" as the dark band straight under the hero (Ryan, 26 Nov: replaces the stats band). */
+.gl-root .gl-nl-who-band { background: var(--band); color: var(--band-text); border-color: transparent; }
+.gl-nl-who-band .gl-eyebrow { color: var(--band-accent); }
+.gl-nl-who-band .gl-heading { color: var(--band-text); }
+.gl-nl-who-band .body { color: var(--band-muted); }
+.gl-nl-parts .gl-step { padding: 24px; }
 .gl-nl-who { display: grid; grid-template-columns: 180px 1fr; gap: var(--space-8); align-items: center; max-width: 900px; }
 .gl-nl-who-photo { position: relative; width: 180px; height: 180px; border-radius: 50%; overflow: hidden; }
 .gl-nl-who-photo img { object-fit: cover; }
