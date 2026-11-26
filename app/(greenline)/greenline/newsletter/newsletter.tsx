@@ -101,6 +101,36 @@ function Thanks({ name }: { name: string }) {
   );
 }
 
+/** The sign-up as a dark closing band, for other Greenline pages (the homepage, 26 Nov). Thanks show in place. */
+export function NewsletterBand() {
+  const [done, setDone] = useState<string | null>(null);
+  return (
+    <section className="gl-band gl-has-bg" id="newsletter">
+      <Backdrop still="/greenline/bg-dark-lines.jpg" wash="linear-gradient(rgba(10,15,13,.45), rgba(10,15,13,.6))" />
+      <div>
+        <p className="gl-eyebrow eyebrow">Free, every Monday</p>
+        <h2 className="gl-heading display-lg">Get Signal over Noise, free every Monday.</h2>
+        <p className="gl-lede lede">
+          A short email newsletter: what happened in NZ business the week just gone, and one practical AI idea to grow
+          your profit. A few minutes to read.
+        </p>
+      </div>
+      {done === null ? (
+        <SignupForm where="home" onDone={setDone} />
+      ) : (
+        <div className="gl-form gl-form-done" role="status">
+          <span className="gl-done-tick" aria-hidden="true">✓</span>
+          <h3 className="gl-form-title display-sm">You&apos;re in{done ? `, ${done}` : ""}.</h3>
+          <p className="gl-form-sub body">
+            Keep an eye out for your first issue on Monday morning. If it isn&apos;t in your inbox, check your Promotions
+            or spam folder.
+          </p>
+        </div>
+      )}
+    </section>
+  );
+}
+
 export function NewsletterPage() {
   const [done, setDone] = useState<string | null>(null);
   const finish = (name: string) => { setDone(name); window.scrollTo(0, 0); };

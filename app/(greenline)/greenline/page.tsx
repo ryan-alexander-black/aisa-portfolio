@@ -4,10 +4,11 @@ import { clients, type ClientCase, type ClientQuote } from "@/lib/clients";
 import { CTA, Footer, Header } from "./chrome";
 import { Backdrop } from "./greenline-page";
 import { greenlineHostOnly } from "./host";
+import { NewsletterBand } from "./newsletter/newsletter";
 
 // greenlineai.nz: the Greenline AI homepage (Ryan, 26 Nov). A business-first, simpler take on ryanalexanderblack.com.
-// Order (Ryan, 26 Nov): hero → who's behind it → the two free ways in → real results (AV big, Legends + Cash Direct
-// under it) → how it works. No phone or email on the page (spam). Ad clicks to the root still get the snapshot (proxy.ts).
+// Order (Ryan, 26 Nov): hero (→ the snapshot) → who's behind it → the two free ways in → real results (AV big, Legends +
+// Cash Direct under it) → a dark Signal over Noise sign-up band to close. No phone or email on the page (spam). Ad clicks to the root still get the snapshot (proxy.ts).
 export const metadata: Metadata = {
   title: "Greenline AI · AI for NZ businesses · Grow your profit, not just your revenue",
   description:
@@ -28,24 +29,6 @@ export const metadata: Metadata = {
 };
 
 const SNAPSHOT = "/profit-snapshot";
-
-const STEPS = [
-  {
-    tag: "Find",
-    title: "Where AI would pay off",
-    text: "We go through how the business runs, from the first enquiry to the paid invoice, and find the biggest profit wins, in order.",
-  },
-  {
-    tag: "Build",
-    title: "One win at a time",
-    text: "Built around the tools you already use, and tested on your real numbers before your team relies on it.",
-  },
-  {
-    tag: "Grow",
-    title: "One system for the business",
-    text: "Each build joins the last, so the whole business runs on one system and the next idea slots straight in.",
-  },
-];
 
 // Every word below comes from the client records (lib/clients.ts), so it can't drift from the portfolio.
 const client = (slug: string) => clients.find((c) => c.slug === slug) as ClientCase;
@@ -75,7 +58,7 @@ export default async function Page() {
   const avQuoting = av.proofStats?.[0];
   const avHub = av.proofStats?.[3];
   const small = [
-    { c: client("legends-academy"), quote: quoteOf(client("legends-academy"), "One month, man") },
+    { c: client("legends-academy"), quote: quoteOf(client("legends-academy"), "Instead of going") },
     { c: client("cash-direct"), quote: client("cash-direct").quote },
   ];
 
@@ -193,22 +176,7 @@ export default async function Page() {
           </div>
         </section>
 
-        <section className="gl-section">
-          <p className="gl-eyebrow eyebrow">How it works</p>
-          <h2 className="gl-heading display-lg">Find it, build it, keep growing.</h2>
-          <div className="gl-steps gl-steps-3 gl-gap-top">
-            {STEPS.map((s, i) => (
-              <div className="gl-step" key={s.tag}>
-                <p className="gl-step-tag tag">0{i + 1} · {s.tag}</p>
-                <h3 className="display-sm">{s.title}</h3>
-                <p className="body">{s.text}</p>
-              </div>
-            ))}
-          </div>
-          <div className="gl-hm-actions">
-            <a className="gl-btn button" href={SNAPSHOT}>{CTA}</a>
-          </div>
-        </section>
+        <NewsletterBand />
       </main>
       <Footer />
     </div>

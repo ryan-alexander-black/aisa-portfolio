@@ -298,6 +298,13 @@ export const clients: ClientCase[] = [
           role: "Owner",
         },
         {
+          // The 6 Aug 2026 call (clients/legends-academy/meeting-transcript-2026-08-06.md, 1:00:38, Speaker 1 = Dan), on
+          // the ad money once the data showed where members came from. Used on greenlineai.nz (Ryan, 26 Nov).
+          text: "Instead of going, let's just chug more money on the Facebook, Instagram advertising… put the money where it's best.",
+          name: "Daniel",
+          role: "Owner",
+        },
+        {
           text: "One month, man… we've done so much… I won't forget that.",
           name: "Daniel",
           role: "Owner",
