@@ -119,15 +119,15 @@ export function NewsletterPage() {
     <div className="gl-root">
       <Header home cta="#signup" label="Get Signal over Noise" />
       <main>
-        <section className="gl-hero gl-has-bg">
+        <section className="gl-hero gl-nl-hero gl-has-bg">
           <Backdrop first still="/greenline/bg-light-lines.jpg"
                     wash="linear-gradient(180deg, rgba(255,255,255,.25), rgba(245,248,246,.45))" />
           <div className="gl-hero-copy">
             <p className="gl-eyebrow eyebrow">Signal over Noise · free, every Monday</p>
-            <h1 className="display-xl">What&apos;s working for NZ businesses, every week.</h1>
+            <h1 className="display-lg">Start your week knowing what&apos;s working for New Zealand businesses.</h1>
             <p className="gl-lede lede">
-              A short email every Monday morning: a fresh look at the week just gone in New Zealand business and beyond,
-              and one practical AI idea to grow your profit. A few minutes to read.
+              A short email every Monday morning: the week just gone in New Zealand business and beyond, and one practical
+              AI idea to grow your profit. A few minutes to read.
             </p>
           </div>
           <SignupForm where="hero" full onDone={finish} />
@@ -188,10 +188,8 @@ export function NewsletterPage() {
               <h2 className="gl-heading display-lg">Hey, I&apos;m Ryan.</h2>
               <p className="body gl-mt-2">
                 I&apos;m based in Napier, New Zealand. My purpose is to help businesses grow their profit, using AI tools
-                and real business knowledge. Signal over Noise is free value, every week. Grab it if you&apos;d like it.
-              </p>
-              <p className="gl-nl-quote body">
-                I&apos;m not a tech-minded person who got into business. I&apos;m a business-minded person who leverages AI.
+                and real business knowledge. Signal over Noise is a completely free email every week. If you find it
+                helpful, pop your details in to get it every Monday.
               </p>
             </div>
           </div>
@@ -201,7 +199,7 @@ export function NewsletterPage() {
           <Backdrop still="/greenline/bg-dark-lines.jpg" wash="linear-gradient(rgba(10,15,13,.45), rgba(10,15,13,.6))" />
           <div>
             <p className="gl-eyebrow eyebrow">Free, every Monday</p>
-            <h2 className="gl-heading display-lg">Start your week knowing what&apos;s working.</h2>
+            <h2 className="gl-heading display-lg">Get Signal over Noise, free every Monday.</h2>
             <p className="gl-lede lede">One email, a few minutes, one idea worth your time.</p>
           </div>
           <SignupForm where="band" onDone={finish} />
