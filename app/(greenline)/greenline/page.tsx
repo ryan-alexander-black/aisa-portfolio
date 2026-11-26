@@ -58,7 +58,7 @@ export default async function Page() {
   const avQuoting = av.proofStats?.[0];
   const avHub = av.proofStats?.[3];
   const small = [
-    { c: client("legends-academy"), quote: quoteOf(client("legends-academy"), "Instead of going") },
+    { c: client("legends-academy"), quote: quoteOf(client("legends-academy"), "Instead of just throwing") },
     { c: client("cash-direct"), quote: client("cash-direct").quote },
   ];
 
@@ -136,7 +136,7 @@ export default async function Page() {
           <article className="gl-card gl-hm-feature gl-gap-top">
             <div className="gl-hm-head">
               <Logo c={av} />
-              <p className="gl-step-tag tag">{av.company} · {av.industry}</p>
+              <p className="gl-step-tag tag">{av.company} · {av.industry.split(" · ")[0]}</p>
             </div>
             <div className="gl-hm-wins">
               {avQuoting && (
@@ -151,7 +151,7 @@ export default async function Page() {
                 <div>
                   <p className="gl-hm-kicker small">Running the business</p>
                   <p className="gl-hm-stat display-sm">{avHub.stat}</p>
-                  <p className="small gl-hm-muted">{avHub.label} Quotes, jobs and invoices, from any device.</p>
+                  <p className="small gl-hm-muted">Every live job now runs on AV&apos;s own system. The old, clunky CRM is no longer needed. Quotes, jobs and invoices, from any device.</p>
                   <Quote q={quoteOf(av, "Love the fact")} />
                 </div>
               )}
