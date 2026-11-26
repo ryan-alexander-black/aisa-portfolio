@@ -146,7 +146,7 @@ export function NewsletterPage() {
               <Image src="/ryan-headshot.png" alt="Ryan Alexander Black" fill sizes="180px" />
             </div>
             <div>
-              <p className="gl-eyebrow eyebrow">Who writes it</p>
+              <p className="gl-eyebrow eyebrow">Who writes it, with the help of AI (obviously)</p>
               <h2 className="gl-heading display-lg">Hey, I&apos;m Ryan.</h2>
               <p className="body gl-mt-2">
                 I&apos;m based in Napier, New Zealand. My purpose is to help businesses grow their profit, using AI tools
