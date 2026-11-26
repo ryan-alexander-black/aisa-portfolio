@@ -18,7 +18,8 @@ const ADS_LABELS: Record<string, string | undefined> = {
 const META_STANDARD: Record<string, string> = { report_requested: "Lead", audit_applied: "SubmitApplication" };
 
 // next_viewed: a good fit opened Greenline's /next (the Full AI Opportunity Report page) from their snapshot.
-export type TrackEvent = "report_requested" | "report_viewed" | "next_viewed" | "audit_applied";
+// newsletter_signup: someone joined Signal over Noise on greenlineai.nz/newsletter (26 Nov).
+export type TrackEvent = "report_requested" | "report_viewed" | "next_viewed" | "audit_applied" | "newsletter_signup";
 
 export function track(event: TrackEvent, params: Record<string, string | number> = {}) {
   try {

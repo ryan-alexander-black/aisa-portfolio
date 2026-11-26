@@ -1,5 +1,5 @@
 // The email list (MailerLite, Ryan 10 Nov): every snapshot joins the "Snapshot" group, every application the
-// "Applied" group, with the UTM source and the answers as fields. No welcome email is sent from here — the
+// "Applied" group, every greenlineai.nz/newsletter sign-up the "Signal over Noise" group (26 Nov), with the UTM source and the answers as fields. No welcome email is sent from here — the
 // automations live in MailerLite (the free plan's API can't send). Failures are logged, never shown to the visitor.
 // Docs: developers.mailerlite.com (subscribers / fields / groups), checked 11 Nov 2026.
 import type { Answers, Fit } from "./shared";
@@ -84,13 +84,13 @@ export async function findOnList(email: string): Promise<ListRecord | null> {
 }
 
 export async function addToList(ctx: {
-  email: string; group: "Snapshot" | "Applied"; brand: "greenline" | "site";
+  email: string; group: "Snapshot" | "Applied" | "Signal over Noise"; brand: "greenline" | "site";
   site?: string; business?: string; name?: string; phone?: string;
   answers?: Answers; fit?: Fit; utm?: Record<string, string>;
-}): Promise<void> {
+}): Promise<boolean> {
   if (!token()) {
     console.log(`[mini-report] MailerLite not configured: ${ctx.email} not added to ${ctx.group}`);
-    return;
+    return false;
   }
   try {
     const [keys, groupId] = await Promise.all([ensureFields(), ensureGroup(ctx.group)]);
@@ -118,7 +118,9 @@ export async function addToList(ctx: {
     // Upsert: an existing subscriber keeps their other groups and fields.
     await ml("/subscribers", { method: "POST", body: { email: ctx.email, fields, groups: [groupId] } });
     console.log(`[mini-report] MailerLite: ${ctx.email} → ${ctx.group}`);
+    return true;
   } catch (e) {
     console.error("[mini-report] MailerLite add failed", e);
+    return false;
   }
 }

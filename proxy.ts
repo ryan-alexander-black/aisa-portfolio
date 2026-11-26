@@ -10,7 +10,7 @@ const PASS = /^\/api\/(mini-report|greenline)\//;
 // Greenline's own pages, at their short addresses.
 const PAGES: Record<string, string> = {
   "/": "/greenline", "/next": "/greenline/next", "/privacy": "/greenline/privacy", "/terms": "/greenline/terms",
-  "/owner-form": "/greenline/owner-form",
+  "/owner-form": "/greenline/owner-form", "/newsletter": "/greenline/newsletter",
 };
 
 export function proxy(req: NextRequest) {
