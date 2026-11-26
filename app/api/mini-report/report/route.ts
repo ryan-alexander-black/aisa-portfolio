@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const fit = fitOf(answers);
     // Greenline good fits: the email's Apply button pre-fills /next on any device (sealed, not readable in the URL).
     const nextUrl = brand === "greenline" && fit !== "low"
-      ? `https://greenlineai.nz/next?s=${sealContext({
+      ? `https://greenlineai.nz/full-report?s=${sealContext({
           email: read.email, site: read.site, business: rep.business_name, fit,
           ideas: rep.opportunities.map((o) => o.title), answers: answers as Record<string, unknown>,
         })}`

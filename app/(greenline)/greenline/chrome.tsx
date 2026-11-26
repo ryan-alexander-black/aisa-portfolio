@@ -2,7 +2,7 @@
 // terms pages. No hooks and no server-only imports, so server and client components can both use it.
 
 export const CTA = "Get my free AI Profit Snapshot";
-/** The next step, on /next: the Full AI Opportunity Report (good fits only, by the report flow's fit rule). */
+/** The next step, on /full-report: the Full AI Opportunity Report (good fits only, by the report flow's fit rule). */
 export const APPLY = "Apply for your Full AI Opportunity Report";
 
 export function Mark({ size = 34 }: { size?: number }) {

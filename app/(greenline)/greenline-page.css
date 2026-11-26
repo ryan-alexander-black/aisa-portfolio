@@ -207,3 +207,28 @@ html { scrollbar-gutter: stable; }
   .gl-nl-who-photo { width: 120px; height: 120px; }
   .gl-nl-thanks { padding-top: var(--space-8); }
 }
+
+/* The homepage (26 Nov, Ryan): a business-first, simpler take on ryanalexanderblack.com. */
+.gl-root .gl-hm-hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: center; padding: var(--section-y) var(--gutter) 64px; position: relative; }
+.gl-hm-hero h1 { margin: var(--space-4) 0 20px; text-wrap: balance; font-family: var(--font-display); }
+.gl-hm-hero .gl-lede { max-width: 580px; }
+.gl-hm-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); margin-top: var(--space-8); }
+.gl-hm-link { color: var(--accent); font-weight: 600; text-decoration: none; }
+.gl-hm-link:hover { text-decoration: underline; }
+.gl-hm-photo { aspect-ratio: 4 / 3; box-shadow: 0 18px 40px rgba(10, 15, 13, .14); }
+.gl-hm-proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.gl-hm-stat { margin-top: var(--space-3); font-family: var(--font-display); color: var(--accent); }
+.gl-hm-muted { margin-top: var(--space-2); color: var(--text-muted); }
+.gl-hm-proof .gl-quote { margin-top: auto; padding-top: 0; }
+.gl-hm-proof .gl-card > .gl-hm-muted { margin-bottom: var(--space-4); }
+.gl-hm-way { display: flex; flex-direction: column; align-items: flex-start; }
+.gl-hm-way .gl-btn { margin-top: var(--space-6); }
+.gl-hm-ghost { background: transparent; color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.gl-hm-ghost:hover { background: var(--tint, rgba(4, 120, 87, .08)); color: var(--accent); }
+.gl-hm-contact { margin-top: var(--space-8); color: var(--text-muted); }
+.gl-hm-contact a { color: var(--accent); font-weight: 600; }
+@media (max-width: 900px) { .gl-hm-proof { grid-template-columns: 1fr; } }
+@media (max-width: 760px) {
+  .gl-root .gl-hm-hero { grid-template-columns: 1fr; gap: var(--space-8); padding-top: var(--space-12); padding-bottom: var(--space-12); }
+  .gl-root .gl-steps { grid-template-columns: 1fr; }
+}

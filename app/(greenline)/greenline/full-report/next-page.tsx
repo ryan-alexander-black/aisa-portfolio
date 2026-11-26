@@ -1,6 +1,6 @@
 "use client";
 
-// The Full AI Opportunity Report page (greenlineai.nz/next). It sells one thing: the application
+// The Full AI Opportunity Report page (greenlineai.nz/full-report). It sells one thing: the application
 // (then Ryan calls at the time they pick). Visitors who came from their snapshot carry its context in
 // sessionStorage (set by the report flow): their email and website arrive pre-filled, so they only add a
 // name, mobile and best time (Ryan, 10 Nov). Anyone else (an email link, a new device) fills all of it.
@@ -44,7 +44,7 @@ function ApplyForm() {
       const raw = sessionStorage.getItem(SNAPSHOT_KEY);
       if (raw) { fill(JSON.parse(raw) as SnapshotContext); return; }
     } catch { /* no storage: try the email link next */ }
-    // 2. From the snapshot email's button: greenlineai.nz/next?s=<sealed context>, any device (18 Nov).
+    // 2. From the snapshot email's button: greenlineai.nz/full-report?s=<sealed context>, any device (18 Nov).
     const s = new URLSearchParams(window.location.search).get("s");
     if (!s) return;
     fetch("/api/mini-report/context", {

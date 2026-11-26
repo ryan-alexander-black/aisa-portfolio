@@ -9,7 +9,7 @@ export type Site = { origin: string; paths: string[] };
 
 // Greenline: the opt-in page and its legal pages. /next stays out on purpose: it's noindex and only for
 // good fits (money-engine/greenline-page.md).
-const GREENLINE_SITE: Site = { origin: "https://greenlineai.nz", paths: ["/", "/newsletter", "/privacy", "/terms"] };
+const GREENLINE_SITE: Site = { origin: "https://greenlineai.nz", paths: ["/", "/profit-snapshot", "/newsletter", "/privacy", "/terms"] };
 
 // The portfolio's public pages. /operator-form and /owner-form are noindex and stay out.
 const PORTFOLIO_SITE: Site = {

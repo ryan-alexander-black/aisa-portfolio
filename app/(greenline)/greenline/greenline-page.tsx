@@ -111,12 +111,12 @@ function Cta() {
 export function GreenlinePage({ proof }: { proof: Proof[] }) {
   const [started, setStarted] = useState<MiniReportStart | null>(null);
 
-  // Once a form is sent, the report flow takes over the page. Good fits finish on a button to /next.
+  // Once a form is sent, the report flow takes over the page. Good fits finish on a button to /full-report.
   if (started) {
     return (
       <>
         <div className="gl-root"><Header cta={null} /></div>
-        <MiniReportFlow initial={started} next="/next" onRestart={() => { setStarted(null); window.scrollTo(0, 0); }} />
+        <MiniReportFlow initial={started} next="/full-report" onRestart={() => { setStarted(null); window.scrollTo(0, 0); }} />
       </>
     );
   }

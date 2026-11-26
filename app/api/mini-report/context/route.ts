@@ -1,6 +1,6 @@
 import { openContext } from "@/lib/mini-report/server";
 
-// greenlineai.nz/next?s=… (the snapshot email's Apply button): turns the sealed link back into the
+// greenlineai.nz/full-report?s=… (the snapshot email's Apply button): turns the sealed link back into the
 // snapshot's context so the application arrives pre-filled on any device. A bad or old link just
 // returns nothing, and the visitor fills in the email + website themselves.
 export async function POST(request: Request) {

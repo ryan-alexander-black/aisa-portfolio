@@ -4,14 +4,14 @@ import type { Proof } from "../greenline-page";
 import { greenlineHostOnly } from "../host";
 import { NextPage } from "./next-page";
 
-// greenlineai.nz/next: the funnel's landing page. Its one job is to sell the call (an application for
+// greenlineai.nz/full-report (was /next until 26 Nov; /next redirects here): the funnel's landing page. Its one job is to sell the call (an application for
 // the Full AI Opportunity Report). Good fits reach it from the end of their snapshot, the snapshot
 // email and the email sequence (money-engine/greenline-page.md → "The funnel").
 export const metadata: Metadata = {
   title: "The Full AI Opportunity Report · Greenline AI",
   description:
     "Turn your snapshot into a full plan to grow your profit. A quick call, a 45-minute audit, then your plan, walked through with you. Completely free, limited to 2 reports per month.",
-  alternates: { canonical: "/next" },
+  alternates: { canonical: "/full-report" },
   robots: { index: false },
 };
 
