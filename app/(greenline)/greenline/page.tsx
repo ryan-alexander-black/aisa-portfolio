@@ -113,10 +113,9 @@ export default async function Page() {
               <p className="gl-eyebrow eyebrow">Who&apos;s behind it</p>
               <h2 className="gl-heading display-lg">Hey, I&apos;m Ryan.</h2>
               <p className="body gl-mt-2">
-                I&apos;m Hawke&apos;s Bay born and based in Napier. I spent nearly a decade at a signage company, working
-                almost every role up to production manager, sold cars, then ran our own online coaching business with my
-                wife for over five years. One lesson kept coming back: profit is what matters most. So I started Greenline
-                AI, to help NZ businesses grow without their costs growing with them.
+                I&apos;m Hawke&apos;s Bay born and based in Napier. I&apos;ve spent the last 7+ years building and running small
+                businesses, and one thing always came back: profit is what matters most. So I started Greenline AI, to help
+                NZ businesses grow without their costs growing with them.
               </p>
             </div>
           </div>

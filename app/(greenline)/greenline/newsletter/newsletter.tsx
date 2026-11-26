@@ -149,9 +149,9 @@ export function NewsletterPage() {
               <p className="gl-eyebrow eyebrow">Who writes it, with the help of AI (obviously)</p>
               <h2 className="gl-heading display-lg">Hey, I&apos;m Ryan.</h2>
               <p className="body gl-mt-2">
-                I&apos;m based in Napier, New Zealand. My purpose is to help businesses grow their profit, using AI tools
-                and real business knowledge. Signal over Noise is a completely free email every week. If you find it
-                helpful, pop your details in to get it every Monday.
+                I&apos;m based in Napier, New Zealand. I&apos;ve spent the last 7+ years building and running small businesses,
+                and one thing always came back: profit is what matters most. Signal over Noise is a completely free email
+                every week. If you find it helpful, pop your details in to get it every Monday.
               </p>
             </div>
           </div>
