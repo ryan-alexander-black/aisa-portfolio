@@ -192,6 +192,8 @@ export const clients: ClientCase[] = [
           role: "Founder",
         },
         { text: "Gee you're a genius! Love it!!", name: "Amanda", role: "Sales Manager" },
+        // Amanda's "Wins" email to ai@, 25 Nov 2026 (used on greenlineai.nz on Ryan's go, 26 Nov).
+        { text: "Love the fact that I've just raised the invoices, approved them and sent them from my iPad, on my couch at home! It's working across multiple devices & locations to suit us!", name: "Amanda", role: "Sales Manager" },
       ],
       stack: [
         "Next.js",
